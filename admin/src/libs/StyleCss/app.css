@@ -1,0 +1,107 @@
+.contentPage {
+    font-size: 1rem;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+}
+
+.contentPage p {
+    margin: 1em 0;
+}
+
+#btn {
+    background: #2222229e;
+    height: 50px;
+    min-width: 150px;
+    border: none;
+    border-radius: 10px;
+    color: #eee;
+    font-size: 40px;
+    position: relative;
+    transition: 1s;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-top: 5px;
+}
+
+#btn #circle {
+    width: 5px;
+    height: 5px;
+    background: transparent;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    overflow: hidden;
+    transition: 500ms;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#btn:hover {
+    background: transparent;
+}
+
+#btn:hover #circle {
+    height: 50px;
+    width: 150px;
+    left: 0;
+    border-radius: 0;
+    border-bottom: 2px solid #eee;
+}
+
+.thangtm13_wrapper {
+    background-color: #ffffff;
+}
+
+.thangtm13_editor {
+    padding: 0 15px;
+    border: 1px solid #9494948a;
+}
+
+.rdw-storybook-toolbar-absolute {
+    position: absolute;
+    width: 100%;
+    top: -50px;
+}
+
+.rdw-storybook-wrapper-margined {
+    position: relative;
+}
+
+.lineTitleLeftBlue {
+    background: url("/static/images/icon/line-blue.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    transform: rotate(180deg);
+}
+
+.lineTitleRightBlue {
+    background: url("/static/images/icon/line-blue.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.lineTitleLeftRed {
+    background: url("/static/images/icon/line-red.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+    transform: rotate(180deg);
+}
+
+.lineTitleRightRed {
+    background: url("/static/images/icon/line-red.gif");
+    background-repeat: no-repeat;
+    background-position: left;
+}

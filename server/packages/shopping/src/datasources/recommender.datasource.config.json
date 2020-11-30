@@ -1,0 +1,23 @@
+{
+  "name": "recommender",
+  "connector": "rest",
+  "options": {
+    "headers": {
+      "accept": "application/json",
+      "content-type": "application/json"
+    }
+  },
+  "operations": [
+    {
+      "template": {
+        "method": "GET",
+        "url": "http://localhost:4001/{userId}"
+      },
+      "functions": {
+        "getProductRecommendations": [
+          "userId"
+        ]
+      }
+    }
+  ]
+}

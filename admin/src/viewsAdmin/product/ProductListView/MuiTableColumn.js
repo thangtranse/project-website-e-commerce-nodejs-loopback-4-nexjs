@@ -44,23 +44,6 @@ export default ({ handleTableOnlick }) => {
       }
     },
     {
-      name: "bestSelling",
-      label: "Bán chạy",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return value ? (
-            <Tooltip title="Sản phẩm được đánh dấu bán chạy" aria-label="add">
-              <IconButton aria-label="seling">
-                <DirectionsRunIcon />
-              </IconButton>
-            </Tooltip>
-          ) : ""
-        }
-      }
-    },
-    {
       name: "priceSales",
       label: "Giá giảm",
       options: {

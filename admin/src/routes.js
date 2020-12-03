@@ -78,6 +78,7 @@ const routes = [
       { path: 'crm', element: <SettingWebsiteView /> },
       { path: 'website', element: <SettingWebsiteView /> },
       { path: 'settings', element: <SettingsView /> },
+      { path: '404', element: <NotFoundView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },

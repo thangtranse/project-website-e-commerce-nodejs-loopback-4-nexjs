@@ -30,7 +30,8 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { setAuthIs } from 'src/saga/action';
 import NavItem from './NavItem';
 
-const ROOT_PATH = "/adm2in"
+const ROOT_PATH = ""
+
 const items = [
   {
     href: ROOT_PATH + '/dashboard',

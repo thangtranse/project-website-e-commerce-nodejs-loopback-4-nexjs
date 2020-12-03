@@ -29,7 +29,7 @@ export class Product extends Entity {
   @property({
     type: 'string',
   })
-  unit: string; // đơn vị tính
+  unit?: string; // đơn vị tính
 
   @property({
     type: 'number',
@@ -42,12 +42,12 @@ export class Product extends Entity {
     type: 'number',
     default: 0,
   })
-  salePrice: number; // giá được giảm trên sản phâm
+  salePrice?: number; // giá được giảm trên sản phâm
 
   @property({
     type: 'number'
   })
-  discountInPercent: number; // phần trăm được giảm
+  discountInPercent?: number; // phần trăm được giảm
 
   @property({
     type: 'string',

@@ -3,10 +3,10 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import {Entity, model, property, hasMany, hasOne} from '@loopback/repository';
+import {Entity, hasMany, hasOne, model, property} from '@loopback/repository';
 import {Order} from './order.model';
-import {UserCredentials} from './user-credentials.model';
 import {ShoppingCart} from './shopping-cart.model';
+import {UserCredentials} from './user-credentials.model';
 
 @model({
   settings: {

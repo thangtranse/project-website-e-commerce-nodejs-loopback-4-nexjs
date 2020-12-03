@@ -11,9 +11,9 @@ import Page from 'src/components/Page';
 import Table from 'src/components/Table';
 import { SETTING } from 'src/constants';
 import {
-  deleteProduct,
+  deleteListIdProduct as deleteListItemId, deleteProduct,
   fetchProduct as fetchItem,
-  deleteListIdProduct as deleteListItemId,
+
   setProductDeleteStateDefault as setDeleteStateDefault
 } from 'src/saga/action';
 import * as SELECTOR from 'src/saga/redux-selector';

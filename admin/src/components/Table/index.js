@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         color: theme.palette.text.secondary,
         minHeight: 330,
+        width: "100%",
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',

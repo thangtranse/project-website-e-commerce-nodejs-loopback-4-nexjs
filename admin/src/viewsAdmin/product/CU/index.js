@@ -208,6 +208,29 @@ function NumberFormatCustom(props) {
     );
 }
 
+function PercentFormatCustom(props) {
+
+    const { inputRef, onChange, ...other } = props;
+
+    return (
+        <NumberFormat
+            {...other}
+            getInputRef={inputRef}
+            onValueChange={(values) => {
+                onChange({
+                    target: {
+                        name: props.name,
+                        value: values.value,
+                    },
+                });
+            }}
+            thousandSeparator
+            isNumericString
+            prefix="% "
+        />
+    );
+}
+
 /**
  * Tạo hoặc Thay đổi cho một Item
  * Step:
@@ -232,7 +255,6 @@ const CURDProduct = ({ urlRoot }) => {
     const [travelTo, setTravelTo] = React.useState([]); // option thêm của from
     const [travelFrom, setTravelFrom] = React.useState([]); // option thêm của from
     const [transport, setTransport] = React.useState([]); // option thêm của from
-    const [timeGo, setTimeGo] = React.useState(""); // option thêm của from
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -283,8 +305,7 @@ const CURDProduct = ({ urlRoot }) => {
 
                 if (detailProduct.object[0].transport)
                     setTransport([...detailProduct.object[0].transport])
-                if (detailProduct.object[0].timego)
-                    setTimeGo(detailProduct.object[0].timego)
+
             }
 
             const contentDetailsBlock = htmlToDraft(detailProduct.details);
@@ -386,13 +407,7 @@ const CURDProduct = ({ urlRoot }) => {
         if (travelTo && travelFrom) {
             dataSend.object = [{ to: travelTo, from: travelFrom }]
         }
-        if (timeGo) {
-            if (dataSend.object && dataSend.object.length > 0) {
-                dataSend.object[0].timego = timeGo
-            } else {
-                dataSend.object = [{ timego: timeGo }]
-            }
-        }
+
         if (transport) {
             if (dataSend.object && dataSend.object.length > 0) {
                 dataSend.object[0].transport = transport
@@ -516,6 +531,7 @@ const CURDProduct = ({ urlRoot }) => {
                                         },
                                     }}
                                 />
+                                <br />
                                 <Typography
                                     align="left"
                                     color="textPrimary"
@@ -540,33 +556,42 @@ const CURDProduct = ({ urlRoot }) => {
                                         <FormControlLabel
                                             control={<Switch checked={values.bestSelling} onChange={handleChangeSwitch('bestSelling')} name="bestSelling" />}
                                             label={values.bestSelling ? 'Giảm giá' : 'Không giảm'}
-                                            style={{ minWidth: 160 }}
+                                            style={{ minWidth: 140 }}
                                         />
                                         {
                                             values.bestSelling ? (
-                                                <FormControl fullWidth variant="outlined">
-                                                    <InputLabel htmlFor="outlined-adornment-amount">Giá giảm</InputLabel>
-                                                    <OutlinedInput
-                                                        id="outlined-adornment-amount"
-                                                        value={values.priceSales}
-                                                        onChange={handleChange('priceSales')}
-                                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                                        labelWidth={60}
-                                                    />
-                                                </FormControl>
+                                                <>
+                                                    <FormControl fullWidth variant="outlined">
+                                                        <TextField
+                                                            label="Giá giảm cho SP"
+                                                            value={values.priceSales}
+                                                            onChange={handleChange('priceSales')}
+                                                            name="numberformat"
+                                                            id="price-product-adornment"
+                                                            labelWidth={60}
+                                                            InputProps={{
+                                                                inputComponent: NumberFormatCustom,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                    <div>&nbsp;</div>
+                                                    <FormControl fullWidth variant="outlined">
+                                                        <TextField
+                                                            label="Tỉ lệ giảm của SP"
+                                                            value={values.priceSales}
+                                                            onChange={handleChange('priceSales')}
+                                                            name="numberformat"
+                                                            id="percent-product-adornment"
+                                                            labelWidth={60}
+                                                            InputProps={{
+                                                                inputComponent: PercentFormatCustom,
+                                                            }}
+                                                        />
+                                                    </FormControl>
+                                                </>
                                             ) : ""
                                         }
                                     </div>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <TextField
-                                        className={classes.title}
-                                        label="Thời gian tour"
-                                        color="secondary"
-                                        value={timeGo}
-                                        defaultValue={timeGo}
-                                        onChange={e => setTimeGo(e.target.value)}
-                                    />
                                 </FormGroup>
                                 <br />
                                 <FormControl component="fieldset" className={classes.rowSpaceEvenly} style={{ fontSize: '0.75rem' }}>
@@ -599,101 +624,6 @@ const CURDProduct = ({ urlRoot }) => {
                                         })
                                     }
                                     <br />
-                                    <div style={{ width: `100%` }}>
-                                        <Autocomplete
-                                            id="combo-box-travel-to"
-                                            options={names}
-                                            getOptionLabel={(option) => option}
-                                            style={{ width: 300 }}
-                                            onInputChange={(event, newInputValue) => {
-                                                if (newInputValue && newInputValue.length > 0) {
-                                                    if (names.indexOf(newInputValue) !== -1) {
-                                                        let dataSave = [...travelTo, newInputValue]
-                                                        setTravelTo([...new Set(dataSave)])
-                                                    }
-                                                }
-                                            }}
-                                            renderInput={(params) => <TextField {...params} label="Travel To" variant="outlined" />}
-                                        />
-                                        <br />
-                                        {
-                                            travelTo && travelTo.length > 0 ? (
-                                                travelTo.map((dt, index) => {
-                                                    return (
-                                                        <Chip
-                                                            label={dt}
-                                                            onDelete={() => {
-                                                                let data = travelTo.filter((data) => data !== dt)
-                                                                setTravelTo(data)
-                                                            }}
-                                                            deleteIcon={<RemoveIcon />}
-                                                            color="primary"
-                                                            variant="outlined"
-                                                        />
-                                                    )
-                                                })
-                                            ) : ""
-                                        }
-                                        <br />
-                                        <br />
-                                        <Autocomplete
-                                            id="combo-box-travel-to"
-                                            options={names}
-                                            getOptionLabel={(option) => option}
-                                            style={{ width: 300 }}
-                                            onInputChange={(event, newInputValue) => {
-                                                if (newInputValue && newInputValue.length > 0) {
-                                                    if (names.indexOf(newInputValue) !== -1) {
-                                                        let dataSave = [...travelFrom, newInputValue]
-                                                        setTravelFrom([...new Set(dataSave)])
-                                                    }
-                                                }
-                                            }}
-                                            renderInput={(params) => <TextField {...params} label="Travel From" variant="outlined" />}
-                                        />
-                                        <br />
-                                        {
-                                            travelFrom && travelFrom.length > 0 ? (
-                                                travelFrom.map((dt, index) => {
-                                                    return (
-                                                        <Chip
-                                                            label={dt}
-                                                            onDelete={() => {
-                                                                let data = travelFrom.filter((data) => data !== dt)
-                                                                setTravelFrom(data)
-                                                            }}
-                                                            deleteIcon={<RemoveIcon />}
-                                                            variant="outlined"
-                                                        />
-                                                    )
-                                                })
-                                            ) : ""
-                                        }
-                                        <br />
-                                        <br />
-                                        <FormControl className={classes.formControl}>
-                                            <InputLabel id="Phuong-tien-di-chuyen">Phương tiện</InputLabel>
-                                            <Select
-                                                labelId="Phuong-tien-di-chuyen"
-                                                id="Phuong-tien-di-chuyen"
-                                                multiple
-                                                value={transport}
-                                                onChange={handleChange('transport')}
-                                                input={<Input />}
-                                                renderValue={(selected) => selected.join(', ')}
-                                                MenuProps={MenuProps}
-                                            >
-                                                {
-                                                    transportConstants.map((name) => (
-                                                        <MenuItem key={name.value} value={name.value}>
-                                                            <Checkbox checked={transport.indexOf(name.value) > -1} />
-                                                            <ListItemText primary={name.value} />
-                                                        </MenuItem>
-                                                    ))
-                                                }
-                                            </Select>
-                                        </FormControl>
-                                    </div>
                                 </FormControl>
                                 <br />
                                 <br />
@@ -796,10 +726,11 @@ const CURDProduct = ({ urlRoot }) => {
                             <Box mt={3}>
                                 <TextField className={classes.title} label="Đường dẫn" color="secondary" value={values.slug} onChange={handleChange('slug')} />
                             </Box>
-                            <Box mt={3} style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Box mt={3} style={{ display: 'flex', justifyContent: 'center' }}>``
                                 {
                                     values.image ? (
-                                        <img src={SETTING.URL_IMAGE_PATH_SERVER + '/' + values.image} alt={values.title} style={{ maxWidth: '150px' }} />
+                                        /(http(s?):)([/|.|\w|\s|-])*/.test(values.image) ? <img src={values.image} alt={values.title} style={{ maxWidth: '150px' }} /> :
+                                            <img src={SETTING.URL_IMAGE_PATH_SERVER + '/' + values.image} alt={values.title} style={{ maxWidth: '150px' }} />
                                     ) : (
                                             <Typography
                                                 align="left"

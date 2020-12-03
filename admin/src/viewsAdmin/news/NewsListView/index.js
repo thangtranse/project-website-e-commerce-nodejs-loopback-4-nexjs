@@ -15,9 +15,8 @@ import {
   fetchNews as fetchItem
 } from 'src/saga/action';
 import {
-  newsSelector as SelectorlistItem,
   newsCountSelector as SelectorCount,
-  newsDeleteStatus as SelectorDeleteStatus,
+  newsDeleteStatus as SelectorDeleteStatus, newsSelector as SelectorlistItem
 } from 'src/saga/redux-selector';
 import MuiTableColumn from './MuiTableColumn';
 import Toolbar from './Toolbar';

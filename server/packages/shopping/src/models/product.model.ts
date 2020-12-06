@@ -28,6 +28,38 @@ export class Product extends Entity {
 
   @property({
     type: 'string',
+    required: true,
+  })
+  slug: string; // path URL
+  // ------- IMAGE -------
+  @property.array(String, {})
+  album?: string[];
+
+  @property({
+    type: 'string',
+  })
+  image?: string; // Hình ảnh đại diện cho sản phẩm
+  // ------- END IMAGE -------
+  // ------- CONTENT PRODUCT -------
+  @property({
+    type: 'string',
+  })
+  description?: string; // Mô tả ngắn cho sản phẩm
+
+  @property({
+    type: 'string',
+  })
+  details?: string; // Mô tả chi tiết sản phẩm
+  // ------- END CONTENT PRODUCT -------
+  // ------- PRICE -------
+  @property({
+    type: 'boolean',
+    default: false,
+  })
+  bestSelling?: boolean; // product is best selling
+
+  @property({
+    type: 'string',
   })
   unit?: string; // đơn vị tính
 
@@ -39,61 +71,26 @@ export class Product extends Entity {
   price: number; // giá sản phẩm
 
   @property({
-    type: 'number',
-    default: 0,
-  })
-  salePrice?: number; // giá được giảm trên sản phâm
-
-  @property({
     type: 'number'
   })
   discountInPercent?: number; // phần trăm được giảm
-
-  @property({
-    type: 'string',
-  })
-  image?: string; // Hình ảnh đại diện cho sản phẩm
-
-  @property({
-    type: 'string',
-  })
-  description?: string; // Mô tả ngắn cho sản phẩm
-
-  @property({
-    type: 'string',
-  })
-  details?: string; // Mô tả chi tiết sản phẩm
-
-  // Thangtm13 add dnv option
-  @property({
-    type: 'string',
-    required: true,
-  })
-  slug: string; // path URL
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  bestSelling?: boolean; // product is best selling
-
-  @property.array(Object, {})
-  type?: Object[]; // product type
 
   @property({
     type: 'number',
     default: 0,
   })
   priceSales?: number; // price sale product
+  // ------- END PRICE -------
+  // ------- CATEGORY -------
+  @property.array(Object, {})
+  type?: Object[]; // product type
+  // ------- END CATEGORY -------
 
   @property({
     type: 'date',
     default: new Date(),
   })
   createAt: string;
-
-  @property.array(String, {})
-  album: string[];
 
   @property.array(Object, {})
   object: Object[];

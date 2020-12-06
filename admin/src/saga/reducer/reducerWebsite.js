@@ -15,11 +15,15 @@ const initialState = {
     socialNetwork: { // -> chú ý mặc định bên saga
         ...initialSocialNetwork
     },
-    deputy: []
+    deputy: [],
+    dashboardLatestProducts: [],
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case WEBSITE.RESULT_REDUCER_DASHBOARD:
+            state.dashboardLatestProducts = action.data.latestProduct ? action.data.latestProduct : initialState.dashboardLatestProducts
+            return state
         case WEBSITE.RESULT_REDUCER:
             if (action.data) {
                 // const addressCompany = JSON.parse()
@@ -29,9 +33,7 @@ export default (state = initialState, action) => {
                 state.settingLoadDate = action.data.settingLoadDate
             }
             console.log("thangtran.reducer", state)
-            return {
-                ...state
-            }
+            return state
         case SETTING_APP.INFOR_WEBSITE_RESULT:
             if (action.data && action.data.length > 0) {
                 state.addressCompany = action.data[0].addressCompany ? action.data[0].addressCompany : []

@@ -21,7 +21,7 @@ function* watchFetchMethodPost() {
         try {
             const tokenUser = yield select(SELECTOR.getUserToken)
             let data = yield fetchPost({ url: apiPath, dataRequest: dataSending, optionHeader: { Authorization: 'Bearer ' + tokenUser } }).then(data => data)
-            if (data) {                
+            if (data) {
                 if (data.error) throw data
                 console.log("thangtran.response", dataSending)
                 console.log("thangtran.typeResponseSuccess", typeResponseSuccess)
@@ -156,12 +156,26 @@ function* watchFetchMethodDelete() {
  * Fetch Method GET
  */
 function* watchFetchMethodGet() {
-    yield takeLatest(SETTING_APP.GET_REQUEST, function* ({ typeResponseSuccess, typeResponseFall, apiPath, dataSending }) {
+    yield takeLatest(SETTING_APP.GET_REQUEST, function* ({
+        typeResponseSuccess,// request complete
+        typeResponseFall, // request false or error
+        apiPath, // path api request
+        dataSending, // method get <OBJECT>
+        typeProcessing = "", // processing
+    }) {
         try {
+            yield put({
+                type: typeProcessing,
+                status: "RUN"
+            })
             const tokenUser = yield select(SELECTOR.getUserToken)
             let data = yield fetchGet({ url: apiPath, dataRequest: dataSending, optionHeader: { Authorization: 'Bearer ' + tokenUser } }).then(data => data)
             if (data) {
                 if (data.error) throw data
+                yield put({
+                    type: typeProcessing,
+                    status: "DONE"
+                })
                 return yield put({
                     type: typeResponseSuccess,
                     data,
@@ -172,6 +186,10 @@ function* watchFetchMethodGet() {
             }
         } catch (error) {
             console.log("thangtran.error.watchFetchMethodGet", error)
+            yield put({
+                type: typeProcessing,
+                status: "DONE"
+            })
             if (error && typeof error === 'object') {
                 if (error.error) {
                     yield put({

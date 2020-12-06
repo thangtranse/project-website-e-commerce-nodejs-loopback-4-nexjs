@@ -51,3 +51,16 @@ export const getDetailItem = ({ idItem, typeReducer }) => ({
   idItem,
   typeReducer
 })
+
+/**
+ * Lấy dữ liệu DASHBOARD
+ */
+export const getInforDashboard = () => {
+  return {
+    type: SETTING_APP.GET_REQUEST,
+    typeResponseSuccess: WEBSITE.RESULT_DASHBOARD,
+    typeResponseFall: WEBSITE.RESULT_DASHBOARD,
+    typeProcessing: WEBSITE.PROCESS_DASHBOARD,
+    apiPath: API.dashboard,
+  }
+}

@@ -1,8 +1,21 @@
-name: Wacom Tablet
-title: Wacom Tablet
+name: Advent Laptop Bag
+title: Advent Laptop Bag
 price: 1200
-image: https://images.unsplash.com/photo-1514905507308-d4d7832e90cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60
+image: https://s3.amazonaws.com/redqteam.com/pickbazar/Advent_laptop_bags.jpg
 description: Wacom tablet.
+slug: advent-laptop-bag
+album:
+  [
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Advent_laptop_bags.jpg",
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Advent_laptop_bags.jpg",
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Advent_laptop_bags.jpg",
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Advent_laptop_bags.jpg",
+  ]
+type:
+  [
+    { key: "laptop-bags", title: "Laptop Bags", slug: "laptop-bags" },
+    { key: "shoulder-bags", title: "Shoulder Bags", slug: "shoulder-bags" },
+  ]
 details: >
   Aliquam auctor mauris egestas, porta nunc in, aliquet enim.
 
@@ -11,4 +24,3 @@ details: >
   Fusce suscipit nunc sit amet felis dapibus egestas. Nunc lobortis tellus sem, tincidunt suscipit felis tempus ut. Cras pellentesque posuere neque, vel sodales enim interdum hendrerit. Praesent quis libero vitae arcu scelerisque ultricies nec nec metus.
 
   Sed quis elit tortor. Donec ac nulla lacinia velit auctor euismod.
-slug: wacom-tablet

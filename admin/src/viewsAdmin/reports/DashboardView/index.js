@@ -1,10 +1,15 @@
-import React from 'react';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Page from 'src/components/Page';
+import {
+  getInforDashboard as fetchItem
+} from 'src/saga/action';
 import Budget from './Budget';
 import LatestOrders from './LatestOrders';
 import LatestProducts from './LatestProducts';
@@ -13,8 +18,6 @@ import TasksProgress from './TasksProgress';
 import TotalCustomers from './TotalCustomers';
 import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchItem({}))
+  }, [])
 
   return (
     <Page
@@ -99,7 +107,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <LatestProducts />
+            <LatestProducts/>
           </Grid>
           <Grid
             item
@@ -121,6 +129,6 @@ const structuredSelector = createStructuredSelector({
   data: state => state.posts
 })
 
-const mapDispatchToProps = { }
+const mapDispatchToProps = {}
 
 export default connect(structuredSelector, mapDispatchToProps)(Dashboard)

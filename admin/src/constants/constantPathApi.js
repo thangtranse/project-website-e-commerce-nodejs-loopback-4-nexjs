@@ -21,6 +21,8 @@ export const API = {
     crmAgentHubs: process.env.REACT_APP_URL_API + '/crm-agent-hubs',
 
     website: process.env.REACT_APP_URL_API + '/app-settings',
+    
+    dashboard: process.env.REACT_APP_URL_API + '/dashboard',
 
     website_setting: process.env.REACT_APP_URL_API + '/app-settings/default',
 }

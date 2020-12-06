@@ -1,8 +1,3 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-import { v4 as uuid } from 'uuid';
-import moment from 'moment';
 import {
   Box,
   Button,
@@ -16,41 +11,14 @@ import {
   ListItemText,
   makeStyles
 } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
-const data = [
-  {
-    id: uuid(),
-    name: 'Dropbox',
-    imageUrl: '/static/images/products/product_1.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
-    updatedAt: moment().subtract(2, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Slack',
-    imageUrl: '/static/images/products/product_3.png',
-    updatedAt: moment().subtract(3, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'Lyft',
-    imageUrl: '/static/images/products/product_4.png',
-    updatedAt: moment().subtract(5, 'hours')
-  },
-  {
-    id: uuid(),
-    name: 'GitHub',
-    imageUrl: '/static/images/products/product_5.png',
-    updatedAt: moment().subtract(9, 'hours')
-  }
-];
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { SETTING } from 'src/constants';
+import * as SELECTOR from 'src/saga/redux-selector';
 
 const useStyles = makeStyles(({
   root: {
@@ -62,9 +30,11 @@ const useStyles = makeStyles(({
   }
 }));
 
+const PATH_DIRECT_PRODUCT = "/products"
+
 const LatestProducts = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const products = useSelector(state => SELECTOR.websiteDashboardLatestProducts(state)); // Tổng số lượng danh sách item
 
   return (
     <Card
@@ -73,25 +43,25 @@ const LatestProducts = ({ className, ...rest }) => {
     >
       <CardHeader
         subtitle={`${products.length} in total`}
-        title="Latest Products"
+        title="Sản phẩm mới được tạo"
       />
       <Divider />
       <List>
         {products.map((product, i) => (
           <ListItem
             divider={i < products.length - 1}
-            key={product.id}
+            key={product.productId}
           >
             <ListItemAvatar>
               <img
                 alt="Product"
                 className={classes.image}
-                src={product.imageUrl}
+                src={/(http(s?):)([/|.|\w|\s|-])*/.test(product.image) ? product.image : (SETTING.URL_IMAGE_PATH_SERVER + '/' + product.image)}
               />
             </ListItemAvatar>
             <ListItemText
-              primary={product.name}
-              secondary={`Updated ${product.updatedAt.fromNow()}`}
+              primary={product.title}
+              secondary={`Thời gian tạo ${product.createAt}`}
             />
             <IconButton
               edge="end"
@@ -113,6 +83,8 @@ const LatestProducts = ({ className, ...rest }) => {
           endIcon={<ArrowRightIcon />}
           size="small"
           variant="text"
+          href={PATH_DIRECT_PRODUCT}
+          component={'a'}
         >
           View all
         </Button>

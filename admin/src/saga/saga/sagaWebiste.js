@@ -60,6 +60,9 @@ function* watchItemDetail() {
     })
 }
 
+/**
+ * API Lấy danh sách theo thông số truyền vô (bị trùng với method GET)
+ */
 function* watchGetList() {
     yield takeLatest(SETTING_APP.GET_LIST_ITEMS_REQUEST, function* (
         {
@@ -113,11 +116,9 @@ function* watchGetList() {
 
 /**
  * Xử lý dữ liệu trả về của API lấy thông số setting default website
- * 
  */
 function* watchSettingWebsite() {
     yield takeLatest(WEBSITE.RESULT, function* ({ data }) {
-        
         if (data) {
             const addressCompany = data.addressCompany ? JSON.stringify(data.addressCompany) : '[]'
             const deputy = data.deputy ? JSON.stringify(data.deputy) : '[]'
@@ -137,11 +138,32 @@ function* watchSettingWebsite() {
     })
 }
 
+/**
+ * Xử lý dữ liệu trả về của API lấy thông số **setting default website**
+ */
+function* watchDashBoardResult() {
+    yield takeLatest(WEBSITE.RESULT_DASHBOARD, function* ({ data }) {
+        return yield put({
+            type: WEBSITE.RESULT_REDUCER_DASHBOARD,
+            data
+        })
+    })
+}
+/**
+ * Xử lý dữ Process trong quá trình lấy thông số **setting default website**
+ */
+function* watchDashBoardProcess() {
+    yield takeLatest(WEBSITE.PROCESS_DASHBOARD, function* ({ data }) {
+        console.log(data)
+    })
+}
 
 
 export {
     watchItemDetail,
     watchGetList,
-    watchSettingWebsite
+    watchSettingWebsite,
+    watchDashBoardResult,
+    watchDashBoardProcess,
 };
 

@@ -5,7 +5,7 @@ import Router from 'next/router';
 // the redirect will only happen on the client-side. This is by design,
 const IndexPage: React.FC<{}> = () => {
   useEffect(() => {
-    Router.replace('/[type]', '/grocery');
+    Router.replace('/[type]', '/bags');
   });
   return (
     <Head>

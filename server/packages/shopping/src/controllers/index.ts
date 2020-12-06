@@ -3,16 +3,18 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-export * from './ping.controller';
-export * from './user.controller';
-export * from './shopping-cart.controller';
-export * from './user-order.controller';
-export * from './product.controller';
+export * from './api-test.controller';
+export * from './app-setting.controller';
+export * from './category.controller';
+export * from './crm.controller';
+export * from './dashboard.controller';
 export * from './file-download.controller';
 export * from './file-upload.controller';
 export * from './news.controller';
-export * from './app-setting.controller';
-export * from './category.controller';
 export * from './page-home.controller';
-export * from './crm.controller';
-export * from './api-test.controller';
+export * from './ping.controller';
+export * from './product.controller';
+export * from './shopping-cart.controller';
+export * from './user-order.controller';
+export * from './user.controller';
+

@@ -16,11 +16,11 @@ import {
 
 
 
-    Grid, InputAdornment,
+    Grid,
 
-    InputLabel,
 
-    makeStyles, OutlinedInput,
+
+    makeStyles,
     Paper,
 
 
@@ -39,20 +39,13 @@ import {
     TextField, Typography
 } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
-import Chip from '@material-ui/core/Chip';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
 import Tooltip from '@material-ui/core/Tooltip';
-import RemoveIcon from '@material-ui/icons/Delete';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import StarOutlineIcon from '@material-ui/icons/StarBorder';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -62,7 +55,7 @@ import React, { useEffect, useState } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import DialogDefault from 'src/components/Dialog/default';
 import Page from 'src/components/Page';
@@ -73,15 +66,19 @@ import EmojisBasic from 'src/libs/Emojis/basic';
 import {
     actionDeleteFileUpload,
 
-    actionUploadFileClearStorage, fetchCategory,
+
+
+
+
+    actionUploadFile, actionUploadFileClearStorage, fetchCategory,
 
     fetchProductCreate,
 
-    actionUploadFile,
+
     fetchProductUpdate, getDetailItem,
 
-    setProductCreateStateDefault as setDefaultStatusCreate,
-    setDefaulGetProduct
+
+    setDefaulGetProduct, setProductCreateStateDefault as setDefaultStatusCreate
 } from 'src/saga/action';
 import * as SELECTOR from 'src/saga/redux-selector';
 import RemoveAccents from 'src/utils/setUrlPath';
@@ -251,6 +248,7 @@ const CURDProduct = ({ urlRoot }) => {
     const [open, setOpen] = React.useState(initDialog); // Tùy chọn mở dialog cảnh báo
     const [disSubmitButton, setDisSubmitButton] = React.useState(false); // Trạng thái nút Submit
     const [openDropzoneDialog, setOpenDropzoneDialog] = useState(false); // Tùy chọn mở dialog cảnh báo
+    const [isSelling, setIsSelling] = useState(false); // Xử lý sản phẩm BEST SELLING
 
     const [travelTo, setTravelTo] = React.useState([]); // option thêm của from
     const [travelFrom, setTravelFrom] = React.useState([]); // option thêm của from
@@ -292,34 +290,36 @@ const CURDProduct = ({ urlRoot }) => {
             dataTemp.slug = detailProduct.slug
             dataTemp.type = detailProduct.type ? detailProduct.type : []
             dataTemp.bestSelling = detailProduct.bestSelling
-            dataTemp.priceSales = detailProduct.priceSales
             dataTemp.price = detailProduct.price
             dataTemp.album = detailProduct.album
             dataTemp.image = detailProduct.image
-
+            if (detailProduct.priceSales) {
+                dataTemp.priceSales = detailProduct.priceSales
+                setIsSelling(true)
+            }
             if (detailProduct.object && detailProduct.object.length > 0) {
                 if (detailProduct.object[0].to && detailProduct.object[0].to.length > 0)
                     setTravelTo([...detailProduct.object[0].to])
                 if (detailProduct.object[0].from && detailProduct.object[0].from.length > 0)
                     setTravelFrom([...detailProduct.object[0].from])
-
                 if (detailProduct.object[0].transport)
                     setTransport([...detailProduct.object[0].transport])
-
             }
-
-            const contentDetailsBlock = htmlToDraft(detailProduct.details);
-            if (contentDetailsBlock) {
-                const contentState = ContentState.createFromBlockArray(contentDetailsBlock.contentBlocks);
-                const editorState = EditorState.createWithContent(contentState);
-                dataTemp.details = editorState
+            if (detailProduct.details) {
+                const contentDetailsBlock = htmlToDraft(detailProduct.details);
+                if (contentDetailsBlock) {
+                    const contentState = ContentState.createFromBlockArray(contentDetailsBlock.contentBlocks);
+                    const editorState = EditorState.createWithContent(contentState);
+                    dataTemp.details = editorState
+                }
             }
-
-            const contentDescriptionBlock = htmlToDraft(detailProduct.description);
-            if (contentDescriptionBlock) {
-                const contentDescriptionState = ContentState.createFromBlockArray(contentDescriptionBlock.contentBlocks);
-                const editorDescriptionState = EditorState.createWithContent(contentDescriptionState);
-                dataTemp.description = editorDescriptionState
+            if (detailProduct.description) {
+                const contentDescriptionBlock = htmlToDraft(detailProduct.description);
+                if (contentDescriptionBlock) {
+                    const contentDescriptionState = ContentState.createFromBlockArray(contentDescriptionBlock.contentBlocks);
+                    const editorDescriptionState = EditorState.createWithContent(contentDescriptionState);
+                    dataTemp.description = editorDescriptionState
+                }
             }
             setValues({ ...dataTemp })
         }
@@ -419,14 +419,15 @@ const CURDProduct = ({ urlRoot }) => {
         let description = draftToHtml(convertToRaw(values.description.getCurrentContent()))
         let details = draftToHtml(convertToRaw(dataSend.details.getCurrentContent()))
         let alm = values.album ? values.album : initValues.album
-
         if (fileUpload && fileUpload.length > 0) {
             dataSend.image = fileUpload[0].title
             fileUpload.map(data => alm.push(data.title))
             dataSend.album = alm
         }
         dataSend.price = typeof dataSend.price !== 'number' ? (parseInt(dataSend.price) ? parseInt(dataSend.price) : 0) : dataSend.price
-        dataSend.priceSales = typeof dataSend.priceSales !== 'number' ? (parseInt(dataSend.priceSales) ? parseInt(dataSend.priceSales) : 0) : dataSend.priceSales
+        if (isSelling) {
+            dataSend.priceSales = typeof dataSend.priceSales !== 'number' ? (parseInt(dataSend.priceSales) ? parseInt(dataSend.priceSales) : 0) : dataSend.priceSales
+        }
         if (isEditView) {
             dispatch(fetchProductUpdate({ data: { ...dataSend, description, details }, _id: id }))
             return
@@ -551,15 +552,20 @@ const CURDProduct = ({ urlRoot }) => {
                                         }}
                                     />
                                 </FormControl>
+                                <FormControlLabel
+                                    control={<Switch checked={values.bestSelling} onChange={handleChangeSwitch('bestSelling')} name="bestSelling" />}
+                                    label={values.bestSelling ? 'Chọn sản phẩm là Best Selling' : 'Bỏ chọn sản phẩm là Best Selling'}
+                                    style={{ minWidth: 140 }}
+                                />
+                                <FormControlLabel
+                                    control={<Switch checked={isSelling} onChange={() => { setIsSelling(!isSelling) }} name="bestSelling" />}
+                                    label={isSelling ? 'Giảm giá sản phẩm' : 'Không giảm'}
+                                    style={{ minWidth: 140 }}
+                                />
                                 <FormGroup row>
                                     <div className={classes.rowSpaceBetween}>
-                                        <FormControlLabel
-                                            control={<Switch checked={values.bestSelling} onChange={handleChangeSwitch('bestSelling')} name="bestSelling" />}
-                                            label={values.bestSelling ? 'Giảm giá' : 'Không giảm'}
-                                            style={{ minWidth: 140 }}
-                                        />
                                         {
-                                            values.bestSelling ? (
+                                            isSelling ? (
                                                 <>
                                                     <FormControl fullWidth variant="outlined">
                                                         <TextField
@@ -676,7 +682,12 @@ const CURDProduct = ({ urlRoot }) => {
                                         {
                                             values.album && values.album.length > 0 ? values.album.map((tile, index) => (
                                                 <GridListTile key={tile.title}>
-                                                    <img src={SETTING.URL_IMAGE_PATH_SERVER + "/" + tile} alt={tile.title} />
+                                                    {
+
+                                                        /(http(s?):)([/|.|\w|\s|-])*/.test(tile) ? <img src={tile} alt={tile} style={{ maxWidth: '150px' }} /> :
+                                                            <img src={SETTING.URL_IMAGE_PATH_SERVER + '/' + tile} alt={tile} style={{ maxWidth: '150px' }} />
+
+                                                    }
                                                     <GridListTileBar
                                                         title={tile.title}
                                                         classes={{
@@ -726,7 +737,7 @@ const CURDProduct = ({ urlRoot }) => {
                             <Box mt={3}>
                                 <TextField className={classes.title} label="Đường dẫn" color="secondary" value={values.slug} onChange={handleChange('slug')} />
                             </Box>
-                            <Box mt={3} style={{ display: 'flex', justifyContent: 'center' }}>``
+                            <Box mt={3} style={{ display: 'flex', justifyContent: 'center' }}>
                                 {
                                     values.image ? (
                                         /(http(s?):)([/|.|\w|\s|-])*/.test(values.image) ? <img src={values.image} alt={values.title} style={{ maxWidth: '150px' }} /> :

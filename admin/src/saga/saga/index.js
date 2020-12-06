@@ -33,6 +33,8 @@ export default function* rootSaga() {
         SagaPage.watchFetchPages(),
         sagaWebiste.watchItemDetail(),
         sagaWebiste.watchGetList(),
+        sagaWebiste.watchDashBoardResult(), // xử lý dữ liệu dashboard từ api trả về
+        sagaWebiste.watchDashBoardProcess(), // xử lý process dashboard khi gọi api
         sagaWebiste.watchSettingWebsite(), // xử lý dữ liệu api trả về: setting default website
     ])
 }

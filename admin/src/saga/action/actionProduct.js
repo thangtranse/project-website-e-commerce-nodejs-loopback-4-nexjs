@@ -10,7 +10,6 @@ export const fetchProduct = ({ offset, limit, skip, order, where, fields }) => {
     offset, limit, skip, order, where, fields
   }
 }
-
 /**
  * CALL API update product
  * @param {*} param0 
@@ -49,11 +48,8 @@ export const setProductCreateStateDefault = () => {
   }
 }
 /**--------------------------------------------------------------------------------*/
-
-
-
 /**
- * Call api profile user
+ * 
  * @param {*} param0 {username, password}
  */
 export const setDefaulCreateProduct = ({ data, status }) => {
@@ -63,10 +59,9 @@ export const setDefaulCreateProduct = ({ data, status }) => {
     status
   }
 }
-
 /**--------------------------------------------------------------------------------*/
 /**
- * Call api profile user
+ * 
  * @param {*} param0 {username, password}
  */
 export const setDefaulDeleteProduct = ({ data, status }) => {

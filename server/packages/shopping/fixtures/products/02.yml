@@ -1,0 +1,18 @@
+name: Chanel Wallet
+title: Chanel Wallet
+price: 60
+priceSales: 48
+discountInPercent: 20
+image: https://s3.amazonaws.com/redqteam.com/pickbazar/Chanel_wallet.jpg
+description: Beautiful new Chanel fingerless wallet. Tweed with leather CC on top and leather on the backside of the wallet.
+slug: chanel-wallet
+album:
+  [
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Chanel_wallet.jpg",
+    "https://s3.amazonaws.com/redqteam.com/pickbazar/Chanel_wallet.jpg",
+  ]
+type:
+  [
+    { key: "wallet", title: "Wallet", slug: "wallet" },
+    { key: "shoulder-bags", title: "Shoulder Bags", slug: "shoulder-bags" },
+  ]

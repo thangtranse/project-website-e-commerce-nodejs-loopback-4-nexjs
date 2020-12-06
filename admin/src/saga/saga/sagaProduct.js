@@ -92,11 +92,10 @@ function* watchResponseDeleteListIdComplete() {
     })
 }
 
-
 export {
     watchFetchProduct,
     watchResponseCreateComplete,
     watchResponseDeleteComplete,
-    watchResponseDeleteListIdComplete,
+    watchResponseDeleteListIdComplete
 };
 

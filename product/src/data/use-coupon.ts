@@ -11,6 +11,9 @@ export default function useCoupon() {
     return data.find((current) => current.code === coupon_code);
   };
 
+  console.log("thangtran.coupon_code", verifyCoupon)
+
+
   return {
     error,
     data,

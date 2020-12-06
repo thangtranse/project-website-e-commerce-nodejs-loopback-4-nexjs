@@ -8,9 +8,13 @@ interface Props {
 export default function useProduct({ slug }: Props) {
   const { data, mutate, error } = useSWR('/api/products.json', productFetcher);
 
+  console.log("thangtran.slug", slug)
+
   const loading = !data && !error;
   // need to remove when you using real API integration
   let product = data?.filter((current) => current.slug === slug);
+
+
 
   return {
     loading,

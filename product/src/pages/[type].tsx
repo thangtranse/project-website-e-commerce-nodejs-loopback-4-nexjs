@@ -20,9 +20,11 @@ import { useRefScroll } from 'utils/use-ref-scroll';
 import { ModalProvider } from 'contexts/modal/modal.provider';
 
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
+
 const Products = dynamic(() =>
   import('components/product-grid/product-list/product-list')
 );
+
 const CartPopUp = dynamic(() => import('features/carts/cart-popup'), {
   ssr: false,
 });
@@ -34,13 +36,17 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
     percentOfContainer: 0,
     offsetPX: -110,
   });
+
   React.useEffect(() => {
     if (query.text || query.category) {
       scroll();
     }
   }, [query.text, query.category]);
+
   const PAGE_TYPE: any = query.type;
+
   const page = sitePages[PAGE_TYPE];
+  
   if (!page) return null;
 
   return (

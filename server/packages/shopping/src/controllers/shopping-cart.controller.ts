@@ -3,26 +3,29 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import {
-  put,
-  get,
-  del,
-  param,
-  requestBody,
-  HttpErrors,
-  post,
-} from '@loopback/rest';
 import {authenticate} from '@loopback/authentication';
 import {authorize} from '@loopback/authorization';
-import {UserProfile, SecurityBindings} from '@loopback/security';
 import {inject} from '@loopback/core';
 import {repository} from '@loopback/repository';
-import {ShoppingCartRepository} from '../repositories';
+import {
+  del, get,
+
+
+
+  HttpErrors, param,
+
+
+  post, put,
+
+
+
+  requestBody
+} from '@loopback/rest';
+import {SecurityBindings, UserProfile} from '@loopback/security';
 import {ShoppingCart, ShoppingCartItem} from '../models';
+import {ShoppingCartRepository} from '../repositories';
 import {basicAuthorization} from '../services/basic.authorizor';
-import debugFactory from 'debug';
 import {OPERATION_SECURITY_SPEC} from '../utils/security-spec';
-const debug = debugFactory('loopback:example:shopping');
 
 /**
  * Controller for shopping cart
@@ -33,7 +36,7 @@ export class ShoppingCartController {
     public currentUserProfile: UserProfile,
     @repository(ShoppingCartRepository)
     public shoppingCartRepository: ShoppingCartRepository,
-  ) {}
+  ) { }
 
   /**
    * Create the shopping cart for a given user
@@ -54,7 +57,6 @@ export class ShoppingCartController {
     @param.path.string('userId') userId: string,
     @requestBody({description: 'shopping cart'}) cart: ShoppingCart,
   ): Promise<void> {
-    debug('Create shopping cart %s: %j', userId, cart);
     await this.shoppingCartRepository.set(userId, cart);
   }
 
@@ -77,7 +79,6 @@ export class ShoppingCartController {
     @param.path.string('userId') userId: string,
     @requestBody({description: 'shopping cart'}) cart: ShoppingCart,
   ): Promise<void> {
-    debug('Create shopping cart %s: %j', userId, cart);
     await this.shoppingCartRepository.set(userId, cart);
   }
 
@@ -99,9 +100,7 @@ export class ShoppingCartController {
   async get(
     @param.path.string('userId') userId: string,
   ): Promise<ShoppingCart> {
-    debug('Get shopping cart %s', userId);
     const cart = await this.shoppingCartRepository.get(userId);
-    debug('Shopping cart %s: %j', userId, cart);
     if (cart == null) {
       throw new HttpErrors.NotFound(
         `Shopping cart not found for user: ${userId}`,
@@ -126,7 +125,6 @@ export class ShoppingCartController {
   @authenticate('jwt')
   @authorize({allowedRoles: ['customer'], voters: [basicAuthorization]})
   async remove(@param.path.string('userId') userId: string): Promise<void> {
-    debug('Remove shopping cart %s', userId);
     await this.shoppingCartRepository.delete(userId);
   }
 
@@ -152,7 +150,6 @@ export class ShoppingCartController {
     @param.path.string('userId') userId: string,
     @requestBody({description: 'shopping cart item'}) item: ShoppingCartItem,
   ): Promise<ShoppingCart> {
-    debug('Add item %j to shopping cart %s', item, userId);
     return this.shoppingCartRepository.addItem(userId, item);
   }
 }

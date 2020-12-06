@@ -177,21 +177,6 @@ export class ShoppingApplication extends BootMixin(
   async migrateSchema(options?: SchemaMigrationOptions): Promise<void> {
     await super.migrateSchema(options);
 
-    // Pre-populate AppSetting
-    const appSettingRepo = await this.getRepository(CategoryRepository);
-    await appSettingRepo.deleteAll();
-    const appSettingDir = path.join(__dirname, '../fixtures/appSetting');
-    const appSettingFiles = fs.readdirSync(appSettingDir);
-
-    for (const file of appSettingFiles) {
-      if (file.endsWith('.yml')) {
-        const productFile = path.join(appSettingDir, file);
-        const yamlString = fs.readFileSync(productFile, 'utf8');
-        const item = YAML.parse(yamlString);
-        await appSettingRepo.create(item);
-      }
-    }
-
     // Pre-populate Category
     const categoryRepo = await this.getRepository(CategoryRepository);
     await categoryRepo.deleteAll();

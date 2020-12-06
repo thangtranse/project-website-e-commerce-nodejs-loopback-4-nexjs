@@ -33,5 +33,6 @@ export const newsDeleteStatus = state => get(state, 'news.statusDelete');
 export const newsDetial = state => get(state, 'news.detial');
 // WEBSITE
 export const websiteInfor = state => get(state, 'website');
+export const websiteDashboardLatestProducts = state => get(state, 'website.dashboardLatestProducts');
 // APP
 export const ListFileUpload = state => Object.values(get(state, 'appSetting.fileUpload'));

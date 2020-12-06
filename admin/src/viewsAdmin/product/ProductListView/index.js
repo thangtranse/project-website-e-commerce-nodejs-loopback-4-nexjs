@@ -60,7 +60,6 @@ const ProductList = () => {
 
   const [open, setOpen] = React.useState(initDialog);
 
-
   useEffect(() => {
     dispatch(fetchItem({ limit: SETTING.LIST_ITEM_PER_PAGE }))
   }, [])

@@ -35,7 +35,7 @@ export class Category extends Entity {
     type: 'date',
     default: new Date(),
   })
-  _createAt: string;
+  createAt: string;
 
   @property({
     type: 'string',

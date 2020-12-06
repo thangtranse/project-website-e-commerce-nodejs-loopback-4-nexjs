@@ -77,5 +77,7 @@ export const SETTING = {
             title: "Thông tin liên hệ",
             url: "/info"
         }
-    ]
+    ],
+
+    
 }

@@ -13,77 +13,13 @@ import {
 import InputIcon from '@material-ui/icons/Input';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import {
-  BarChart as BarChartIcon,
-
-
-
-
-
-
-
-  Chrome, FileMinus, Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
-  User as UserIcon
-} from 'react-feather';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { setAuthIs } from 'src/saga/action';
+import ContentMenuLeft from './ContentMenuLeft';
+import { ROOT_PATH } from './ContentMenuLeft';
 import NavItem from './NavItem';
 
-const ROOT_PATH = ""
-
-const items = [
-  {
-    href: ROOT_PATH + '/dashboard',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
-  {
-    href: ROOT_PATH + '/pages',
-    icon: ShoppingBagIcon,
-    title: 'Pages'
-  },
-  {
-    href: ROOT_PATH + '/products',
-    icon: ShoppingBagIcon,
-    title: 'Products'
-  },
-  {
-    href: ROOT_PATH + '/news',
-    icon: FileMinus,
-    title: 'News'
-  },
-  {
-    href: ROOT_PATH + '/categories',
-    icon: FileMinus,
-    title: 'Category'
-  },
-  {
-    href: ROOT_PATH + '/crm',
-    icon: UserIcon,
-    title: 'CRM'
-  },
-  {
-    href: ROOT_PATH + '/menu',
-    icon: UserIcon,
-    title: 'Menu'
-  },
-  {
-    href: ROOT_PATH + '/customers',
-    icon: UserIcon,
-    title: 'Users'
-  },
-  {
-    href: ROOT_PATH + '/website',
-    icon: Chrome,
-    title: 'Website Infor'
-  },
-  {
-    href: ROOT_PATH + '/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  }
-];
+const items = ContentMenuLeft()
 
 const useStyles = makeStyles(() => ({
   mobileDrawer: {
@@ -101,6 +37,11 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+/**
+ * Menu Left for UI Admin Page
+ * All config in file "ContentMenuLeft"
+ * @param {*} param0 
+ */
 const NavBar = ({ onMobileClose, openMobile, lastName, firstName, name, roles, avatar, dispatch }) => {
 
   const classes = useStyles();

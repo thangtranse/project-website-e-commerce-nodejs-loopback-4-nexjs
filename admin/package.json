@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "start:dev": "react-scripts start",
-    "start:pm2": "pm2 start npm --name 'dnvtravel.com' -- start",
+    "start:pm2": "pm2 start npm --name 'tuyetmy.admin.com' -- start",
     "start": "node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",

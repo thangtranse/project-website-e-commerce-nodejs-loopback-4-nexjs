@@ -38,7 +38,7 @@
     "prestart": "npm run build",
     "start": "concurrently --kill-others \"npm run start:app\" \"npm run start:recommender\"",
     "start:app": "node ./packages/shopping --PORT 9000",
-    "start:pm2": "pm2 start npm --name 'dnvtravel.service.com' -- start",
+    "start:pm2": "pm2 start npm --name 'tuyetmy.service.com' -- start",
     "start:recommender": "node ./packages/recommender",
     "prepublishOnly": "npm run test"
   },

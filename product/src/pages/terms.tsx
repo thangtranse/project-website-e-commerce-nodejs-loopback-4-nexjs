@@ -14,6 +14,7 @@ import { Element } from 'react-scroll';
 import { SEO } from 'components/seo';
 import { useMedia } from 'utils/use-media';
 import { siteTermsAndServices } from 'site-settings/site-terms-and-services';
+import { SHOP_NAME } from "environment";
 
 const TermsPage: NextPage<{}> = () => {
   const { title, date, content } = siteTermsAndServices;
@@ -26,7 +27,7 @@ const TermsPage: NextPage<{}> = () => {
 
   return (
     <>
-      <SEO title={title} description="PickBazar privacy page" />
+      <SEO title={title} description={`${SHOP_NAME} privacy page`} />
 
       <StyledContainer>
         <Heading title={title} subtitle={`Last update: ${date}`} />

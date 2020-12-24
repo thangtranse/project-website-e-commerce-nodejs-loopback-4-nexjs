@@ -116,7 +116,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
           <ProductDescription>
             <ReadMore character={600}>{product.description}</ReadMore>
           </ProductDescription>
-
           <ProductCartWrapper>
             <ProductCartBtn>
               {!isInCart(data.id) ? (

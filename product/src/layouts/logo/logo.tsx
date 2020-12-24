@@ -1,6 +1,7 @@
 import React from 'react';
 import Router from 'next/router';
 import { LogoBox, LogoImage } from './logo.style';
+
 type LogoProps = {
   imageUrl: string;
   alt: string;

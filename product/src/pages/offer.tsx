@@ -7,6 +7,8 @@ import { Modal } from '@redq/reuse-modal';
 import GiftCard from 'components/gift-card/gift-card';
 import Footer from 'layouts/footer';
 import useCoupon from 'data/use-coupon';
+import { SHOP_NAME } from "environment";
+
 import {
   OfferPageWrapper,
   ProductsRow,
@@ -32,7 +34,7 @@ const GiftCardPage: NextPage<GiftCardProps> = ({ deviceType }) => {
 
   return (
     <Modal>
-      <SEO title="Offer - PickBazar" description="Offer Details" />
+      <SEO title={`Offer - ${SHOP_NAME}`} description="Offer Details" />
       <OfferPageWrapper>
         <MainContentArea>
           <div style={{ width: '100%' }}>

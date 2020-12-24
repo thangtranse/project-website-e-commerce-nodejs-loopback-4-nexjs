@@ -6,6 +6,7 @@ import Checkout from 'features/checkouts/checkout-one/checkout-one';
 import { ProfileProvider } from 'contexts/profile/profile.provider';
 import ErrorMessage from 'components/error-message/error-message';
 import useUser from 'data/use-user';
+import { SHOP_NAME } from "environment";
 
 type Props = {
   deviceType: {
@@ -24,7 +25,7 @@ const CheckoutPage: NextPage<Props> = ({ deviceType }) => {
   return (
     <>
       <SEO
-        title="Checkout Alternative - PickBazar"
+        title={`Checkout Alternative - ${SHOP_NAME}`}
         description="Checkout Details"
       />
       <ProfileProvider initData={user}>

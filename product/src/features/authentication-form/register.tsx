@@ -1,24 +1,37 @@
-import React, { useContext } from 'react';
-import Link from 'next/link';
-import { Input } from 'components/forms/input';
-import {
-  Button,
-  IconWrapper,
-  Wrapper,
-  Container,
-  LogoWrapper,
-  Heading,
-  SubHeading,
-  HelperText,
-  Offer,
-  // Input,
-  Divider,
-  LinkButton,
-} from './authentication-form.style';
 import { Facebook } from 'assets/icons/Facebook';
 import { Google } from 'assets/icons/Google';
+import { Input } from 'components/forms/input';
 import { AuthContext } from 'contexts/auth/auth.context';
+import Link from 'next/link';
+import React, { useContext } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import {
+  Button,
+
+
+  Container,
+
+
+
+
+
+  // Input,
+  Divider, Heading,
+
+  HelperText, IconWrapper,
+
+
+
+
+
+
+
+
+
+  LinkButton, Offer, SubHeading, Wrapper
+} from './authentication-form.style';
+
+import { SHOP_NAME } from "environment";
 
 export default function SignOutModal() {
   const intl = useIntl();
@@ -65,7 +78,7 @@ export default function SignOutModal() {
         <HelperText style={{ padding: '20px 0 30px' }}>
           <FormattedMessage
             id='signUpText'
-            defaultMessage="By signing up, you agree to Pickbazar's"
+            defaultMessage={`By signing up, you agree to ${SHOP_NAME}'s`}
           />
           &nbsp;
           <Link href='/'>

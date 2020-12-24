@@ -1,19 +1,24 @@
-import { NextPage } from 'next';
-import Sticky from 'react-stickynode';
+import { Heading } from 'components/heading/heading';
+import { SEO } from 'components/seo';
+import { SHOP_NAME } from "environment";
 import {
   StyledContainer,
   StyledContent,
-  StyledLink,
-  StyledLeftContent,
-  StyledLeftInnerContent,
-  StyledRightContent,
-  StyledContentHeading,
+
+
+
+
+  StyledContentHeading, StyledLeftContent,
+  StyledLeftInnerContent, StyledLink,
+
+
+  StyledRightContent
 } from 'features/terms-and-services/terms-and-services';
-import { Heading } from 'components/heading/heading';
+import { NextPage } from 'next';
 import { Element } from 'react-scroll';
-import { SEO } from 'components/seo';
-import { useMedia } from 'utils/use-media';
+import Sticky from 'react-stickynode';
 import { sitePrivacyPolicy } from 'site-settings/site-privacy-policy';
+import { useMedia } from 'utils/use-media';
 
 const PrivacyPage: NextPage<{}> = () => {
   const { title, date, content } = sitePrivacyPolicy;
@@ -25,7 +30,7 @@ const PrivacyPage: NextPage<{}> = () => {
 
   return (
     <>
-      <SEO title={title} description="PickBazar privacy page" />
+      <SEO title={title} description={`${SHOP_NAME} privacy page`} />
 
       <StyledContainer>
         <Heading title={title} subtitle={`Last update: ${date}`} />

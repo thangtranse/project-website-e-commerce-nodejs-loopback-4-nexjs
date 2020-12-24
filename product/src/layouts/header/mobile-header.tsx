@@ -13,7 +13,7 @@ import {
 } from './header.style';
 import Search from 'features/search/search';
 
-import LogoImage from 'assets/images/logo.svg';
+import LogoImage from 'assets/tuyetmy/logo.png';
 
 import { SearchIcon } from 'assets/icons/SearchIcon';
 import { LongArrowLeft } from 'assets/icons/LongArrowLeft';
@@ -21,6 +21,7 @@ import Logo from 'layouts/logo/logo';
 import LanguageSwitcher from './menu/language-switcher/language-switcher';
 import { isCategoryPage } from '../is-home-page';
 import useDimensions from 'utils/useComponentSize';
+import {SHOP_NAME} from 'environment';
 
 type MobileHeaderProps = {
   className?: string;
@@ -77,7 +78,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ className }) => {
         </DrawerWrapper>
 
         <LogoWrapper>
-          <Logo imageUrl={LogoImage} alt="shop logo" />
+          <Logo imageUrl={LogoImage} alt={SHOP_NAME} />
         </LogoWrapper>
 
         <LanguageSwitcher />

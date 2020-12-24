@@ -94,7 +94,6 @@ const CartPopUp: React.FC<CartProps> = ({
               <Cart onCloseBtnClick={toggleCart} scrollbarHeight='100vh' />
             )}
           </CartSlidePopup>
-
           <BoxedCartButton
             className='product-cart'
             itemCount={cartItemsCount}

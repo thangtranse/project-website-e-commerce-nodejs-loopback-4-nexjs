@@ -22,12 +22,14 @@ export const RightMenu: React.FC<Props> = ({
 }) => {
   return (
     <RightMenuBox>
+      
       <NavLink
         className="menu-item"
         href={OFFER_MENU_ITEM.href}
         label={OFFER_MENU_ITEM.defaultMessage}
         intlId={OFFER_MENU_ITEM.id}
       />
+
       <NavLink
         className="menu-item"
         href={HELP_MENU_ITEM.href}
@@ -36,6 +38,7 @@ export const RightMenu: React.FC<Props> = ({
         iconClass="menu-icon"
         icon={<HelpIcon />}
       />
+      
       <LanguageSwitcher />
 
       <AuthMenu

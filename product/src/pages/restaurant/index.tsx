@@ -1,24 +1,23 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import { Modal } from '@redq/reuse-modal';
-import StoreNav from 'components/store-nav/store-nav';
-import Carousel from 'components/carousel/carousel';
+import BannerImg from 'assets/images/banner/restaurant.png';
+import {
+  ContentSection, MainContentArea,
+
+
+
+  MobileCarouselDropdown, OfferSection, SidebarSection
+} from 'assets/styles/pages.style';
 import { Banner } from 'components/banner/banner';
 import { MobileBanner } from 'components/banner/mobile-banner';
-
-import {
-  MainContentArea,
-  SidebarSection,
-  ContentSection,
-  OfferSection,
-  MobileCarouselDropdown,
-} from 'assets/styles/pages.style';
+import Carousel from 'components/carousel/carousel';
+import { SEO } from 'components/seo';
+import { SHOP_NAME } from "environment";
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import React from 'react';
 // Static Data Import Here
 import { siteOffers } from 'site-settings/site-offers';
-import BannerImg from 'assets/images/banner/restaurant.png';
-import { CATEGORY_MENU_ITEMS } from 'site-settings/site-navigation';
-import { SEO } from 'components/seo';
+
 
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
 const Products = dynamic(() =>
@@ -40,7 +39,7 @@ function RestaurantPage({ deviceType }) {
 
   return (
     <>
-      <SEO title='Restaurant - PickBazar' description='Restaurant Details' />
+      <SEO title={`Restaurant - ${SHOP_NAME}`} description='Restaurant Details' />
       <Modal>
         <MobileBanner intlTitleId='foodsTitle' type={PAGE_TYPE} />
 

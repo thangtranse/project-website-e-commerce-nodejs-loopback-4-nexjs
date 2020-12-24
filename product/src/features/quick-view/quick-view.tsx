@@ -121,7 +121,6 @@ const QuickView: React.FunctionComponent<QuickViewProps> = ({
               <ProductDescription>
                 <ReadMore character={600}>{description}</ReadMore>
               </ProductDescription>
-
               <ProductCartWrapper>
                 <ProductCartBtn>
                   {!isInCart(id) ? (

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import css from '@styled-system/css';
 import { FormattedMessage } from 'react-intl';
+import { SHOP_NAME } from "environment";
+
 const Box = styled.div(
   css({
     fontFamily: 'body',
@@ -27,7 +29,7 @@ const Footer = () => {
     <Box>
       <FormattedMessage
         id='siteFooter'
-        defaultMessage='PickBazar is a product of'
+        defaultMessage={`${SHOP_NAME} is a product of`}
       />
       &nbsp;
       <a href='#' target='_blank'>

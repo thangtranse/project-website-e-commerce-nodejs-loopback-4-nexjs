@@ -6,6 +6,7 @@ import RequestMedicine from 'features/request-product/request-product';
 import { ProfileProvider } from 'contexts/profile/profile.provider';
 import ErrorMessage from 'components/error-message/error-message';
 import useUser from 'data/use-user';
+import { SHOP_NAME } from "environment";
 
 type Props = {
   deviceType: {
@@ -24,7 +25,7 @@ const RequestMedicinePage: NextPage<Props> = ({ deviceType }) => {
   return (
     <>
       <SEO
-        title="Request Medicine - PickBazar"
+        title={`Request Medicine - ${SHOP_NAME}`}
         description="Request Medicine Details"
       />
       <ProfileProvider initData={user}>

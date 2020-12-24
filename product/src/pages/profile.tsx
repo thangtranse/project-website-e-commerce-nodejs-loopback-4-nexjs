@@ -12,6 +12,7 @@ import { SEO } from 'components/seo';
 import Footer from 'layouts/footer';
 import ErrorMessage from 'components/error-message/error-message';
 import useUser from 'data/use-user';
+import { SHOP_NAME } from "environment";
 
 type Props = {
   deviceType?: {
@@ -27,7 +28,7 @@ const ProfilePage: NextPage<Props> = ({ deviceType }) => {
 
   return (
     <>
-      <SEO title="Profile - PickBazar" description="Profile Details" />
+      <SEO title={`Profile - ${SHOP_NAME}`} description="Profile Details" />
       <ProfileProvider initData={user}>
         <Modal>
           <PageWrapper>

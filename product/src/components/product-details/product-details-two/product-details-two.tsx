@@ -176,7 +176,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
                 {product.salePrice ? product.salePrice : product.price}
               </ProductPrice>
             </ProductPriceWrapper>
-
             <ProductCartBtn>
               {!isInCart(data.id) ? (
                 <Button

@@ -1,22 +1,20 @@
 // product card for general
-import React from 'react';
+import { CartIcon } from 'assets/icons/CartIcon';
+import { Button } from 'components/button/button';
+import { Counter } from 'components/counter/counter';
+import Image from 'components/image/image';
+import { useCart } from 'contexts/cart/use-cart';
+import { useModal } from 'contexts/modal/use-modal';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import Image from 'components/image/image';
-import { Button } from 'components/button/button';
-import {
-  ProductCardWrapper,
-  ProductImageWrapper,
-  ProductInfo,
-  DiscountPercent,
-  ButtonText,
-} from '../product-card.style';
-import { useCart } from 'contexts/cart/use-cart';
-import { Counter } from 'components/counter/counter';
-import { cartAnimation } from 'utils/cart-animation';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { CartIcon } from 'assets/icons/CartIcon';
-import { useModal } from 'contexts/modal/use-modal';
+import { cartAnimation } from 'utils/cart-animation';
+import {
+  ButtonText, DiscountPercent, ProductCardWrapper,
+  ProductImageWrapper,
+  ProductInfo
+} from '../product-card.style';
 const QuickViewMobile = dynamic(() =>
   import('features/quick-view/quick-view-mobile')
 );
@@ -151,7 +149,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {salePrice ? salePrice : price}
             </span>
           </div>
-
           {!isInCart(data.id) ? (
             <Button
               className="cart-button"
@@ -165,13 +162,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
               </ButtonText>
             </Button>
           ) : (
-            <Counter
-              value={getItem(data.id).quantity}
-              onDecrement={handleRemoveClick}
-              onIncrement={handleAddClick}
-              className="card-counter"
-            />
-          )}
+              <Counter
+                value={getItem(data.id).quantity}
+                onDecrement={handleRemoveClick}
+                onIncrement={handleAddClick}
+                className="card-counter"
+              />
+            )}
         </div>
       </ProductInfo>
     </ProductCardWrapper>

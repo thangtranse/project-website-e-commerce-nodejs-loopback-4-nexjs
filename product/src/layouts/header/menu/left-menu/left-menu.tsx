@@ -5,6 +5,7 @@ import Popover from 'components/popover/popover';
 import Logo from 'layouts/logo/logo';
 import { MenuDown } from 'assets/icons/MenuDown';
 import { CATEGORY_MENU_ITEMS } from 'site-settings/site-navigation';
+import { SHOP_NAME } from 'environment';
 import * as categoryMenuIcons from 'assets/icons/category-menu-icons';
 import {
   MainMenu,
@@ -63,12 +64,12 @@ export const LeftMenu: React.FC<Props> = ({ logo }) => {
     <LeftMenuBox>
       <Logo
         imageUrl={logo}
-        alt={'Shop Logo'}
+        alt={SHOP_NAME}
         onClick={() => setActiveMenu(CATEGORY_MENU_ITEMS[0])}
       />
 
       <MainMenu>
-        <Popover
+        {/* <Popover
           className='right'
           handler={
             <SelectedItem>
@@ -89,7 +90,7 @@ export const LeftMenu: React.FC<Props> = ({ logo }) => {
             </SelectedItem>
           }
           content={<CategoryMenu onClick={setActiveMenu} />}
-        />
+        /> */}
       </MainMenu>
     </LeftMenuBox>
   );

@@ -7,6 +7,7 @@ import ProductSingleWrapper, {
 } from 'assets/styles/product-single.style';
 import { SEO } from 'components/seo';
 import { getAllVendors, getVendorBySlug } from 'utils/api/vendor';
+import { SHOP_NAME } from "environment";
 
 type Props = {
   deviceType?: {
@@ -25,7 +26,7 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
   return (
     <>
       <SEO
-        title={`${data?.name} - PickBazar`}
+        title={`${data?.name} - ${SHOP_NAME}`}
         description={`${data?.name} Details`}
       />
       <Modal>

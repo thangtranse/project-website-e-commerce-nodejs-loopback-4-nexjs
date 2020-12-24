@@ -8,11 +8,12 @@ import {
 } from 'features/user-profile/user-profile.style';
 import Sidebar from 'features/user-profile/sidebar/sidebar';
 import { Modal } from '@redq/reuse-modal';
+import { SHOP_NAME } from "environment";
 
 const OrderPage: NextPage = () => {
   return (
     <>
-      <SEO title="Order - PickBazar" description="Order Details" />
+      <SEO title={`Order - ${SHOP_NAME}`} description="Order Details" />
       <Modal>
         <PageWrapper>
           <SidebarSection>

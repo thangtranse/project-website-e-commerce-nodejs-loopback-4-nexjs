@@ -7,6 +7,7 @@ import { Modal } from '@redq/reuse-modal';
 import ProductSingleWrapper, {
   ProductSingleContainer,
 } from 'assets/styles/product-single.style';
+import { SHOP_NAME } from "environment";
 import { getAllProducts, getProductBySlug } from 'utils/api/product';
 
 const ProductDetails = dynamic(() =>
@@ -40,10 +41,9 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
   return (
     <>
       <SEO
-        title={`${data.title} - PickBazar`}
+        title={`${data.title} - ${SHOP_NAME}`}
         description={`${data.title} Details`}
       />
-
       <Modal>
         <ProductSingleWrapper>
           <ProductSingleContainer>

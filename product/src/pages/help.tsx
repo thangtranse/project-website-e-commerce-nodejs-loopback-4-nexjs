@@ -4,6 +4,7 @@ import { Modal } from '@redq/reuse-modal';
 import { SEO } from 'components/seo';
 import Footer from 'layouts/footer';
 import Accordion from 'components/accordion/accordion';
+import { SHOP_NAME } from "environment";
 
 const accordionData = [
   {
@@ -73,7 +74,7 @@ export const HelpPageContainer = styled.div`
 export default function () {
   return (
     <Modal>
-      <SEO title="F.A.Q - PickBazar" description="F.A.Q Details" />
+      <SEO title={`F.A.Q - ${SHOP_NAME}`} description="F.A.Q Details" />
       <HelpPageWrapper>
         <HelpPageContainer>
           <Heading>F.A.Q</Heading>

@@ -143,38 +143,59 @@ export const Products: React.FC<ProductsProps> = ({
   return (
     <>
       <ProductsRow>
-        {data.map((item: any, index: number) => (
-          <ProductsCol
-            key={index}
-            style={type === 'book' ? { paddingLeft: 0, paddingRight: 1 } : {}}
-          >
-            <ProductCardWrapper>
-              <Fade
-                duration={800}
-                delay={index * 10}
-                style={{ height: '100%' }}
-              >
-                {renderCard(type, item)}
-              </Fade>
-            </ProductCardWrapper>
-          </ProductsCol>
-        ))}
+        {
+          data.map((item: any, index: number) => (
+            <ProductsCol
+              key={index}
+              style={type === 'book' ? { paddingLeft: 0, paddingRight: 1 } : {}}
+            >
+              <ProductCardWrapper>
+                <Fade
+                  duration={800}
+                  delay={index * 10}
+                  style={{ height: '100%' }}
+                >
+                  {renderCard(type, item)}
+                </Fade>
+              </ProductCardWrapper>
+            </ProductsCol>
+          ))
+        }
       </ProductsRow>
-      {loadMore && data?.hasMore && (
-        <ButtonWrapper>
-          <Button
-            onClick={handleLoadMore}
-            loading={loading}
-            variant="secondary"
-            style={{
-              fontSize: 14,
-            }}
-            border="1px solid #f1f1f1"
-          >
-            <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
-          </Button>
-        </ButtonWrapper>
-      )}
+      {
+        loadMore && data && (
+          <ButtonWrapper>
+            <Button
+              onClick={handleLoadMore}
+              loading={loading}
+              variant="secondary"
+              style={{
+                fontSize: 14,
+              }}
+              border="1px solid #f1f1f1"
+            >
+              <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
+            </Button>
+          </ButtonWrapper>
+        )
+      }
+      {/* {
+        loadMore && data?.hasMore && (
+          <ButtonWrapper>
+            <Button
+              onClick={handleLoadMore}
+              loading={loading}
+              variant="secondary"
+              style={{
+                fontSize: 14,
+              }}
+              border="1px solid #f1f1f1"
+            >
+              <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
+            </Button>
+          </ButtonWrapper>
+        )
+      } */}
     </>
   );
 };

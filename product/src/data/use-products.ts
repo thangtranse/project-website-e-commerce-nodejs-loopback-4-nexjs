@@ -39,8 +39,6 @@ interface Props {
 export default function useProducts(variables: Props) {
   const { type, text, category, offset = 0, limit = 20 } = variables ?? {};
 
-  console.log("thangtran.variables", variables)
-
   // type là category cha
   // category là category con
 
@@ -68,7 +66,6 @@ export default function useProducts(variables: Props) {
 
   const { data, mutate, error } = useSWR('/products?filter=' + JSON.stringify(fields), productFetcher);
 
-  console.log("thangtran.products", data)
   let products = []
   if (data) {
     products = data.map(da => {

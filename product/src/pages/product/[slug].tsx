@@ -34,10 +34,13 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
   const router = useRouter();
 
   if (router.isFallback) return <p>Loading...</p>;
+
   let content = <ProductDetails product={data} deviceType={deviceType} />;
+
   if (data.type === 'book') {
     content = <ProductDetailsBook product={data} deviceType={deviceType} />;
   }
+  
   return (
     <>
       <SEO

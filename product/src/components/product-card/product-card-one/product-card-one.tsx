@@ -128,9 +128,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
           style={{ position: 'relative' }}
           alt={title}
         />
-        {discountInPercent ? (
-          <DiscountPercent>{discountInPercent}%</DiscountPercent>
-        ) : null}
+        {
+          discountInPercent ? (
+            <DiscountPercent>{discountInPercent}%</DiscountPercent>
+          ) : null
+        }
       </ProductImageWrapper>
       <ProductInfo>
         <h3 className="product-title">{title}</h3>

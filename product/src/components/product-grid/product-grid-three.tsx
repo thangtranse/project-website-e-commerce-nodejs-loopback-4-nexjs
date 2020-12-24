@@ -79,7 +79,23 @@ export const ProductGrid = ({
         ))}
       </Grid>
 
-      {loadMore && data?.hasMore && (
+      {/* {loadMore && data?.hasMore && (
+        <Box style={{ textAlign: 'center' }} mt={'2rem'}>
+          <Button
+            onClick={handleLoadMore}
+            loading={loading}
+            variant="secondary"
+            style={{
+              fontSize: 14,
+              display: 'inline-flex',
+            }}
+            border="1px solid #f1f1f1"
+          >
+            <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
+          </Button>
+        </Box>
+      )} */}
+      {loadMore && data && (
         <Box style={{ textAlign: 'center' }} mt={'2rem'}>
           <Button
             onClick={handleLoadMore}

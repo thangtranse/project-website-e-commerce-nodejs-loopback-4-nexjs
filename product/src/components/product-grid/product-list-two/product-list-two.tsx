@@ -104,7 +104,7 @@ export const Products: React.FC<ProductsProps> = ({
           </ProductsCol>
         ))}
       </ProductsRow>
-      {loadMore && data?.hasMore && (
+      {loadMore && data && (
         <ButtonWrapper>
           <Button
             onClick={handleLoadMore}
@@ -116,6 +116,18 @@ export const Products: React.FC<ProductsProps> = ({
           </Button>
         </ButtonWrapper>
       )}
+      {/* {loadMore && data?.hasMore && (
+        <ButtonWrapper>
+          <Button
+            onClick={handleLoadMore}
+            loading={loading}
+            variant="secondary"
+            border="1px solid #f1f1f1"
+          >
+            <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
+          </Button>
+        </ButtonWrapper>
+      )} */}
     </>
   );
 };

@@ -6,6 +6,7 @@
     "dev": "next -p 8002",
     "build": "next build",
     "start": "next -p 8002",
+    "start:pm2": "pm2 start npm --name 'tuyetmy' -- start",
     "start:product": "next start"
   },
   "dependencies": {

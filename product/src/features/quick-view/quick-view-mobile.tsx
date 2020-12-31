@@ -27,6 +27,7 @@ import {
 import { CloseIcon } from 'assets/icons/CloseIcon';
 import { CartIcon } from 'assets/icons/CartIcon';
 import { CURRENCY } from 'utils/constant';
+import { cleanTag } from 'utils/thangtran/getStringHtmlTag';
 
 import ReadMore from 'components/truncate/truncate';
 import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
@@ -88,14 +89,16 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
       </ModalClose> */}
       <QuickViewWrapper className='quick-view-mobile-wrapper'>
         <ProductDetailsWrapper className='product-card' dir='ltr'>
-          {!isRtl && (
-            <ProductPreview>
-              <CarouselWithCustomDots items={gallery} deviceType={deviceType} />
-              {!!discountInPercent && (
-                <DiscountPercent>{discountInPercent}%</DiscountPercent>
-              )}
-            </ProductPreview>
-          )}
+          {
+            !isRtl && (
+              <ProductPreview>
+                <CarouselWithCustomDots items={gallery} deviceType={deviceType} />
+                {!!discountInPercent && (
+                  <DiscountPercent>{discountInPercent}%</DiscountPercent>
+                )}
+              </ProductPreview>
+            )
+          }
           <ProductInfoWrapper dir={isRtl ? 'rtl' : 'ltr'}>
             <ProductInfo>
               <ProductTitlePriceWrapper>
@@ -104,13 +107,14 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
 
               <ProductWeight>{unit}</ProductWeight>
               <ProductDescription>
-                <ReadMore character={600}>{description}</ReadMore>
+                <ReadMore character={600}>{cleanTag(description)}</ReadMore>
               </ProductDescription>
 
               <ProductMeta>
                 <MetaSingle>
-                  {categories
-                    ? categories.map((item: any) => (
+                  {
+                    categories
+                      ? categories.map((item: any) => (
                         <MetaItem
                           onClick={() => onCategoryClick(item.slug)}
                           key={item.id}
@@ -118,7 +122,8 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                           {item.title}
                         </MetaItem>
                       ))
-                    : ''}
+                      : ''
+                  }
                 </MetaSingle>
               </ProductMeta>
 
@@ -128,13 +133,14 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                     {CURRENCY}
                     {salePrice ? salePrice : price}
                   </ProductPrice>
-
-                  {discountInPercent ? (
-                    <SalePrice>
-                      {CURRENCY}
-                      {price}
-                    </SalePrice>
-                  ) : null}
+                  {
+                    discountInPercent ? (
+                      <SalePrice>
+                        {CURRENCY}
+                        {price}
+                      </SalePrice>
+                    ) : null
+                  }
                 </ProductPriceWrapper>
 
                 <ProductCartBtn>
@@ -154,12 +160,12 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                       </ButtonText>
                     </Button>
                   ) : (
-                    <Counter
-                      value={getItem(id).quantity}
-                      onDecrement={handleRemoveClick}
-                      onIncrement={handleAddClick}
-                    />
-                  )}
+                      <Counter
+                        value={getItem(id).quantity}
+                        onDecrement={handleRemoveClick}
+                        onIncrement={handleAddClick}
+                      />
+                    )}
                 </ProductCartBtn>
               </ProductCartWrapper>
             </ProductInfo>

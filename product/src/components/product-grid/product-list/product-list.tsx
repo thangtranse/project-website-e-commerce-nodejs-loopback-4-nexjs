@@ -32,6 +32,8 @@ const MedicineCard = dynamic(
   import('components/product-card/product-card-five/product-card-five')
 );
 
+const URL_FILE = process.env.NEXT_PUBLIC_REST_API_ENDPOINT_FILE
+
 type ProductsProps = {
   deviceType?: {
     mobile: boolean;
@@ -42,6 +44,7 @@ type ProductsProps = {
   loadMore?: boolean;
   type?: string;
 };
+
 export const Products: React.FC<ProductsProps> = ({
   deviceType,
   fetchLimit = 20,
@@ -57,6 +60,7 @@ export const Products: React.FC<ProductsProps> = ({
     offset: 0,
     limit: fetchLimit,
   });
+
 
   if (error) return <ErrorMessage message={error.message} />;
   if (!data) {
@@ -85,12 +89,14 @@ export const Products: React.FC<ProductsProps> = ({
   };
 
   const renderCard = (productType, props) => {
+    console.log("thangtran.props", URL_FILE + props.image)
+
     switch (productType) {
       case 'book':
         return (
           <BookCard
             title={props.title}
-            image={props.image}
+            image={URL_FILE + props.image}
             name={props?.author?.name}
             data={props}
             deviceType={deviceType}
@@ -107,7 +113,7 @@ export const Products: React.FC<ProductsProps> = ({
           <MedicineCard
             title={props.title}
             currency={CURRENCY}
-            image={props.image}
+            image={URL_FILE + props.image}
             price={props.price}
             weight={props.unit}
             data={props}
@@ -117,7 +123,7 @@ export const Products: React.FC<ProductsProps> = ({
         return (
           <FurnitureCard
             title={props.title}
-            image={props.gallery[0].url}
+            image={URL_FILE + props.gallery[0].url}
             discountInPercent={props.discountInPercent}
             data={props}
             deviceType={deviceType}
@@ -128,7 +134,7 @@ export const Products: React.FC<ProductsProps> = ({
           <GeneralCard
             title={props.title}
             description={props.description}
-            image={props.image}
+            image={URL_FILE + props.image}
             weight={props.unit}
             currency={CURRENCY}
             price={props.price}

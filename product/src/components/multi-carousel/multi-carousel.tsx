@@ -2,6 +2,7 @@ import React from 'react';
 import { themeGet } from '@styled-system/theme-get';
 import Carousel from 'react-multi-carousel';
 import styled from 'styled-components';
+const URL_FILE = process.env.NEXT_PUBLIC_REST_API_ENDPOINT_FILE
 
 const SingleItem = styled.li`
   border: 1px solid ${themeGet('colors.gray.500', '#f1f1f1')};
@@ -51,9 +52,12 @@ const CarouselWithCustomDots = ({
   title,
   ...rest
 }: any) => {
+
+  console.log("thangtran.gallery", items)
+
   const children = items.slice(0, 6).map((item: any, index: number) => (
     <img
-      src={item.url}
+      src={URL_FILE + item.url}
       key={index}
       alt={title}
       style={{
@@ -67,7 +71,7 @@ const CarouselWithCustomDots = ({
   ));
   const images = items.map((item: any, index: number) => (
     <img
-      src={item.url}
+      src={URL_FILE + item.url}
       key={index}
       alt={title}
       style={{ width: '100%', height: '100%', position: 'relative' }}

@@ -58,6 +58,7 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
     </>
   );
 };
+
 export async function getStaticProps({ params }) {
   const data = await getProductBySlug(params.slug);
   return {
@@ -66,6 +67,7 @@ export async function getStaticProps({ params }) {
     },
   };
 }
+
 export async function getStaticPaths() {
   const products = await getAllProducts();
   return {
@@ -73,4 +75,5 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
 export default ProductPage;

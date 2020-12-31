@@ -95,6 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e.stopPropagation();
     removeItem(data);
   };
+
   const handleQuickViewModal = () => {
     const { pathname, query } = router;
     const as = `/product/${data.slug}`;
@@ -119,6 +120,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       }
     );
   };
+
   return (
     <ProductCardWrapper onClick={handleQuickViewModal} className="product-card">
       <ProductImageWrapper>
@@ -139,38 +141,41 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <span className="product-weight">{weight}</span>
         <div className="product-meta">
           <div className="productPriceWrapper">
-            {discountInPercent ? (
-              <span className="discountedPrice">
-                {currency}
-                {price}
-              </span>
-            ) : null}
-
+            {
+              discountInPercent ? (
+                <span className="discountedPrice">
+                  {currency}
+                  {price}
+                </span>
+              ) : null
+            }
             <span className="product-price">
               {currency}
               {salePrice ? salePrice : price}
             </span>
           </div>
-          {!isInCart(data.id) ? (
-            <Button
-              className="cart-button"
-              variant="secondary"
-              borderRadius={100}
-              onClick={handleAddClick}
-            >
-              <CartIcon mr={2} />
-              <ButtonText>
-                <FormattedMessage id="addCartButton" defaultMessage="Cart" />
-              </ButtonText>
-            </Button>
-          ) : (
-              <Counter
-                value={getItem(data.id).quantity}
-                onDecrement={handleRemoveClick}
-                onIncrement={handleAddClick}
-                className="card-counter"
-              />
-            )}
+          {
+            !isInCart(data.id) ? (
+              <Button
+                className="cart-button"
+                variant="secondary"
+                borderRadius={100}
+                onClick={handleAddClick}
+              >
+                <CartIcon mr={2} />
+                <ButtonText>
+                  <FormattedMessage id="addCartButton" defaultMessage="Cart" />
+                </ButtonText>
+              </Button>
+            ) : (
+                <Counter
+                  value={getItem(data.id).quantity}
+                  onDecrement={handleRemoveClick}
+                  onIncrement={handleAddClick}
+                  className="card-counter"
+                />
+              )
+          }
         </div>
       </ProductInfo>
     </ProductCardWrapper>

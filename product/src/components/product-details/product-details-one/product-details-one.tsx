@@ -22,6 +22,7 @@ import {
   MetaItem,
   RelatedItems,
 } from './product-details-one.style';
+import { cleanTag } from 'utils/thangtran/getStringHtmlTag';
 import { LongArrowLeft } from 'assets/icons/LongArrowLeft';
 import { CartIcon } from 'assets/icons/CartIcon';
 import ReadMore from 'components/truncate/truncate';
@@ -48,7 +49,17 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
 }) => {
   const { isRtl } = useLocale();
   const { addItem, removeItem, isInCart, getItem } = useCart();
-  const data = product;
+
+  const data = product && product[0] ? product[0] : {};
+  product = product && product[0] ? product[0] : {};
+
+  if (product.album) {
+    console.log("thangtran.product.gallery.3", product.album)
+    let gallery = []
+    gallery = product.album.map(data => ({ url: data }))
+    product.gallery = gallery
+
+  }
 
   const handleAddClick = (e) => {
     e.stopPropagation();
@@ -65,6 +76,8 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
       window.scrollTo(0, 0);
     }, 500);
   }, []);
+
+  console.log("thangtran.product.3", product)
 
   return (
     <>
@@ -86,7 +99,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
                 <FormattedMessage id="backBtn" defaultMessage="Back" />
               </Button>
             </BackButton>
-
             <CarouselWithCustomDots
               items={product.gallery}
               deviceType={deviceType}
@@ -114,7 +126,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
 
           <ProductWeight>{product.unit}</ProductWeight>
           <ProductDescription>
-            <ReadMore character={600}>{product.description}</ReadMore>
+            <ReadMore character={600}>{cleanTag(product.description)}</ReadMore>
           </ProductDescription>
           <ProductCartWrapper>
             <ProductCartBtn>
@@ -134,12 +146,12 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
                   </ButtonText>
                 </Button>
               ) : (
-                <Counter
-                  value={getItem(data.id).quantity}
-                  onDecrement={handleRemoveClick}
-                  onIncrement={handleAddClick}
-                />
-              )}
+                  <Counter
+                    value={getItem(data.id).quantity}
+                    onDecrement={handleRemoveClick}
+                    onIncrement={handleAddClick}
+                  />
+                )}
             </ProductCartBtn>
           </ProductCartWrapper>
 
@@ -147,7 +159,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             <MetaSingle>
               {product?.categories?.map((item: any) => (
                 <Link
-                  href={`/${product.type.toLowerCase()}?category=${item.slug}`}
+                  href={`/${product.type}?category=${item.slug}`}
                   key={`link-${item.id}`}
                 >
                   {
@@ -195,7 +207,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
           />
         </h2>
         <Products
-          type={product.type.toLowerCase()}
+          type={product.type}
           deviceType={deviceType}
           loadMore={false}
           fetchLimit={10}

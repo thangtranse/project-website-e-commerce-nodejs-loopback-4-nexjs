@@ -88,6 +88,8 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
     }, 500);
   }, []);
 
+  console.log("thangtran.product.1", product)
+
   return (
     <>
       <ProductDetailsWrapper className="product-card">
@@ -299,7 +301,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
           />
         </h2>
         <Products
-          type={product.type.toLowerCase()}
+          type={product.type}
           deviceType={deviceType}
           loadMore={false}
           fetchLimit={10}

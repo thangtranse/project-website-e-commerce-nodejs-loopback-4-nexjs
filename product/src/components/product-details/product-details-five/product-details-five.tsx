@@ -63,6 +63,8 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
     }, 500);
   }, []);
 
+  console.log("thangtran.product.5", product)
+
   return (
     <>
       <ProductDetailsWrapper className='product-card' dir='ltr'>
@@ -131,7 +133,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             <MetaSingle>
               {product?.categories?.map((item: any) => (
                 <Link
-                  href={`/${product.type.toLowerCase()}?category=${item.slug}`}
+                  href={`/${product.type}?category=${item.slug}`}
                   key={`link-${item.id}`}
                 >
                   <a>
@@ -162,7 +164,7 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
         </h2>
 
         <ProductGrid
-          type={product.type.toLowerCase()}
+          type={product.type}
           loadMore={false}
           fetchLimit={5}
           style={{

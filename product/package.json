@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next -p 8002",
     "build": "next build",
-    "start": "next start"
+    "start": "next -p 8002",
+    "start:product": "next start"
   },
   "dependencies": {
     "@redq/reuse-modal": "1.2.4-beta.0.63",

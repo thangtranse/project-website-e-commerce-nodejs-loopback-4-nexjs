@@ -16,11 +16,14 @@ type Props = {
 };
 
 const Header: React.FC<Props> = ({ className }) => {
+  
   const {
     authState: { isAuthenticated },
     authDispatch,
   } = React.useContext<any>(AuthContext);
+  
   const { pathname, query } = useRouter();
+
   const handleLogout = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('access_token');
@@ -30,6 +33,7 @@ const Header: React.FC<Props> = ({ className }) => {
   };
 
   const handleJoin = () => {
+
     authDispatch({
       type: 'SIGNIN',
     });
@@ -49,11 +53,14 @@ const Header: React.FC<Props> = ({ className }) => {
       },
     });
   };
+
   const showSearch =
     isCategoryPage(query.type) ||
+    pathname === '/bags' ||
     pathname === '/furniture-two' ||
     pathname === '/grocery-two' ||
     pathname === '/bakery';
+
   return (
     <HeaderWrapper className={className} id="layout-header">
       <LeftMenu logo={LogoImage} />

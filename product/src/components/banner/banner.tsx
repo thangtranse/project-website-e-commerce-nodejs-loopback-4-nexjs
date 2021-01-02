@@ -42,6 +42,7 @@ export const Banner: React.FC<Props> = ({
     <Box display={['none', 'none', 'flex']} style={style}>
       <Image backgroundImage={`url(${imageUrl})`} />
       <Content>
+        
         <Title>
           <FormattedMessage
             id={intlTitleId}
@@ -49,18 +50,21 @@ export const Banner: React.FC<Props> = ({
             values={{ minute: 90 }}
           />
         </Title>
+        
         <Description>
           <FormattedMessage
             id={intlDescriptionId}
             defaultMessage='Set Your Description Through Language File'
           />
         </Description>
-        <SearchWrapper>
+
+        {/* <SearchWrapper>
           <Search
             className='banner-search'
             shadow='0 21px 36px rgba(0,0,0,0.05)'
           />
-        </SearchWrapper>
+        </SearchWrapper> */}
+        
         <Waypoint
           onEnter={removeSticky}
           onLeave={setSticky}

@@ -44,13 +44,15 @@ const Banner = ({ data }: Props) => {
       }}
       style={{ marginBottom: 20, minHeight: 180 }}
     >
-      {data.map((item, idx) => (
-        <SwiperSlide key={idx}>
-          <ImageWrapper>
-            <img src={item.img} alt={item.alt} />
-          </ImageWrapper>
-        </SwiperSlide>
-      ))}
+      {
+        data.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <ImageWrapper>
+              <img src={item.img} alt={item.alt} />
+            </ImageWrapper>
+          </SwiperSlide>
+        ))
+      }
       <SliderNav className='banner-slider-next'>
         <ArrowNext />
       </SliderNav>

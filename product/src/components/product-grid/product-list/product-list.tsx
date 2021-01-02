@@ -53,6 +53,7 @@ export const Products: React.FC<ProductsProps> = ({
 }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
   const { data, error } = useProducts({
     type,
     text: router.query.text,
@@ -63,6 +64,10 @@ export const Products: React.FC<ProductsProps> = ({
 
 
   if (error) return <ErrorMessage message={error.message} />;
+
+  console.log("thangtran.loadMore", loadMore)
+  console.log("thangtran.data", data)
+
   if (!data) {
     return (
       <LoaderWrapper>

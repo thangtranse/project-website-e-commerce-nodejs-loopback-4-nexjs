@@ -1,6 +1,7 @@
 import useSWR from 'swr';
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
+
 interface CategoryProps {
   userId: number;
   limit: number;

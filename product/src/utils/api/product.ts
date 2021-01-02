@@ -2,7 +2,6 @@ const url = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 
 export async function getAllProducts() {
   const products = await fetch(`${url}/products`);
-  console.log("thangtran.se", products)
   return await products.json();
 }
 

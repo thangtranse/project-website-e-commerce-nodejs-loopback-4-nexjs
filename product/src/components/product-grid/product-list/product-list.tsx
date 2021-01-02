@@ -16,6 +16,7 @@ import NoResultFound from 'components/no-result/no-result';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'components/button/button';
 import useProducts from 'data/use-products';
+import { flex } from 'styled-system';
 const ErrorMessage = dynamic(() =>
   import('components/error-message/error-message')
 );
@@ -48,13 +49,12 @@ type ProductsProps = {
 export const Products: React.FC<ProductsProps> = ({
   deviceType,
   fetchLimit = 20,
-  loadMore = true,
   type,
 }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const { data, error } = useProducts({
+  const { data, error, fetchMore, formattedData, offset, limit, dataCount } = useProducts({
     type,
     text: router.query.text,
     category: router.query.category,
@@ -62,11 +62,7 @@ export const Products: React.FC<ProductsProps> = ({
     limit: fetchLimit,
   });
 
-
   if (error) return <ErrorMessage message={error.message} />;
-
-  console.log("thangtran.loadMore", loadMore)
-  console.log("thangtran.data", data)
 
   if (!data) {
     return (
@@ -87,15 +83,23 @@ export const Products: React.FC<ProductsProps> = ({
   if (data.length === 0) {
     return <NoResultFound />;
   }
+
+  console.log("thangtran.dataCount", dataCount)
+  console.log("thangtran.offset + limit", offset + limit)
+
   const handleLoadMore = async () => {
     setLoading(true);
-    // await fetchMore(Number(data.length), fetchLimit);
+    fetchMore(limit, offset + limit)
+    setLoading(false);
+  };
+
+  const handleLoadBack = async () => {
+    setLoading(true);
+    fetchMore(limit, offset - limit)
     setLoading(false);
   };
 
   const renderCard = (productType, props) => {
-    console.log("thangtran.props", URL_FILE + props.image)
-
     switch (productType) {
       case 'book':
         return (
@@ -173,40 +177,42 @@ export const Products: React.FC<ProductsProps> = ({
           ))
         }
       </ProductsRow>
-      {
-        loadMore && data && (
-          <ButtonWrapper>
-            <Button
-              onClick={handleLoadMore}
-              loading={loading}
-              variant="secondary"
-              style={{
-                fontSize: 14,
-              }}
-              border="1px solid #f1f1f1"
-            >
-              <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
-            </Button>
-          </ButtonWrapper>
-        )
-      }
-      {/* {
-        loadMore && data?.hasMore && (
-          <ButtonWrapper>
-            <Button
-              onClick={handleLoadMore}
-              loading={loading}
-              variant="secondary"
-              style={{
-                fontSize: 14,
-              }}
-              border="1px solid #f1f1f1"
-            >
-              <FormattedMessage id="loadMoreButton" defaultMessage="Load More" />
-            </Button>
-          </ButtonWrapper>
-        )
-      } */}
+      <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}>
+        {
+          (dataCount && (offset !== 0)) && (
+            <ButtonWrapper>
+              <Button
+                onClick={handleLoadBack}
+                loading={loading}
+                variant="secondary"
+                style={{
+                  fontSize: 14,
+                }}
+                border="1px solid #f1f1f1"
+              >
+                <FormattedMessage id="loadBackButton" defaultMessage="Back" />
+              </Button>
+            </ButtonWrapper>
+          )
+        }
+        {
+          (dataCount && !(dataCount.count <= (limit + offset))) && (
+            <ButtonWrapper>
+              <Button
+                onClick={handleLoadMore}
+                loading={loading}
+                variant="secondary"
+                style={{
+                  fontSize: 14,
+                }}
+                border="1px solid #f1f1f1"
+              >
+                <FormattedMessage id="loadNextButton" defaultMessage="Next" />
+              </Button>
+            </ButtonWrapper>
+          )
+        }
+      </div>
     </>
   );
 };

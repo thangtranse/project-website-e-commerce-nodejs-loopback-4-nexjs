@@ -88,8 +88,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
     }, 500);
   }, []);
 
-  console.log("thangtran.product.1", product)
-
   return (
     <>
       <ProductDetailsWrapper className="product-card">

@@ -26,6 +26,7 @@ function search(list, pattern) {
   const fuse = new Fuse(list, options);
   return fuse.search(pattern).map((current) => current.item);
 }
+
 // import productFetcher from 'utils/api/product';
 const productFetcher = (url) => fetch(URL_ROOT + url).then((res) => res.json());
 
@@ -36,15 +37,21 @@ interface Props {
   offset?: number;
   limit?: number;
 }
+
 export default function useProducts(variables: Props) {
+
   const { type, text, category, offset = 0, limit = 20 } = variables ?? {};
+  const [formattedData, setFormattedData] = useState(true);
+
+  const [nextLimit, setNextLimit] = useState(limit);
+  const [nextOffset, setNextOffset] = useState(offset);
 
   // type là category cha
   // category là category con
 
   let fields: any = {
-    offset: offset,
-    limit: limit,
+    offset: nextOffset,
+    limit: nextLimit,
     where: {}
   }
 
@@ -64,9 +71,17 @@ export default function useProducts(variables: Props) {
     }
   }
 
+  const fetchMore = async (limit, offset) => {
+    setNextLimit(limit)
+    setNextOffset(offset)
+  };
+
   const { data, mutate, error } = useSWR('/products?filter=' + JSON.stringify(fields), productFetcher);
 
+  const { data: dataCount } = useSWR('/products/count', productFetcher);
+
   let products = []
+
   if (data) {
     products = data.map(da => {
       let temp = da
@@ -86,49 +101,11 @@ export default function useProducts(variables: Props) {
     loading,
     error,
     data: products,
-    // hasMore,
     mutate,
-    // fetchMore,
+    formattedData,
+    fetchMore,
+    offset: nextOffset,
+    limit: nextLimit,
+    dataCount
   };
-
-  // need to remove when you using real API integration
-  // const [formattedData, setFormattedData] = useState(false);
-
-  // let products = data?.filter((current) => current.type === type);
-  // if (category) {
-  //   products = products?.filter((product) =>
-  //     product.categories.find(
-  //       (category_item) => category_item.slug === category
-  //     )
-  //   );
-  // }
-  // if (text) {
-  //   products = search(products, text);
-  // }
-
-  // let localOffset = offset;
-  // let localLimit = limit;
-  // const fetchMore = async (os, lmt) => {
-  //   localOffset = os;
-  //   localLimit = lmt;
-  //   setFormattedData(true);
-  // };
-  // console.log('object');
-  // data: [
-  //   ...state.data,
-  //   ...state.total.slice(
-  //     state.data.length,
-  //     state.data.length + state.limit
-  //   ),
-  // ],
-  // need to implement fetchMore
-  // const hasMore = products?.length > localOffset + localLimit;
-  // return {
-  //   loading,
-  //   error,
-  //   data: products?.slice(offset, offset + limit),
-  //   // hasMore,
-  //   mutate,
-  //   // fetchMore,
-  // };
 }

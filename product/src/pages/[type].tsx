@@ -103,7 +103,7 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
                 <Products
                   type={PAGE_TYPE}
                   deviceType={deviceType}
-                  fetchLimit={20}
+                  fetchLimit={10}
                 />
               </div>
             </ContentSection>

@@ -75,7 +75,6 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     removeItem(modalProps);
   };
   function onCategoryClick(slug) {
-    console.log("thangtran.category.1", type)
     Router.push({
       pathname: `/${type && type[0] ? type[0].key : ""}`,
       query: { category: slug },

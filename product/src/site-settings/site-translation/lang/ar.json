@@ -183,5 +183,7 @@
   "cuisineText": "أطباق",
   "minOrderText": "لمين",
   "fromText": "من عند",
-  "loadMoreButton": "تحميل المزيد"
+  "loadMoreButton": "تحميل المزيد",
+  "loadNextButton": "تحميل المزيد",
+  "loadBackButton": "تحميل المزيد"
 }

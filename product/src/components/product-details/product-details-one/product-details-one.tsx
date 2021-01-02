@@ -54,7 +54,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
   product = product && product[0] ? product[0] : {};
 
   if (product.album) {
-    console.log("thangtran.product.gallery.3", product.album)
     let gallery = []
     gallery = product.album.map(data => ({ url: data }))
     product.gallery = gallery
@@ -76,8 +75,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
       window.scrollTo(0, 0);
     }, 500);
   }, []);
-
-  console.log("thangtran.product.3", product)
 
   return (
     <>

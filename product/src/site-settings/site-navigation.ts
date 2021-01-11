@@ -18,6 +18,8 @@ export const YOUR_ORDER_PAGE = '/order';
 export const ORDER_RECEIVED_PAGE = '/order-received';
 export const OFFER_PAGE = '/offer';
 export const HELP_PAGE = '/help';
+export const ABOUT_PAGE = '/about';
+export const CONTACT_PAGE = '/contact';
 export const TERMS_AND_SERVICES_PAGE = '/terms';
 export const PRIVACY_POLICY_PAGE = '/privacy';
 // Mobile Drawer Menus
@@ -28,6 +30,17 @@ export const HOME_MENU_ITEM = {
   href: HOME_PAGE,
 };
 
+export const CONTACT_MENU_ITEM = {
+  id: 'nav.contact',
+  defaultMessage: 'Contact',
+  href: CONTACT_PAGE,
+};
+
+export const ABOUT_MENU_ITEM = {
+  id: 'nav.about',
+  defaultMessage: 'About',
+  href: ABOUT_PAGE,
+};
 export const HELP_MENU_ITEM = {
   id: 'nav.help',
   defaultMessage: 'Help',

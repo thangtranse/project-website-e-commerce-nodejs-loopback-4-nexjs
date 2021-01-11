@@ -1,7 +1,7 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import NavLink from 'components/nav-link/nav-link';
-import { OFFER_MENU_ITEM, HELP_MENU_ITEM } from 'site-settings/site-navigation';
+import { OFFER_MENU_ITEM, HELP_MENU_ITEM, ABOUT_MENU_ITEM, CONTACT_MENU_ITEM } from 'site-settings/site-navigation';
 import LanguageSwitcher from '../language-switcher/language-switcher';
 import { HelpIcon } from 'assets/icons/HelpIcon';
 import { RightMenuBox } from './right-menu.style';
@@ -29,9 +29,9 @@ export const RightMenu: React.FC<Props> = ({
         label={OFFER_MENU_ITEM.defaultMessage}
         intlId={OFFER_MENU_ITEM.id}
       /> */}
-      
-      {/* 
-      <NavLink
+
+
+      {/* <NavLink
         className="menu-item"
         href={HELP_MENU_ITEM.href}
         label={HELP_MENU_ITEM.defaultMessage}
@@ -39,6 +39,22 @@ export const RightMenu: React.FC<Props> = ({
         iconClass="menu-icon"
         icon={<HelpIcon />}
       /> */}
+
+      <NavLink
+        className="menu-item"
+        href={CONTACT_MENU_ITEM.href}
+        label={CONTACT_MENU_ITEM.defaultMessage}
+        intlId={CONTACT_MENU_ITEM.id}
+        iconClass="menu-icon"
+      />
+      
+      <NavLink
+        className="menu-item"
+        href={ABOUT_MENU_ITEM.href}
+        label={ABOUT_MENU_ITEM.defaultMessage}
+        intlId={ABOUT_MENU_ITEM.id}
+        iconClass="menu-icon"
+      />
 
       <LanguageSwitcher />
 

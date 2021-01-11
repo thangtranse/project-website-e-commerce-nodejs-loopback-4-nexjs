@@ -1,40 +1,74 @@
-import React from 'react';
-import Router from 'next/router';
+import { CartIcon } from 'assets/icons/CartIcon';
 // import { closeModal } from '@redq/reuse-modal';
 import { Button } from 'components/button/button';
-import {
-  QuickViewWrapper,
-  ProductDetailsWrapper,
-  ProductPreview,
-  DiscountPercent,
-  ProductInfoWrapper,
-  ProductInfo,
-  ProductTitlePriceWrapper,
-  ProductTitle,
-  ProductWeight,
-  ProductDescription,
-  ButtonText,
-  ProductMeta,
-  ProductCartWrapper,
-  ProductPriceWrapper,
-  ProductPrice,
-  SalePrice,
-  ProductCartBtn,
-  MetaSingle,
-  MetaItem,
-  ModalClose,
-} from './quick-view.style';
-import { CloseIcon } from 'assets/icons/CloseIcon';
-import { CartIcon } from 'assets/icons/CartIcon';
-import { CURRENCY } from 'utils/constant';
-import { cleanTag } from 'utils/thangtran/getStringHtmlTag';
-
-import ReadMore from 'components/truncate/truncate';
-import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
-import { useLocale } from 'contexts/language/language.provider';
-import { useCart } from 'contexts/cart/use-cart';
 import { Counter } from 'components/counter/counter';
+import CarouselWithCustomDots from 'components/multi-carousel/multi-carousel';
+import ReadMore from 'components/truncate/truncate';
+import { useCart } from 'contexts/cart/use-cart';
+import { useLocale } from 'contexts/language/language.provider';
+import Router from 'next/router';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { CURRENCY } from 'utils/constant';
+import {
+  ButtonText, DiscountPercent,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  MetaItem, MetaSingle, ProductCartBtn, ProductCartWrapper, ProductDescription, ProductDetailsWrapper,
+
+
+
+  ProductInfo, ProductInfoWrapper,
+
+
+
+
+
+
+  ProductMeta, ProductPreview,
+
+
+
+
+
+
+
+
+
+
+
+  ProductPrice, ProductPriceWrapper, ProductTitle, ProductTitlePriceWrapper,
+
+  ProductWeight, QuickViewWrapper,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  SalePrice
+} from './quick-view.style';
+
 
 type QuickViewProps = {
   modalProps: any;

@@ -107,7 +107,11 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
 
               <ProductWeight>{unit}</ProductWeight>
               <ProductDescription>
-                <ReadMore character={600}>{cleanTag(description)}</ReadMore>
+                {/* <ReadMore character={600}>{cleanTag(description)}</ReadMore> */}
+                <ReadMore character={600}>
+                </ReadMore>
+                <div className={`contentPage`} dangerouslySetInnerHTML={{ __html: description.replace(/(<? *script)/gi, 'illegalscript') }} ></div>
+
               </ProductDescription>
 
               <ProductMeta>

@@ -20,6 +20,7 @@ export const OFFER_PAGE = '/offer';
 export const HELP_PAGE = '/help';
 export const ABOUT_PAGE = '/about';
 export const CONTACT_PAGE = '/contact';
+export const BLOG = '/blog';
 export const TERMS_AND_SERVICES_PAGE = '/terms';
 export const PRIVACY_POLICY_PAGE = '/privacy';
 // Mobile Drawer Menus
@@ -34,6 +35,12 @@ export const CONTACT_MENU_ITEM = {
   id: 'nav.contact',
   defaultMessage: 'Contact',
   href: CONTACT_PAGE,
+};
+
+export const BLOG_MENU_ITEM = {
+  id: 'nav.blog',
+  defaultMessage: 'Blog',
+  href: BLOG,
 };
 
 export const ABOUT_MENU_ITEM = {

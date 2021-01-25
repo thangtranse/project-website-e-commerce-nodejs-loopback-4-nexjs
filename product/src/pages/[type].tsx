@@ -74,11 +74,14 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
         <Modal>
           {/* Banner */}
           {/* <MobileBanner intlTitleId={page?.banner_title_id} type={PAGE_TYPE} /> */}
-          <Banner
+          {/* <Banner
             intlTitleId={page?.banner_title_id}
             intlDescriptionId={page?.banner_description_id}
             imageUrl={page?.banner_image_url}
-          />
+          /> */}
+
+          <div style={{height: '70px'}}>
+          </div>
 
           {/* <Banner data={bannerSlides} /> */}
 

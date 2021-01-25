@@ -15,11 +15,15 @@ type Props = {
     desktop: boolean;
   };
 };
+
 const RequestMedicinePage: NextPage<Props> = ({ deviceType }) => {
+  
   const { user, error } = useUser();
+
   if (!user) return <div>loading...</div>;
 
   if (error) return <ErrorMessage message={error.message} />;
+
   const token = true;
 
   return (

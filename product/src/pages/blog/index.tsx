@@ -17,6 +17,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 // Static Data Import Here
 import { siteOffers } from 'site-settings/site-offers';
+import { display, flex } from 'styled-system';
 
 
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
@@ -28,6 +29,7 @@ const PAGE_TYPE = 'restaurant';
 function RestaurantPage({ deviceType }) {
   const { query } = useRouter();
   const targetRef = React.useRef(null);
+
   React.useEffect(() => {
     if ((query.text || query.category) && targetRef.current) {
       window.scrollTo({
@@ -41,37 +43,29 @@ function RestaurantPage({ deviceType }) {
     <>
       <SEO title={`Restaurant - ${SHOP_NAME}`} description='Restaurant Details' />
       <Modal>
-        <MobileBanner intlTitleId='foodsTitle' type={PAGE_TYPE} />
-
-        <Banner
-          intlTitleId='foodsTitle'
-          intlDescriptionId='foodsSubTitle'
-          imageUrl={BannerImg}
-        />
 
         <OfferSection>
           <div style={{ margin: '0 -10px' }}>
             <Carousel deviceType={deviceType} data={siteOffers} />
           </div>
         </OfferSection>
-
+        {/* 
         <MobileCarouselDropdown>
           <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
-        </MobileCarouselDropdown>
+        </MobileCarouselDropdown> */}
 
         <MainContentArea>
-          <SidebarSection>
-            <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
-          </SidebarSection>
-          <ContentSection>
-            <div ref={targetRef}>
-              <Products
-                type={PAGE_TYPE}
-                deviceType={deviceType}
-                fetchLimit={16}
-              />
-            </div>
-          </ContentSection>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <ContentSection>
+              <div ref={targetRef}>
+                <Products
+                  type={PAGE_TYPE}
+                  deviceType={deviceType}
+                  fetchLimit={16}
+                />
+              </div>
+            </ContentSection>
+          </div>
         </MainContentArea>
       </Modal>
     </>

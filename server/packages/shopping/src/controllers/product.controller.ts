@@ -3,8 +3,8 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import { authenticate } from '@loopback/authentication';
-import { authorize } from '@loopback/authorization';
+import {authenticate} from '@loopback/authentication';
+import {authorize} from '@loopback/authorization';
 import {
   Count,
   CountSchema,
@@ -32,14 +32,14 @@ import {
 
   requestBody
 } from '@loopback/rest';
-import { Product } from '../models';
-import { ProductRepository } from '../repositories';
+import {Product} from '../models';
+import {ProductRepository} from '../repositories';
 import {
   ListIdDeleteUser as RequestListIdDeleteList,
   ResponseDeleteUser as ResponseListIdDeleteList
 } from '../repositories/user.repository';
-import { basicAuthorization } from '../services/basic.authorizor';
-import { OPERATION_SECURITY_SPEC } from '../utils/security-spec';
+import {basicAuthorization} from '../services/basic.authorizor';
+import {OPERATION_SECURITY_SPEC} from '../utils/security-spec';
 
 export class ProductController {
   constructor(
@@ -52,12 +52,12 @@ export class ProductController {
     responses: {
       '200': {
         description: 'Product model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(Product) } },
+        content: {'application/json': {schema: getModelSchemaRef(Product)}},
       },
     },
   })
   @authenticate('jwt')
-  @authorize({ allowedRoles: ['admin'], voters: [basicAuthorization] })
+  @authorize({allowedRoles: ['admin'], voters: [basicAuthorization]})
   async create(
     @requestBody({
       content: {
@@ -78,7 +78,7 @@ export class ProductController {
     responses: {
       '200': {
         description: 'Product model count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -97,7 +97,7 @@ export class ProductController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Product, { includeRelations: true }),
+              items: getModelSchemaRef(Product, {includeRelations: true}),
             },
           },
         },
@@ -107,8 +107,18 @@ export class ProductController {
   async find(
     @param.query.object('filter', getFilterSchemaFor(Product))
     filter?: Filter<Product>,
-  ): Promise<Product[]> {
-    return this.productRepository.find(filter);
+  ): Promise<any> {
+    const result = await this.productRepository.find(filter);
+    if (result) {
+      const resultID = result.map(data => {
+        return {
+          ...data,
+          id: data.productId
+        }
+      })
+      return resultID;
+    }
+    return result;
   }
 
   @patch('/products', {
@@ -116,17 +126,17 @@ export class ProductController {
     responses: {
       '200': {
         description: 'Product PATCH success count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
   @authenticate('jwt')
-  @authorize({ allowedRoles: ['admin'], voters: [basicAuthorization] })
+  @authorize({allowedRoles: ['admin'], voters: [basicAuthorization]})
   async updateAll(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Product, { partial: true }),
+          schema: getModelSchemaRef(Product, {partial: true}),
         },
       },
     })
@@ -143,7 +153,7 @@ export class ProductController {
         description: 'Product model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Product, { includeRelations: true }),
+            schema: getModelSchemaRef(Product, {includeRelations: true}),
           },
         },
       },
@@ -166,13 +176,13 @@ export class ProductController {
     },
   })
   @authenticate('jwt')
-  @authorize({ allowedRoles: ['admin'], voters: [basicAuthorization] })
+  @authorize({allowedRoles: ['admin'], voters: [basicAuthorization]})
   async updateById(
     @param.path.string('id') id: string,
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Product, { partial: true }),
+          schema: getModelSchemaRef(Product, {partial: true}),
         },
       },
     })
@@ -190,7 +200,7 @@ export class ProductController {
     },
   })
   @authenticate('jwt')
-  @authorize({ allowedRoles: ['admin'], voters: [basicAuthorization] })
+  @authorize({allowedRoles: ['admin'], voters: [basicAuthorization]})
   async replaceById(
     @param.path.string('id') id: string,
     @requestBody() product: Product,
@@ -207,7 +217,7 @@ export class ProductController {
     },
   })
   @authenticate('jwt')
-  @authorize({ allowedRoles: ['admin'], voters: [basicAuthorization] })
+  @authorize({allowedRoles: ['admin'], voters: [basicAuthorization]})
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.productRepository.deleteById(id);
   }
@@ -218,7 +228,7 @@ export class ProductController {
     responses: {
       '200': {
         description: 'Product model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(Array) } },
+        content: {'application/json': {schema: getModelSchemaRef(Array)}},
       },
     },
   })
@@ -238,7 +248,7 @@ export class ProductController {
     if (list) {
       data = list
     }
-    return this.productRepository.find({ where: { productId: { inq: data } } });
+    return this.productRepository.find({where: {productId: {inq: data}}});
   }
 
   @get('/products/slug/{slug}', {
@@ -249,7 +259,7 @@ export class ProductController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Product, { includeRelations: true }),
+              items: getModelSchemaRef(Product, {includeRelations: true}),
             },
           },
         },
@@ -259,7 +269,7 @@ export class ProductController {
   async findSlug(
     @param.path.string('slug') slug: string
   ): Promise<Product[]> {
-    return this.productRepository.find({ where: { slug } });
+    return this.productRepository.find({where: {slug}});
   }
 
   @post('/products/deleteList', {
@@ -310,8 +320,8 @@ export class ProductController {
       },
     }) listId: RequestListIdDeleteList,
   ): Promise<ResponseListIdDeleteList> {
-    const { list } = listId
+    const {list} = listId
     // @ts-ignore
-    return this.productRepository.deleteAll({ _id: { inq: [...list] } })
+    return this.productRepository.deleteAll({_id: {inq: [...list]}})
   }
 }

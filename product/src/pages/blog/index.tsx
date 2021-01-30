@@ -1,14 +1,11 @@
 import { Modal } from '@redq/reuse-modal';
-import BannerImg from 'assets/images/banner/restaurant.png';
 import {
   ContentSection, MainContentArea,
 
 
 
-  MobileCarouselDropdown, OfferSection, SidebarSection
+  OfferSection
 } from 'assets/styles/pages.style';
-import { Banner } from 'components/banner/banner';
-import { MobileBanner } from 'components/banner/mobile-banner';
 import Carousel from 'components/carousel/carousel';
 import { SEO } from 'components/seo';
 import { SHOP_NAME } from "environment";
@@ -17,10 +14,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 // Static Data Import Here
 import { siteOffers } from 'site-settings/site-offers';
-import { display, flex } from 'styled-system';
 
-
-const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
 const Products = dynamic(() =>
   import('components/product-grid/product-list-two/product-list-two')
 );
@@ -41,19 +35,13 @@ function RestaurantPage({ deviceType }) {
 
   return (
     <>
-      <SEO title={`Restaurant - ${SHOP_NAME}`} description='Restaurant Details' />
+      <SEO title={`Blog - ${SHOP_NAME}`} description='Blog Details' />
       <Modal>
-
         <OfferSection>
           <div style={{ margin: '0 -10px' }}>
             <Carousel deviceType={deviceType} data={siteOffers} />
           </div>
         </OfferSection>
-        {/* 
-        <MobileCarouselDropdown>
-          <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
-        </MobileCarouselDropdown> */}
-
         <MainContentArea>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <ContentSection>

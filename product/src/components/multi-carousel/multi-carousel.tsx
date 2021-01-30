@@ -2,6 +2,7 @@ import React from 'react';
 import { themeGet } from '@styled-system/theme-get';
 import Carousel from 'react-multi-carousel';
 import styled from 'styled-components';
+
 const URL_FILE = process.env.NEXT_PUBLIC_REST_API_ENDPOINT_FILE
 
 const SingleItem = styled.li`

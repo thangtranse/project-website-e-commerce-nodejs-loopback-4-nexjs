@@ -86,6 +86,9 @@ const QuickView: React.FunctionComponent<QuickViewProps> = ({
       </ModalClose>
       <QuickViewWrapper>
         <ProductDetailsWrapper className="product-card" dir="ltr">
+          123123123
+          12312312
+          123123
           {!isRtl && (
             <ProductPreview>
               <CarouselWithCustomDots items={gallery} deviceType={deviceType} />
@@ -147,7 +150,6 @@ const QuickView: React.FunctionComponent<QuickViewProps> = ({
                   )}
                 </ProductCartBtn>
               </ProductCartWrapper>
-
               <ProductMeta>
                 <MetaSingle>
                   {categories

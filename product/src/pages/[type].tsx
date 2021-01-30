@@ -1,41 +1,15 @@
-import React from 'react';
+import { Modal } from '@redq/reuse-modal';
+import {
+  ContentSection, MainContentArea,
+  SidebarSection
+} from 'assets/styles/pages.style';
+import { SEO } from 'components/seo';
+import { ModalProvider } from 'contexts/modal/modal.provider';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Modal } from '@redq/reuse-modal';
-import Carousel from 'components/carousel/carousel';
-import { Banner } from 'components/banner/banner';
-// import { MobileBanner } from 'components/banner/mobile-banner';
-import {
-  MainContentArea,
-  SidebarSection,
-  ContentSection,
-  OfferSection,
-  MobileCarouselDropdown,
-} from 'assets/styles/pages.style';
-// Static Data Import Here
-import { siteOffers } from 'site-settings/site-offers';
+import React from 'react';
 import { sitePages } from 'site-settings/site-pages';
-import { SEO } from 'components/seo';
 import { useRefScroll } from 'utils/use-ref-scroll';
-import { ModalProvider } from 'contexts/modal/modal.provider';
-
-// import GroceryImgOne from 'assets/images/banner/grocery-banner-img-one.jpg';
-// import GroceryImgTwo from 'assets/images/banner/grocery-banner-img-two.jpg';
-
-// const Banner = dynamic(() => import('components/banner/banner-two'), {
-//   ssr: false,
-// });
-
-// const bannerSlides = [
-//   {
-//     img: GroceryImgOne,
-//     alt: 'Slide One',
-//   },
-//   {
-//     img: GroceryImgTwo,
-//     alt: 'Slide Two',
-//   },
-// ];
 
 const Sidebar = dynamic(() => import('layouts/sidebar/sidebar'));
 
@@ -72,31 +46,8 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
       <SEO title={page.page_title} description={page.page_description} />
       <ModalProvider>
         <Modal>
-          {/* Banner */}
-          {/* <MobileBanner intlTitleId={page?.banner_title_id} type={PAGE_TYPE} /> */}
-          {/* <Banner
-            intlTitleId={page?.banner_title_id}
-            intlDescriptionId={page?.banner_description_id}
-            imageUrl={page?.banner_image_url}
-          /> */}
-
           <div style={{height: '70px'}}>
           </div>
-
-          {/* <Banner data={bannerSlides} /> */}
-
-          {/* END - Banner */}
-          
-          {/* <OfferSection>
-            <div style={{ margin: '0 -10px' }}>
-              <Carousel deviceType={deviceType} data={siteOffers} />
-            </div>
-          </OfferSection> */}
-
-          {/* <MobileCarouselDropdown>
-            <Sidebar type={PAGE_TYPE} deviceType={deviceType} />
-          </MobileCarouselDropdown>
-           */}
           <MainContentArea>
             <SidebarSection>
               <Sidebar type={PAGE_TYPE} deviceType={deviceType} />

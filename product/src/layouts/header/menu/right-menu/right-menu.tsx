@@ -22,23 +22,6 @@ export const RightMenu: React.FC<Props> = ({
   return (
     <RightMenuBox>
 
-      {/* <NavLink
-        className="menu-item"
-        href={OFFER_MENU_ITEM.href}
-        label={OFFER_MENU_ITEM.defaultMessage}
-        intlId={OFFER_MENU_ITEM.id}
-      /> */}
-
-
-      {/* <NavLink
-        className="menu-item"
-        href={HELP_MENU_ITEM.href}
-        label={HELP_MENU_ITEM.defaultMessage}
-        intlId={HELP_MENU_ITEM.id}
-        iconClass="menu-icon"
-        icon={<HelpIcon />}
-      /> */}
-
       <NavLink
         className="menu-item"
         href={BLOG_MENU_ITEM.href}

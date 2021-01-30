@@ -13,6 +13,8 @@ import {
   RemoveButton,
 } from './cart-item.style';
 
+const URL_FILE = process.env.NEXT_PUBLIC_REST_API_ENDPOINT_FILE
+
 interface Props {
   data: any;
   onDecrement: () => void;
@@ -36,7 +38,7 @@ export const CartItem: React.FC<Props> = ({
         onIncrement={onIncrement}
         variant="lightVertical"
       />
-      <Image src={image} />
+      <Image src={URL_FILE + image} />
       <Information>
         <Name>{title}</Name>
         <Price>

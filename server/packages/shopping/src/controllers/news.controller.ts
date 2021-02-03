@@ -102,7 +102,12 @@ export class NewsController {
       const resultID = result.map(data => {
         return {
           ...data,
-          id: data.NewsId
+          id: data.NewsId,
+          name: data.title,
+          previewUrl: data.image,
+          thumbnailUrl: data.image,
+          type: "blog",
+          categories: data.type ? data.type : []
         }
       })
       return resultID;

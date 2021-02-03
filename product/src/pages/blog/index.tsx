@@ -16,7 +16,7 @@ import React from 'react';
 import { siteOffers } from 'site-settings/site-offers';
 
 const Products = dynamic(() =>
-  import('components/product-grid/product-list-two/product-list-two')
+  import('components/product-grid/item-blog')
 );
 const PAGE_TYPE = 'restaurant';
 
@@ -43,7 +43,7 @@ function RestaurantPage({ deviceType }) {
           </div>
         </OfferSection>
         <MainContentArea>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', width: `100%` }}>
             <ContentSection>
               <div ref={targetRef}>
                 <Products

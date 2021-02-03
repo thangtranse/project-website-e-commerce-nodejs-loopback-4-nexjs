@@ -1,18 +1,20 @@
 // product card for food
-import React from 'react';
 import Image from 'components/image/image';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { CURRENCY } from 'utils/constant';
 import {
-  FoodCardWrapper,
+  Category,
+
+
+  DeliveryOpt,
+  DiscountPercent, Duration, FoodCardWrapper,
   FoodImageWrapper,
   ProductInfo,
-  Category,
-  Duration,
-  ProductMeta,
-  DeliveryOpt,
-  DiscountPercent,
+
+
+  ProductMeta
 } from '../product-card.style';
-import { FormattedMessage } from 'react-intl';
 
 type CardProps = {
   name: string;
@@ -20,8 +22,7 @@ type CardProps = {
   restaurantType: string;
   delivery?: string;
   isFree?: boolean;
-  duration?: string;
-  discountInPercent?: number;
+  discountInPercent?: string;
   data: any;
   onClick?: (e: any) => void;
 };
@@ -32,7 +33,6 @@ const ProductCard: React.FC<CardProps> = ({
   restaurantType,
   delivery,
   isFree,
-  duration,
   discountInPercent,
   data,
   onClick,
@@ -48,7 +48,7 @@ const ProductCard: React.FC<CardProps> = ({
           alt={name}
         />
         {discountInPercent && (
-          <DiscountPercent>{discountInPercent}%</DiscountPercent>
+          <DiscountPercent>{discountInPercent}</DiscountPercent>
         )}
       </FoodImageWrapper>
       <ProductInfo
@@ -61,10 +61,12 @@ const ProductCard: React.FC<CardProps> = ({
         <ProductMeta style={{ marginTop: 'auto' }}>
           <DeliveryOpt>
             {!isFree && CURRENCY}
-            {delivery}{' '}
-            <FormattedMessage id='deliveryText' defaultMessage='Delivery' />
+            <div className={`contentPage`} dangerouslySetInnerHTML={{ __html: delivery.replace(/(<? *script)/gi, 'illegalscript') }} ></div>
+            {' '}
           </DeliveryOpt>
-          <Duration>{duration}</Duration>
+          <Duration>
+            <FormattedMessage id="detialButton" defaultMessage="Detail" />
+          </Duration>
         </ProductMeta>
       </ProductInfo>
     </FoodCardWrapper>

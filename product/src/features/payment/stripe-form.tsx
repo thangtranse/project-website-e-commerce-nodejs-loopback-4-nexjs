@@ -36,7 +36,6 @@ const StripeForm = ({ buttonText, getToken }) => {
       dispatch({ type: 'ADD_CARD', payload: token.card });
       closeModal();
     }
-    console.log(token, 'token');
   };
   return (
     <StripeFormWrapper>
@@ -62,7 +61,6 @@ const StripePaymentForm = ({ item: { price, buttonText } }: Item) => {
     // const payment_info = await getPayment({
     //   variables: { paymentInput: JSON.stringify({ token, amount: price }) },
     // });
-    // console.log(payment_info, 'payment_info');
   };
 
   return (

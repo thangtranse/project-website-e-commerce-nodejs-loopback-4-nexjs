@@ -121,8 +121,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     );
   };
 
-  console.log("thangtran.data", data)
-
   return (
     <ProductCardWrapper onClick={handleQuickViewModal} className="product-card">
       <ProductImageWrapper>

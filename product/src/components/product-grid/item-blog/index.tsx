@@ -87,10 +87,9 @@ export const Products: React.FC<ProductsProps> = ({
                   name={item.name}
                   image={item.thumbnailUrl}
                   restaurantType={item?.categories.join(', ')}
-                  duration={formatTime(customerDistance())}
-                  delivery={item.deliveryDetails.charge}
-                  isFree={item.deliveryDetails.isFree}
-                  discountInPercent={item.promotion}
+                  delivery={item.description}
+                  isFree={true}
+                  discountInPercent={"new"} // chử nhỏ gốc trên bên phải
                   data={item}
                   onClick={() =>
                     router.push(

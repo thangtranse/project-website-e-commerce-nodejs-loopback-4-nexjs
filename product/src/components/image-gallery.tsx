@@ -8,7 +8,6 @@ SwiperCore.use([Thumbs]);
 export const ImageGallery = ({ data }) => {
   // store thumbs swiper instance
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  console.log(data, 'gallery');
   const slides = data?.map((current, idx) => (
     <SwiperSlide key={idx}>
       <img

@@ -7,8 +7,6 @@ const INITIAL_STATE = {
 };
 
 function reducer(state: any, action: any) {
-  console.log(state, 'auth');
-
   switch (action.type) {
     case 'SIGNIN':
       return {

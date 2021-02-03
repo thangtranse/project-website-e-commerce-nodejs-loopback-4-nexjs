@@ -37,7 +37,6 @@ const FormEnhancer = withFormik<MyFormProps, FormValues>({
     info: Yup.string().required('Address is required'),
   }),
   handleSubmit: (values) => {
-    console.log(values, 'values');
     // do submitting things
   },
 });
@@ -71,7 +70,6 @@ const UpdateAddress = (props: FormikProps<FormValues> & MyFormProps) => {
       // const addressData = await addressMutation({
       //   variables: { addressInput: JSON.stringify(addressValue) },
       // });
-      // console.log(addressData, 'address data');
       dispatch({ type: 'ADD_OR_UPDATE_ADDRESS', payload: addressValue });
       closeModal();
     }

@@ -38,7 +38,6 @@ const CreateOrUpdateContact: React.FC<Props> = ({ item }) => {
     // await addContactMutation({
     //   variables: { contactInput: JSON.stringify(values) },
     // });
-    console.log(values, 'formik values');
     dispatch({ type: 'ADD_OR_UPDATE_CONTACT', payload: values });
     closeModal();
     setSubmitting(false);

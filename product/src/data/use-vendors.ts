@@ -1,6 +1,8 @@
-import useSWR from 'swr';
 import Fuse from 'fuse.js';
-import { useState } from 'react';
+import useSWR from 'swr';
+
+const URL_ROOT = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
+
 const options = {
   // isCaseSensitive: false,
   // includeScore: false,
@@ -22,7 +24,9 @@ function search(list, pattern) {
 
   return fuse.search(pattern).map((current) => current.item);
 }
-const fetcher = (url) => fetch(url).then((res) => res.json());
+
+const fetcher = (url) => fetch(URL_ROOT + url).then((res) => res.json());
+
 interface Props {
   type: string;
   text?: any;
@@ -31,18 +35,27 @@ interface Props {
   limit?: number;
 }
 export default function useVendors(variables: Props) {
+
   const { type, text, category, offset = 0, limit = 20 } = variables ?? {};
-  const { data, mutate, error } = useSWR('/api/vendors.json', fetcher);
+  const { data, mutate, error } = useSWR('/news', fetcher);
+
+
+  console.log("thangtran.data", JSON.stringify(data))
+  console.log("thangtran.mutate", mutate)
+  console.log("thangtran.error", error)
+
   const loading = !data && !error;
   // need to remove when you using real API integration
   // const [formattedData, setFormattedData] = useState(false);
-  let vendors = data?.filter((current) => current.type === type);
-  if (category) {
-    vendors = vendors.filter((item) => item.categories.includes(category));
-  }
-  if (text) {
-    vendors = search(vendors, text);
-  }
+  
+  // let vendors = data?.filter((current) => current.type === type);
+  // if (category) {
+  //   vendors = vendors.filter((item) => item.categories.includes(category));
+  // }
+  // if (text) {
+  //   vendors = search(vendors, text);
+  // }
+
   // let localOffset = offset;
   // let localLimit = limit;
   // const fetchMore = async (os, lmt) => {
@@ -60,10 +73,13 @@ export default function useVendors(variables: Props) {
   // ],
   // need to implement fetchMore
   // const hasMore = vendors?.length > localOffset + localLimit;
+
+  // console.log("thangtran.vender", vendors?.slice(offset, offset + limit))
+  
   return {
     loading,
     error,
-    data: vendors?.slice(offset, offset + limit),
+    data,
     // hasMore,
     mutate,
     // fetchMore,

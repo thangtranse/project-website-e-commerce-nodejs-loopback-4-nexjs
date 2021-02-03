@@ -65,7 +65,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e.stopPropagation();
     removeItem(data);
   };
-  // console.log(items, 'product-card');
 
   return (
     <CardWrapper onClick={onClick} className="medicine-card">

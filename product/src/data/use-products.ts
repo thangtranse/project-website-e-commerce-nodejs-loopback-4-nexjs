@@ -1,7 +1,6 @@
-import useSWR from 'swr';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
-import getUrlParams from '../utils/getUrlParams';
+import useSWR from 'swr';
 
 const URL_ROOT = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 

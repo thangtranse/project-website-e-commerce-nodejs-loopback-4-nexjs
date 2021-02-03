@@ -84,9 +84,6 @@ export const Products: React.FC<ProductsProps> = ({
     return <NoResultFound />;
   }
 
-  console.log("thangtran.dataCount", dataCount)
-  console.log("thangtran.offset + limit", offset + limit)
-
   const handleLoadMore = async () => {
     setLoading(true);
     fetchMore(limit, offset + limit)

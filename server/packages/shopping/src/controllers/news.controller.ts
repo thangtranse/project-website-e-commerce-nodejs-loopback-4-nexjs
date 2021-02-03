@@ -1,7 +1,7 @@
 import {
   authenticate
 } from '@loopback/authentication';
-import { authorize } from '@loopback/authorization';
+import {authorize} from '@loopback/authorization';
 import {
   Count,
   CountSchema,
@@ -24,10 +24,10 @@ import {
 
   requestBody
 } from '@loopback/rest';
-import { News } from '../models';
-import { NewsRepository } from '../repositories';
-import { basicAuthorization } from '../services/basic.authorizor';
-import { OPERATION_SECURITY_SPEC } from '../utils/security-spec';
+import {News} from '../models';
+import {NewsRepository} from '../repositories';
+import {basicAuthorization} from '../services/basic.authorizor';
+import {OPERATION_SECURITY_SPEC} from '../utils/security-spec';
 
 export class NewsController {
   constructor(
@@ -40,7 +40,7 @@ export class NewsController {
     responses: {
       '200': {
         description: 'News model instance',
-        content: { 'application/json': { schema: getModelSchemaRef(News) } },
+        content: {'application/json': {schema: getModelSchemaRef(News)}},
       },
     },
   })
@@ -69,7 +69,7 @@ export class NewsController {
     responses: {
       '200': {
         description: 'News model count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -87,7 +87,7 @@ export class NewsController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(News, { includeRelations: true }),
+              items: getModelSchemaRef(News, {includeRelations: true}),
             },
           },
         },
@@ -96,8 +96,18 @@ export class NewsController {
   })
   async find(
     @param.filter(News) filter?: Filter<News>,
-  ): Promise<News[]> {
-    return this.newsRepository.find(filter);
+  ): Promise<any> {
+    const result = await this.newsRepository.find(filter);
+    if (result) {
+      const resultID = result.map(data => {
+        return {
+          ...data,
+          id: data.NewsId
+        }
+      })
+      return resultID;
+    }
+    return result
   }
 
   @patch('/news', {
@@ -105,7 +115,7 @@ export class NewsController {
     responses: {
       '200': {
         description: 'News PATCH success count',
-        content: { 'application/json': { schema: CountSchema } },
+        content: {'application/json': {schema: CountSchema}},
       },
     },
   })
@@ -118,7 +128,7 @@ export class NewsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(News, { partial: true }),
+          schema: getModelSchemaRef(News, {partial: true}),
         },
       },
     })
@@ -134,7 +144,7 @@ export class NewsController {
         description: 'News model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(News, { includeRelations: true }),
+            schema: getModelSchemaRef(News, {includeRelations: true}),
           },
         },
       },
@@ -142,7 +152,7 @@ export class NewsController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(News, { exclude: 'where' }) filter?: FilterExcludingWhere<News>
+    @param.filter(News, {exclude: 'where'}) filter?: FilterExcludingWhere<News>
   ): Promise<News> {
     return this.newsRepository.findById(id, filter);
   }
@@ -165,7 +175,7 @@ export class NewsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(News, { partial: true }),
+          schema: getModelSchemaRef(News, {partial: true}),
         },
       },
     })
@@ -219,7 +229,7 @@ export class NewsController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(News, { includeRelations: true }),
+              items: getModelSchemaRef(News, {includeRelations: true}),
             },
           },
         },
@@ -229,7 +239,7 @@ export class NewsController {
   async findSlug(
     @param.path.string('slug') slug: string
   ): Promise<News[]> {
-    return this.newsRepository.find({ where: { slug } });
+    return this.newsRepository.find({where: {slug}});
   }
 
   @get('/news/getFields', {

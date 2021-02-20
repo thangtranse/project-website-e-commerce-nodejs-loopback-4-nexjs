@@ -100,7 +100,7 @@ const PageListView = () => {
     return (
         <Page
             className={classes.root}
-            title="Products"
+            title="Pages"
         >
             <Container maxWidth={false}>
                 <Box

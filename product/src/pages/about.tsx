@@ -25,6 +25,7 @@ const PrivacyPage: NextPage<{}> = () => {
   const mobile = useMedia('(max-width: 580px)');
   
   const menuItems: string[] = [];
+  
   content.forEach((item) => {
     menuItems.push(item.title);
   });
@@ -32,10 +33,8 @@ const PrivacyPage: NextPage<{}> = () => {
   return (
     <>
       <SEO title={title} description={`${SHOP_NAME} about page`} />
-
       <StyledContainer>
         <Heading title={title} subtitle={`Last update: ${date}`} />
-
         <StyledContent>
           <StyledLeftContent>
             <Sticky top={mobile ? 68 : 150} innerZ="1">

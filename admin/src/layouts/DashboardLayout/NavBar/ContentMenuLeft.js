@@ -37,6 +37,11 @@ export default () => {
       title: 'Category'
     },
     {
+      href: ROOT_PATH + '/pages',
+      icon: FileMinus,
+      title: 'Pages'
+    },
+    {
       href: ROOT_PATH + '/customers',
       icon: UserIcon,
       title: 'Users'

@@ -10,11 +10,6 @@ import {
 
     TextField, Typography
 } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
-import AspectRatioIcon from '@material-ui/icons/AspectRatio';
-import DeleteSweepIcon from '@material-ui/icons/DeleteSweep';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -26,7 +21,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from "react-toastify";
 import DialogDefault from 'src/components/Dialog/default';
 import Page from 'src/components/Page';
-import { API, SETTING } from 'src/constants';
+import { SETTING } from 'src/constants';
 import EmojisBasic from 'src/libs/Emojis/basic';
 import {
     actionUploadFile,
@@ -36,13 +31,25 @@ import {
     setDefaulGetPage
 } from 'src/saga/action';
 import * as SELECTOR from 'src/saga/redux-selector';
-import { fetchPost, UploadFile } from '../../../libs/apiApp';
-import AddConditional from './addConditional';
-import AddItemDialog from './addItem';
-import { PopularListItem } from './PopularListItem';
+import { UploadFile } from '../../../libs/apiApp';
+
+import { render } from 'react-dom';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 
 const KEY_FILTER = "image_main"
 const typeReducer = "Page"
+
+const SortableItem = SortableElement(({ value }) => <li>{value}</li>);
+const SortableList = SortableContainer(({ items }) => {
+    return (
+        <ul>
+            {items.map((value, index) => (
+                <SortableItem key={`item-${value}`} index={index} value={value} />
+            ))}
+        </ul>
+    );
+});
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,19 +104,19 @@ const CURDPage = () => {
     const classes = useStyles();
 
     const detailItem = useSelector((state) => SELECTOR.pageDetial(state));
-
     const [values, setValues] = React.useState({ ...initValues });
     const [valuesElementProduct, setValuesElementProduct] = React.useState([]);
     const [open, setOpen] = React.useState(initDialog);
     const [disSubmitButton, setDisSubmitButton] = React.useState(false);
 
-    const [openEditHome, setOpenEditHome] = React.useState(false);
     const [openEditContent, setOpenEditContent] = React.useState(false);
 
-    const [openDialogAddItem, setopenDialogAddItem] = React.useState(false);
-    const [openDialogAddConditional, setopenDialogAddConditional] = React.useState(false);
+    const [inputContentTitle, setInputContentTitle] = React.useState("");
+    const [inputContent, setInputContent] = React.useState("");
 
     const [editContent, setEditContent] = React.useState(EditorState.createEmpty())
+
+    const [itemSortTable, setItemSortTable ] = React.useState(['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'])
 
     // IMAGE UPLOAD
     const [openDropzoneDialog, setOpenDropzoneDialog] = React.useState(false);
@@ -154,14 +161,6 @@ const CURDPage = () => {
     useEffect(() => {
         if (detailItem) {
             switch (detailItem.key) {
-                case "home":
-                    updateElement(detailItem)
-                    setOpenEditHome(true)
-                    break;
-                case "write-to-us":
-                case "testimonial":
-                case "unique-experience":
-                case "agent-hub":
                 case "about-us":
                     if (detailItem.setting) {
                         const contentDescriptionBlock = detailItem.setting.contentMain ? htmlToDraft(detailItem.setting.contentMain) : "";
@@ -190,52 +189,6 @@ const CURDPage = () => {
     }, [detailItem]);
 
     /**
-     * 
-     * @param {*} detailItem List id Product or News
-     */
-    const updateElement = async (detailItem) => {
-        const detailItemElement = detailItem.element ? detailItem.element : initValues.element;
-        if (detailItemElement && detailItemElement.length > 0) {
-            let dataProduct = detailItemElement.filter(fil => { if (fil.type === "product") return fil })
-            dataProduct = dataProduct.map(data => data.object)
-            await fetchPost({
-                url: API.product + '/listid',
-                dataRequest: dataProduct
-            }).then(data => {
-                if (data && data.error) {
-                    throw "Có lỗi trong quá trình lấy dữ liệu từ Server!"
-                } else {
-                    let dataShow = data
-                    let dataProductImage = detailItemElement.filter(fil => { if (fil.type === KEY_FILTER) return fil })
-                    dataProductImage = dataProductImage.map(data => data.object)
-                    if (dataProductImage && dataProductImage.length > 0) {
-                        for (const productImage in dataProductImage) {
-                            dataShow.unshift({
-                                title: "Hình ảnh đại diện",
-                                description: "Hình ảnh đại diện",
-                                image: dataProductImage[productImage],
-                                productId: Math.random().toString(36).substring(7)
-                            })
-                        }
-                    }
-                    setValuesElementProduct(dataShow)
-                }
-            }).catch(error => {
-                console.log("thangtran.error", error)
-                toast.error("Có lỗi trong quá trình lấy dữ liệu từ Server!")
-            })
-        }
-        setValues({
-            title: detailItem.title ? detailItem.title : initValues.title,
-            key: detailItem.key ? detailItem.key : initValues.key,
-            url: detailItem.url ? detailItem.url : initValues.url,
-            content: detailItem.content ? detailItem.content : initValues.content,
-            element: detailItemElement,
-            setting: detailItem.setting ? detailItem.setting : initValues.setting,
-        });
-    }
-
-    /**
        * Change content with type input
        * @param {*} prop: key work
        * @param {*} event:
@@ -260,48 +213,15 @@ const CURDPage = () => {
             return;
         }
 
-        switch (detailItem.key) {
-            case "home":
-                setDisSubmitButton(true);
-                dataSend.title = dataSend.title.trim();
-                dataSend.content = dataSend.content.trim();
-                if (dataSend.element) {
-                    dataSend.element = dataSend.element.filter(fil => fil.object && fil.type && fil.object.length > 0 && fil.type.length > 0)
-                }
-                break;
-            case "agent-hub":
-            case "write-to-us":
-            case "about-us":
-                const description = draftToHtml(convertToRaw(editContent.getCurrentContent()))
-                const valuesTemp = values
-                valuesTemp.setting.contentMain = description
-                break;
-            default:
-                return;
-        }
+        // switch (detailItem.key) {
+        //     case "about-us":
+        //         break;
+        //     default:
+        //         return;
+        // }
 
         dispatch(fetchPageUpdate({ data: { ...dataSend }, _id: dataSend.key }));
         setDisSubmitButton(false);
-    };
-
-    /**
-     * Handle close popup "add item product"
-     * @param {*} dataCB callback
-     */
-    const handleCloseAddItemProduct = (dataCB) => {
-        let data = values
-        for (let i = 0; i < dataCB.length; i++) {
-            data.element.push({
-                type: 'product',
-                object: dataCB[i].productId
-            })
-        }
-        updateElement(values)
-        setopenDialogAddItem(false);
-    };
-
-    const handleClosesetAddConditional = (dataCB) => {
-        setopenDialogAddConditional(false);
     };
 
     /**
@@ -310,13 +230,19 @@ const CURDPage = () => {
      * @param {*} editorState: 
      */
     const onEditorStateChange = data => (editorState) => {
-        setEditContent(editorState);
+        setInputContent(editorState);
+    };
+
+    console.log("thangtran", values.element)
+
+    const onSortEnd = ({ oldIndex, newIndex }) => {
+
     };
 
     return (
         <Page
             className={classes.root}
-            title="Products"
+            title="Pages"
         >
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
@@ -343,87 +269,56 @@ const CURDPage = () => {
                             />
                         </Paper>
                         <br />
+
                         {
-                            openEditHome ? (
-                                <Paper className={classes.paper}>
-                                    {
-                                        valuesElementProduct && valuesElementProduct.length > 0 ? (
-                                            valuesElementProduct.map((data, index) => {
-                                                let time = new Date(data.createAt)
-                                                return (
-                                                    <div className={classes.rowBetween} key={"dev-" + index}>
-                                                        <PopularListItem
-                                                            title={data.title}
-                                                            description={data.description}
-                                                            image={data.image}
-                                                            updateAt={time.toLocaleString()}
-                                                        />
-                                                        <Tooltip title="Xóa nội dung khỏi trang chính">
-                                                            <IconButton
-                                                                color="primary"
-                                                                aria-label="Xóa"
-                                                                onClick={() => {
-                                                                    let dataDelete = valuesElementProduct
-                                                                    dataDelete = dataDelete.filter(fil => {
-                                                                        if (fil.productId !== data.productId) {
-                                                                            return fil
-                                                                        }
-                                                                    })
-                                                                    setValuesElementProduct(dataDelete)
-                                                                    let dataValueDelete = values
-                                                                    let elementValue = dataValueDelete.element
-                                                                    elementValue = elementValue.filter(fil => {
-                                                                        if (fil.object !== data.productId) {
-                                                                            return fil
-                                                                        }
-                                                                    })
-                                                                    dataValueDelete.element = elementValue
-                                                                    setValues({ ...dataValueDelete })
-                                                                }}
-                                                            >
-                                                                <DeleteSweepIcon />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </div>
-                                                )
-                                            })
-                                        ) : ""
-                                    }
-                                    <hr />
-                                    <Tooltip title="Thêm nội dung cố định">
-                                        <IconButton
-                                            color="primary"
-                                            aria-label="Thêm mới nội dung"
+                            values.element.map((data, index) => {
+                                return (
+                                    <Paper style={{ paddingBottom: '40px' }} className={classes.paper}>
+                                        <h3>{data.title}</h3>
+                                        <div className={`contentPage`} dangerouslySetInnerHTML={{ __html: data.description }} ></div>
+                                        <Button
+                                            style={{ color: 'red', float: 'right' }}
                                             onClick={() => {
-                                                setopenDialogAddItem(true);
+                                                setOpen({
+                                                    ...open,
+                                                    status: true,
+                                                    title: data.title,
+                                                    content: 'Bạn có muốn xóa không?',
+                                                    confirmFn: () => {
+                                                        let data = values.element.splice((index + 1), 1)
+                                                        setValues({
+                                                            ...values,
+                                                            element: data
+                                                        })
+                                                        setOpen(initDialog);
+                                                    },
+                                                    rejectFn: () => {
+                                                        setOpen(initDialog);
+                                                    }
+                                                });
                                             }}
-                                        >
-                                            <AddIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Thêm hình ảnh">
-                                        <IconButton
-                                            color="primary"
-                                            aria-label="Thêm hình ảnh"
-                                            onClick={() => {
-                                                handleOpenDropzoneDialog(true);
-                                            }}
-                                        >
-                                            <AspectRatioIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                </Paper>
-                            ) : ""
+                                        >Xóa nội dung</Button>
+                                    </Paper>
+                                )
+                            })
                         }
+                        <br />
                         {
                             openEditContent ? (
                                 <Paper className={classes.paper}>
+                                    <TextField
+                                        className={classes.title}
+                                        label="Tiêu đề nội dung"
+                                        color="secondary"
+                                        value={inputContentTitle}
+                                        onChange={e => setInputContentTitle(e.target.value)}
+                                    />
                                     <div className={classes.EditorLayout}>
                                         <Editor
                                             wrapperClassName="thangtm13_wrapper"
                                             editorClassName="thangtm13_editor"
                                             onEditorStateChange={onEditorStateChange("content")}
-                                            editorState={editContent}
+                                            editorState={inputContent}
                                             toolbar={{
                                                 image: {
                                                     uploadCallback: UploadFile,
@@ -436,6 +331,35 @@ const CURDPage = () => {
                                                 },
                                             }}
                                         />
+                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                            <Button
+                                                style={{ color: 'red' }}
+                                                onClick={() => {
+                                                    setInputContent("")
+                                                    setInputContentTitle("")
+                                                }}
+                                            >Nhập lại</Button>
+                                            <Button
+                                                style={{ color: '#3f51b5' }}
+                                                onClick={() => {
+                                                    let data = values.element ? values.element : []
+                                                    const description = draftToHtml(convertToRaw(inputContent.getCurrentContent()))
+                                                    if (inputContentTitle.trim().length > 0) {
+                                                        data.push({
+                                                            id: values.element.length + 1,
+                                                            title: inputContentTitle.trim(),
+                                                            description: description
+                                                        })
+                                                    }
+                                                    setValues({
+                                                        ...values,
+                                                        element: data
+                                                    })
+                                                    setInputContent("")
+                                                    setInputContentTitle("")
+                                                }}
+                                            >Thêm nội dung</Button>
+                                        </div>
                                     </div>
                                 </Paper>
                             ) : ""
@@ -454,35 +378,42 @@ const CURDPage = () => {
                             >Tùy chọn</Typography>
                             <div className={classes.rowSpaceEvenly}>
                                 <Button
-                                    style={{ color: 'red', width: '50%' }}
+                                    style={{ color: 'red', width: '60%' }}
                                     onClick={() => {
                                         setOpen({
                                             ...open,
                                             status: true,
-                                            title: 'Xác nhận thao tác',
-                                            content: 'Bạn có muốn nhập lại tất cả dữ liệu đã nhập hiện tại?',
+                                            title: 'Quay trở lại ban đầu',
+                                            content: 'Hủy bỏ các chỉnh sửa của bạn để quay trở về nội dung ban đầu?',
                                             confirmFn: () => {
-                                                if (id) {
-                                                    dispatch(getDetailItem({ idItem: id, typeReducer }));
-                                                }
+                                                setValues({
+                                                    title: detailItem.title ? detailItem.title : initValues.title,
+                                                    key: detailItem.key ? detailItem.key : initValues.key,
+                                                    url: detailItem.url ? detailItem.url : initValues.url,
+                                                    content: detailItem.content ? detailItem.content : initValues.content,
+                                                    element: detailItem.element ? detailItem.element : initValues.element,
+                                                    setting: detailItem.setting ? detailItem.setting : initValues.setting,
+                                                });
                                                 setOpen(initDialog);
-                                                setValues({ ...initValues });
                                             },
                                             rejectFn: () => {
                                                 setOpen(initDialog);
                                             }
                                         });
                                     }}
-                                >Nhập lại</Button>
-                                <Button color="secondary" style={{ width: '50%' }} onClick={handleSubmit} disabled={disSubmitButton}>Thay đổi</Button>
+                                >Quay trở lại ban đầu</Button>
+                                <Button color="secondary" style={{ width: '40%' }} onClick={handleSubmit} disabled={disSubmitButton}>Thay đổi</Button>
                             </div>
                         </Paper>
                     </Grid>
+
+                    <br />
+
+                    <SortableList items={itemSortTable} onSortEnd={onSortEnd} />
                     {/* --------------------------------------------------------------------------------- */}
                 </Grid>
                 <DialogDefault open={open} />
             </Container>
-
             <DropzoneDialog
                 open={openDropzoneDialog}
                 onSave={handleSaveDropzoneDialog}
@@ -490,16 +421,6 @@ const CURDPage = () => {
                 showPreviews={true}
                 maxFileSize={5000000}
                 onClose={handleOpenDropzoneDialog}
-            />
-
-
-            <AddItemDialog
-                statusOpen={openDialogAddItem}
-                cbHanldeClose={handleCloseAddItemProduct}
-            />
-            <AddConditional
-                statusOpen={openDialogAddConditional}
-                cbHanldeClose={handleClosesetAddConditional}
             />
         </Page>
     );

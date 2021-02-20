@@ -296,9 +296,7 @@ const CURDProduct = () => {
                 }
             }
         }
-
         setValues({ ...values, [prop]: dataSave, slug });
-
     };
 
     /**
@@ -315,6 +313,12 @@ const CURDProduct = () => {
             toast.warn("Đường dẫn không được bỏ trống");
             return;
         }
+
+        if (dataSend.type && typeof dataSend.type === 'string') {
+            console.log("thangtran.se")
+            dataSend.type = [dataSend.type]
+        }
+
         setDisSubmitButton(true)
         let description = draftToHtml(convertToRaw(values.description.getCurrentContent()))
         let details = draftToHtml(convertToRaw(dataSend.details.getCurrentContent()))

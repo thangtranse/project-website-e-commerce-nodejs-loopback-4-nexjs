@@ -37,7 +37,6 @@ const PrivacyPage: NextPage<{}> = () => {
     menuItems.push(item.title);
   });
 
-  console.log("thangtran.dataAbout", dataAbout)
   return (
     <>
       <SEO title={title} description={`${SHOP_NAME} about page`} />
@@ -47,40 +46,44 @@ const PrivacyPage: NextPage<{}> = () => {
           <StyledLeftContent>
             <Sticky top={mobile ? 68 : 150} innerZ="1">
               <StyledLeftInnerContent>
-                {menuItems.map((item) => (
-                  <StyledLink
-                    key={item}
-                    activeClass="active"
-                    to={item}
-                    spy={true}
-                    smooth={true}
-                    offset={-276}
-                    duration={500}
-                  >
-                    {item}
-                  </StyledLink>
-                ))}
+                {
+                  menuItems.map((item) => (
+                    <StyledLink
+                      key={item}
+                      activeClass="active"
+                      to={item}
+                      spy={true}
+                      smooth={true}
+                      offset={-276}
+                      duration={500}
+                    >
+                      {item}
+                    </StyledLink>
+                  ))
+                }
               </StyledLeftInnerContent>
             </Sticky>
           </StyledLeftContent>
           <StyledRightContent>
-            {content.map((item, idx) => {
-              return (
-                <Element
-                  name={item.title}
-                  style={{ paddingBottom: 40 }}
-                  key={idx}
-                >
-                  <StyledContentHeading>{item.title}</StyledContentHeading>
-                  <div
-                    className="html-content"
-                    dangerouslySetInnerHTML={{
-                      __html: item.description,
-                    }}
-                  />
-                </Element>
-              );
-            })}
+            {
+              content.map((item, idx) => {
+                return (
+                  <Element
+                    name={item.title}
+                    style={{ paddingBottom: 40 }}
+                    key={idx}
+                  >
+                    <StyledContentHeading>{item.title}</StyledContentHeading>
+                    <div
+                      className="html-content"
+                      dangerouslySetInnerHTML={{
+                        __html: item.description,
+                      }}
+                    />
+                  </Element>
+                );
+              })
+            }
           </StyledRightContent>
         </StyledContent>
       </StyledContainer>

@@ -1,13 +1,12 @@
-import React from 'react';
-import { NextPage } from 'next';
 import { Modal } from '@redq/reuse-modal';
-import { SEO } from 'components/seo';
-import RequestMedicine from 'features/request-product/request-product';
-import { ProfileProvider } from 'contexts/profile/profile.provider';
 import ErrorMessage from 'components/error-message/error-message';
-import Contact from 'features/contact/contact';
+import { SEO } from 'components/seo';
+import { ProfileProvider } from 'contexts/profile/profile.provider';
 import useUser from 'data/use-user';
 import { SHOP_NAME } from "environment";
+import Contact from 'features/contact/contact';
+import { NextPage } from 'next';
+import React from 'react';
 
 type Props = {
   deviceType: {

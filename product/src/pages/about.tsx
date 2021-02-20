@@ -1,5 +1,6 @@
-import { Heading } from 'components/heading/heading';
+import ErrorMessage from 'components/error-message/error-message';
 import { SEO } from 'components/seo';
+import useAbout from 'data/use-about';
 import { SHOP_NAME } from "environment";
 import {
   StyledContainer,
@@ -17,24 +18,31 @@ import {
 import { NextPage } from 'next';
 import { Element } from 'react-scroll';
 import Sticky from 'react-stickynode';
-import { siteAbout } from 'site-settings/site-about';
 import { useMedia } from 'utils/use-media';
 
 const PrivacyPage: NextPage<{}> = () => {
-  const { title, date, content } = siteAbout;
+
+  const { data: dataAbout, error } = useAbout();
+
   const mobile = useMedia('(max-width: 580px)');
-  
+
   const menuItems: string[] = [];
-  
+
+
+  if (!dataAbout) return <div>loading...</div>;
+  if (error) return <ErrorMessage message={error.message} />;
+
+  const { title, element: content } = dataAbout;
   content.forEach((item) => {
     menuItems.push(item.title);
   });
 
+  console.log("thangtran.dataAbout", dataAbout)
   return (
     <>
       <SEO title={title} description={`${SHOP_NAME} about page`} />
       <StyledContainer>
-        <Heading title={title} subtitle={`Last update: ${date}`} />
+        {/* <Heading title={title} subtitle={`Last update: ${date}`} /> */}
         <StyledContent>
           <StyledLeftContent>
             <Sticky top={mobile ? 68 : 150} innerZ="1">

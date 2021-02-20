@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 
-
 const URL_ROOT = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 
 // import productFetcher from 'utils/api/product';

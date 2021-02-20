@@ -16,6 +16,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -141,8 +142,8 @@ const CURDPage = () => {
     const styles = useRowGutterStyles({ size: '1rem' });
 
     const detailItem = useSelector((state) => SELECTOR.pageDetial(state));
+
     const [values, setValues] = React.useState({ ...initValues });
-    const [valuesElementProduct, setValuesElementProduct] = React.useState([]);
     const [open, setOpen] = React.useState(initDialog);
     const [disSubmitButton, setDisSubmitButton] = React.useState(false);
 
@@ -152,37 +153,7 @@ const CURDPage = () => {
 
     const [inputContentTitle, setInputContentTitle] = React.useState("");
     const [inputContent, setInputContent] = React.useState("");
-
-    const [editContent, setEditContent] = React.useState(EditorState.createEmpty())
-
-    // IMAGE UPLOAD
-    const [openDropzoneDialog, setOpenDropzoneDialog] = React.useState(false);
-
-    /**
-     * handle upload file open popup
-     * @param {*} event 
-     */
-    const handleOpenDropzoneDialog = (event) => {
-        setOpenDropzoneDialog(!openDropzoneDialog)
-    }
-    /**
-     * Handle when submit file
-     * @param {*} files 
-     */
-    const handleSaveDropzoneDialog = async (files) => {
-        dispatch(actionUploadFile(files))
-        setOpenDropzoneDialog(false)
-        valuesElementProduct.unshift({
-            title: "Hình ảnh đại diện",
-            description: "Hình ảnh đại diện",
-            image: files[0].path,
-            productId: Math.random().toString(36).substring(7)
-        })
-        values.element.unshift({
-            type: KEY_FILTER,
-            object: files[0].path
-        })
-    }
+    const [inputIndexContent, setInputIndexContent] = React.useState(-1);
 
     const { id } = useParams();
 
@@ -199,14 +170,6 @@ const CURDPage = () => {
         if (detailItem) {
             switch (detailItem.key) {
                 case "about-us":
-                    if (detailItem.setting) {
-                        const contentDescriptionBlock = detailItem.setting.contentMain ? htmlToDraft(detailItem.setting.contentMain) : "";
-                        if (contentDescriptionBlock) {
-                            const contentDescriptionState = ContentState.createFromBlockArray(contentDescriptionBlock.contentBlocks);
-                            const editorDescriptionState = EditorState.createWithContent(contentDescriptionState);
-                            setEditContent(editorDescriptionState)
-                        }
-                    }
                     setValues({
                         title: detailItem.title ? detailItem.title : initValues.title,
                         key: detailItem.key ? detailItem.key : initValues.key,
@@ -215,7 +178,6 @@ const CURDPage = () => {
                         element: detailItem.element ? detailItem.element : initValues.element,
                         setting: detailItem.setting ? detailItem.setting : initValues.setting,
                     });
-                    setOpenEditContent(true)
                     break;
                 default:
                     break;
@@ -246,6 +208,13 @@ const CURDPage = () => {
     }
     const handleOpenSortContent = (event) => {
         setOpenSortContent(true)
+    }
+    const handleOpenEditContent = (event) => {
+        setOpenEditContent(true)
+    }
+    const handleCloseEditContent = (event) => {
+        setInputIndexContent(-1)
+        setOpenEditContent(false)
     }
 
     /**
@@ -329,10 +298,11 @@ const CURDPage = () => {
                                                             title: data.title,
                                                             content: 'Bạn có muốn xóa không?',
                                                             confirmFn: () => {
-                                                                let data = values.element.splice((index + 1), 1)
+                                                                let spliceData = values.element
+                                                                spliceData.splice((index), 1)
                                                                 setValues({
                                                                     ...values,
-                                                                    element: data
+                                                                    element: spliceData
                                                                 })
                                                                 setOpen(initDialog);
                                                             },
@@ -348,6 +318,28 @@ const CURDPage = () => {
                                                     }}
                                                 >
                                                     <DeleteForeverIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title={`Thay đổi nội dung "${data.title}"`} aria-label="add">
+                                                <IconButton
+                                                    onClick={() => {
+                                                        setInputContentTitle(data.title)
+                                                        const contentDetailsBlock = htmlToDraft(data.description);
+                                                        if (contentDetailsBlock) {
+                                                            const contentState = ContentState.createFromBlockArray(contentDetailsBlock.contentBlocks);
+                                                            const editorState = EditorState.createWithContent(contentState);
+                                                            setInputContent(editorState)
+                                                        }
+                                                        setInputIndexContent(index)
+                                                        handleOpenEditContent()
+                                                    }}
+                                                    aria-label="sort"
+                                                    className={classes.margin}
+                                                    style={{
+                                                        color: "#3f51b5"
+                                                    }}
+                                                >
+                                                    <EditIcon />
                                                 </IconButton>
                                             </Tooltip>
                                         </div>
@@ -420,7 +412,6 @@ const CURDPage = () => {
                 <DialogDefault open={open} />
             </Container>
 
-
             <Dialog open={openEditBigContent} onClose={handleCloseBigContent} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Thêm nội dung</DialogTitle>
                 <DialogContent>
@@ -484,9 +475,78 @@ const CURDPage = () => {
                                 })
                                 setInputContent("")
                                 setInputContentTitle("")
+                            } else {
+                                toast.warn('Nội dung không tồn tại');
                             }
                             handleCloseBigContent()
-                            toast.warn('Nội dung không tồn tại');
+                        }}
+                    >Thêm nội dung</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={openEditContent} onClose={handleCloseEditContent} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Thay đổi nội dung</DialogTitle>
+                <DialogContent>
+                    <TextField
+                        autoFocus
+                        className={classes.title}
+                        label="Tiêu đề nội dung"
+                        color="secondary"
+                        value={inputContentTitle}
+                        onChange={e => setInputContentTitle(e.target.value)}
+                    />
+                    <div className={classes.EditorLayout}>
+                        <Editor
+                            wrapperClassName="thangtm13_wrapper"
+                            editorClassName="thangtm13_editor"
+                            onEditorStateChange={onEditorStateChange("content")}
+                            editorState={inputContent}
+                            toolbar={{
+                                image: {
+                                    uploadCallback: UploadFile,
+                                    alt: { present: true, mandatory: true },
+                                    previewImage: true,
+                                    inputAccept: SETTING.FILE_UPLOAD_IMAGE.toString(),
+                                },
+                                emoji: {
+                                    emojis: EmojisBasic,
+                                },
+                            }}
+                        />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        style={{ color: 'red' }}
+                        onClick={() => {
+                            setInputContent("")
+                            setInputContentTitle("")
+                        }}
+                    >Nhập lại</Button>
+                    <Button
+                        style={{ color: '#3f51b5' }}
+                        onClick={() => {
+                            if (inputContent) {
+                                let data = values.element ? values.element : []
+                                const description = draftToHtml(convertToRaw(inputContent.getCurrentContent()))
+                                if (inputContentTitle.trim().length > 0) {
+                                    data[inputIndexContent] = {
+                                        id: values.element.length + 1,
+                                        title: inputContentTitle.trim(),
+                                        description: description
+                                    }
+                                }
+                                setValues({
+                                    ...values,
+                                    element: data
+                                })
+                                setInputContent("")
+                                setInputIndexContent(-1)
+                                setInputContentTitle("")
+                            } else {
+                                toast.warn('Nội dung không tồn tại');
+                            }
+                            handleCloseEditContent()
                         }}
                     >Thêm nội dung</Button>
                 </DialogActions>
@@ -517,15 +577,6 @@ const CURDPage = () => {
                     >Đồng ý</Button>
                 </DialogActions>
             </Dialog>
-
-            <DropzoneDialog
-                open={openDropzoneDialog}
-                onSave={handleSaveDropzoneDialog}
-                acceptedFiles={SETTING.FILE_UPLOAD_IMAGE}
-                showPreviews={true}
-                maxFileSize={5000000}
-                onClose={handleOpenDropzoneDialog}
-            />
         </Page>
     );
 };

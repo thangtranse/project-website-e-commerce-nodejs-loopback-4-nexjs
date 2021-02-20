@@ -10,6 +10,18 @@ import {
 
     TextField, Typography
 } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import SortIcon from '@material-ui/icons/Sort';
+import { useRowGutterStyles } from '@mui-treasury/styles/gutter/row';
+import arrayMove from 'array-move';
 import { ContentState, convertToRaw, EditorState } from 'draft-js';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
@@ -18,6 +30,7 @@ import React, { useEffect } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { toast } from "react-toastify";
 import DialogDefault from 'src/components/Dialog/default';
 import Page from 'src/components/Page';
@@ -33,20 +46,43 @@ import {
 import * as SELECTOR from 'src/saga/redux-selector';
 import { UploadFile } from '../../../libs/apiApp';
 
-import { render } from 'react-dom';
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import arrayMove from 'array-move';
-
 const KEY_FILTER = "image_main"
 const typeReducer = "Page"
 
-const SortableItem = SortableElement(({ value }) => <li>{value}</li>);
+const SortableItem = SortableElement(({ index, value }) => {
+    const classes = useStyles();
+    return (
+        <>
+            <Paper style={{
+                paddingBottom: 15,
+                listStyleType: 'none'
+            }} className={classes.paper}>
+                <li>
+                    <h4>{value.title}</h4>
+                </li>
+            </Paper>
+        </>
+    )
+});
+
 const SortableList = SortableContainer(({ items }) => {
     return (
         <ul>
-            {items.map((value, index) => (
-                <SortableItem key={`item-${value}`} index={index} value={value} />
-            ))}
+            <Paper>
+                {
+                    items.map((value, index) => {
+                        return (
+                            <>
+                                <SortableItem
+                                    key={`item-${value.id}`}
+                                    index={index}
+                                    value={value}
+                                />
+                            </>
+                        )
+                    })
+                }
+            </Paper>
         </ul>
     );
 });
@@ -102,6 +138,7 @@ const initDialog = {
 const CURDPage = () => {
     const dispatch = useDispatch();
     const classes = useStyles();
+    const styles = useRowGutterStyles({ size: '1rem' });
 
     const detailItem = useSelector((state) => SELECTOR.pageDetial(state));
     const [values, setValues] = React.useState({ ...initValues });
@@ -110,13 +147,13 @@ const CURDPage = () => {
     const [disSubmitButton, setDisSubmitButton] = React.useState(false);
 
     const [openEditContent, setOpenEditContent] = React.useState(false);
+    const [openEditBigContent, setOpenEditBigContent] = React.useState(false);
+    const [openSortContent, setOpenSortContent] = React.useState(false);
 
     const [inputContentTitle, setInputContentTitle] = React.useState("");
     const [inputContent, setInputContent] = React.useState("");
 
     const [editContent, setEditContent] = React.useState(EditorState.createEmpty())
-
-    const [itemSortTable, setItemSortTable ] = React.useState(['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'])
 
     // IMAGE UPLOAD
     const [openDropzoneDialog, setOpenDropzoneDialog] = React.useState(false);
@@ -198,6 +235,19 @@ const CURDPage = () => {
         setValues({ ...values, [prop]: dataSave });
     };
 
+    const handleCloseBigContent = (event) => {
+        setOpenEditBigContent(false)
+    }
+    const handleOpenBigContent = (event) => {
+        setOpenEditBigContent(true)
+    }
+    const handleCloseSortContent = (event) => {
+        setOpenSortContent(false)
+    }
+    const handleOpenSortContent = (event) => {
+        setOpenSortContent(true)
+    }
+
     /**
      * handle when press submit && save to server
      * @param {*} event
@@ -212,14 +262,6 @@ const CURDPage = () => {
             toast.warn('Nội dung không được bỏ trống');
             return;
         }
-
-        // switch (detailItem.key) {
-        //     case "about-us":
-        //         break;
-        //     default:
-        //         return;
-        // }
-
         dispatch(fetchPageUpdate({ data: { ...dataSend }, _id: dataSend.key }));
         setDisSubmitButton(false);
     };
@@ -233,10 +275,12 @@ const CURDPage = () => {
         setInputContent(editorState);
     };
 
-    console.log("thangtran", values.element)
-
     const onSortEnd = ({ oldIndex, newIndex }) => {
-
+        let swapData = arrayMove(values.element, oldIndex, newIndex)
+        setValues({
+            ...values,
+            element: swapData
+        })
     };
 
     return (
@@ -269,101 +313,66 @@ const CURDPage = () => {
                             />
                         </Paper>
                         <br />
-
                         {
                             values.element.map((data, index) => {
                                 return (
-                                    <Paper style={{ paddingBottom: '40px' }} className={classes.paper}>
+                                    <Paper style={{ paddingBottom: '56px' }} className={classes.paper}>
                                         <h3>{data.title}</h3>
                                         <div className={`contentPage`} dangerouslySetInnerHTML={{ __html: data.description }} ></div>
-                                        <Button
-                                            style={{ color: 'red', float: 'right' }}
-                                            onClick={() => {
-                                                setOpen({
-                                                    ...open,
-                                                    status: true,
-                                                    title: data.title,
-                                                    content: 'Bạn có muốn xóa không?',
-                                                    confirmFn: () => {
-                                                        let data = values.element.splice((index + 1), 1)
-                                                        setValues({
-                                                            ...values,
-                                                            element: data
-                                                        })
-                                                        setOpen(initDialog);
-                                                    },
-                                                    rejectFn: () => {
-                                                        setOpen(initDialog);
-                                                    }
-                                                });
-                                            }}
-                                        >Xóa nội dung</Button>
+                                        <div style={{ float: 'right' }}>
+                                            <Tooltip title={`Xóa nội dung "${data.title}"`} aria-label="add">
+                                                <IconButton
+                                                    onClick={() => {
+                                                        setOpen({
+                                                            ...open,
+                                                            status: true,
+                                                            title: data.title,
+                                                            content: 'Bạn có muốn xóa không?',
+                                                            confirmFn: () => {
+                                                                let data = values.element.splice((index + 1), 1)
+                                                                setValues({
+                                                                    ...values,
+                                                                    element: data
+                                                                })
+                                                                setOpen(initDialog);
+                                                            },
+                                                            rejectFn: () => {
+                                                                setOpen(initDialog);
+                                                            }
+                                                        });
+                                                    }}
+                                                    aria-label="sort"
+                                                    className={classes.margin}
+                                                    style={{
+                                                        color: "red"
+                                                    }}
+                                                >
+                                                    <DeleteForeverIcon />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </div>
                                     </Paper>
                                 )
                             })
                         }
                         <br />
-                        {
-                            openEditContent ? (
-                                <Paper className={classes.paper}>
-                                    <TextField
-                                        className={classes.title}
-                                        label="Tiêu đề nội dung"
-                                        color="secondary"
-                                        value={inputContentTitle}
-                                        onChange={e => setInputContentTitle(e.target.value)}
-                                    />
-                                    <div className={classes.EditorLayout}>
-                                        <Editor
-                                            wrapperClassName="thangtm13_wrapper"
-                                            editorClassName="thangtm13_editor"
-                                            onEditorStateChange={onEditorStateChange("content")}
-                                            editorState={inputContent}
-                                            toolbar={{
-                                                image: {
-                                                    uploadCallback: UploadFile,
-                                                    alt: { present: true, mandatory: true },
-                                                    previewImage: true,
-                                                    inputAccept: SETTING.FILE_UPLOAD_IMAGE.toString(),
-                                                },
-                                                emoji: {
-                                                    emojis: EmojisBasic,
-                                                },
-                                            }}
-                                        />
-                                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                            <Button
-                                                style={{ color: 'red' }}
-                                                onClick={() => {
-                                                    setInputContent("")
-                                                    setInputContentTitle("")
-                                                }}
-                                            >Nhập lại</Button>
-                                            <Button
-                                                style={{ color: '#3f51b5' }}
-                                                onClick={() => {
-                                                    let data = values.element ? values.element : []
-                                                    const description = draftToHtml(convertToRaw(inputContent.getCurrentContent()))
-                                                    if (inputContentTitle.trim().length > 0) {
-                                                        data.push({
-                                                            id: values.element.length + 1,
-                                                            title: inputContentTitle.trim(),
-                                                            description: description
-                                                        })
-                                                    }
-                                                    setValues({
-                                                        ...values,
-                                                        element: data
-                                                    })
-                                                    setInputContent("")
-                                                    setInputContentTitle("")
-                                                }}
-                                            >Thêm nội dung</Button>
-                                        </div>
-                                    </div>
-                                </Paper>
-                            ) : ""
-                        }
+                        <Paper style={{ paddingBottom: '10px', display: 'flex' }} className={classes.paper}>
+                            <div className={styles.parent}>
+                                <Tooltip title="Sắp xếp nội dung" aria-label="add">
+                                    <IconButton aria-label="sort" className={classes.margin} onClick={handleOpenSortContent}>
+                                        <SortIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                            <div className={styles.parent}>
+                                <Tooltip title="Thêm mới nội dung" aria-label="add">
+                                    <IconButton aria-label="add" className={classes.margin} onClick={handleOpenBigContent}>
+                                        <AddIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
+                        </Paper>
+                        <br />
                     </Grid>
                     {/* --------------------------------------------------------------------------------- */}
                     <Grid item xs>
@@ -406,14 +415,109 @@ const CURDPage = () => {
                             </div>
                         </Paper>
                     </Grid>
-
-                    <br />
-
-                    <SortableList items={itemSortTable} onSortEnd={onSortEnd} />
                     {/* --------------------------------------------------------------------------------- */}
                 </Grid>
                 <DialogDefault open={open} />
             </Container>
+
+
+            <Dialog open={openEditBigContent} onClose={handleCloseBigContent} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Thêm nội dung</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Mỗi nội dung bạn thêm vào sẽ được cập nhật lên trang <b>"About"</b>.<br />
+                        <b>"Tiêu đề nội dung"</b> tương ứng với mục lục, bạn có thể sắp xếp lại theo ý muốn.
+                    </DialogContentText>
+                    <br />
+                    <TextField
+                        autoFocus
+                        className={classes.title}
+                        label="Tiêu đề nội dung"
+                        color="secondary"
+                        value={inputContentTitle}
+                        onChange={e => setInputContentTitle(e.target.value)}
+                    />
+                    <div className={classes.EditorLayout}>
+                        <Editor
+                            wrapperClassName="thangtm13_wrapper"
+                            editorClassName="thangtm13_editor"
+                            onEditorStateChange={onEditorStateChange("content")}
+                            editorState={inputContent}
+                            toolbar={{
+                                image: {
+                                    uploadCallback: UploadFile,
+                                    alt: { present: true, mandatory: true },
+                                    previewImage: true,
+                                    inputAccept: SETTING.FILE_UPLOAD_IMAGE.toString(),
+                                },
+                                emoji: {
+                                    emojis: EmojisBasic,
+                                },
+                            }}
+                        />
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        style={{ color: 'red' }}
+                        onClick={() => {
+                            setInputContent("")
+                            setInputContentTitle("")
+                        }}
+                    >Nhập lại</Button>
+                    <Button
+                        style={{ color: '#3f51b5' }}
+                        onClick={() => {
+                            if (inputContent) {
+                                let data = values.element ? values.element : []
+                                const description = draftToHtml(convertToRaw(inputContent.getCurrentContent()))
+                                if (inputContentTitle.trim().length > 0) {
+                                    data.push({
+                                        id: values.element.length + 1,
+                                        title: inputContentTitle.trim(),
+                                        description: description
+                                    })
+                                }
+                                setValues({
+                                    ...values,
+                                    element: data
+                                })
+                                setInputContent("")
+                                setInputContentTitle("")
+                            }
+                            handleCloseBigContent()
+                            toast.warn('Nội dung không tồn tại');
+                        }}
+                    >Thêm nội dung</Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog open={openSortContent} onClose={handleCloseSortContent} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Sắp xếp nội dung</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Nội dung bạn sắp xếp sẽ hiển thị tương ứng lên trang <b>"About"</b>.<br />
+                    </DialogContentText>
+                    <br />
+                    <Paper style={{ padding: '10px' }}>
+                        <h4>Sắp xếp nội dung</h4>
+                        <br />
+                        <SortableList
+                            items={values.element}
+                            onSortEnd={onSortEnd}
+                        />
+                    </Paper>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        style={{ color: 'red' }}
+                        onClick={() => {
+                            handleCloseSortContent()
+                        }}
+                    >Đồng ý</Button>
+                </DialogActions>
+            </Dialog>
+
             <DropzoneDialog
                 open={openDropzoneDialog}
                 onSave={handleSaveDropzoneDialog}

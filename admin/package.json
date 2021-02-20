@@ -37,6 +37,7 @@
     "@n8tb1t/use-scroll-position": "^1.0.43",
     "@rjsf/core": "^2.4.0",
     "@rjsf/material-ui": "^2.4.0",
+    "array-move": "^3.0.1",
     "chart.js": "^2.9.3",
     "clsx": "^1.1.1",
     "cors": "^2.8.5",

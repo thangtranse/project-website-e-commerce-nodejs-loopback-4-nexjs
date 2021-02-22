@@ -129,7 +129,7 @@ const HeaderWrapper = styled.header`
         a {
           margin: 0;
           padding: 12px 30px;
-          border-bottom: 1px solid ${themeGet('colors.gray.200', '#F7F7F7')};
+          border-bottom: 1px solid ${themeGet('colors.gray.200', '#fff')};
           cursor: pointer;
           white-space: nowrap;
 
@@ -441,7 +441,7 @@ export const DrawerClose = styled.div`
 `;
 
 export const DrawerProfile = styled.div`
-  background-color: ${themeGet('colors.gray.200', '#F7F7F7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   padding: 45px;
 `;
 

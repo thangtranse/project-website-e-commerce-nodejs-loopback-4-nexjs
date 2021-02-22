@@ -375,7 +375,7 @@ const CartSlidePopup = styled.div`
   }
 
   ${ItemCards} {
-    border-bottom: 1px solid ${themeGet('colors.gray.200', '#f7f7f7')};
+    border-bottom: 1px solid ${themeGet('colors.gray.200', '#fff')};
     margin-bottom: 0;
   }
 

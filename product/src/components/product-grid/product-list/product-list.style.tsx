@@ -5,7 +5,7 @@ export const ProductsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 25px;
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   position: relative;
   z-index: 1;
   margin: 0 -15px;

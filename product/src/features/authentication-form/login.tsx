@@ -69,7 +69,7 @@ export default function SignInModal() {
             onChange={(e) => setEmail(e.target.value)}
             required
             height='48px'
-            backgroundColor='#F7F7F7'
+            backgroundColor='#fff'
             mb='10px'
           />
 
@@ -83,7 +83,7 @@ export default function SignInModal() {
             onChange={(e) => setPassword(e.target.value)}
             required
             height='48px'
-            backgroundColor='#F7F7F7'
+            backgroundColor='#fff'
             mb='10px'
           />
 

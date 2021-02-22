@@ -166,7 +166,7 @@ export const ProductInfo = styled.div`
       }
     }
     .cart-button {
-      border: 2px solid ${themeGet('colors.gray.200', '#f7f7f7')};
+      border: 2px solid ${themeGet('colors.gray.200', '#fff')};
       border-radius: ${themeGet('radii.big', '18px')};
       height: 36px;
       padding-left: 17px;

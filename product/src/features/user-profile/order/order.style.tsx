@@ -63,7 +63,7 @@ const OrderList = styled.div`
 
     > .rc-collapse-item {
       margin-bottom: 15px;
-      background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+      background-color: ${themeGet('colors.gray.200', '#fff')};
       border-radius: ${themeGet('radii.base', '6px')};
       overflow: hidden;
       margin-bottom: 15px;

@@ -314,7 +314,7 @@ export const MetaItem = styled.span`
   font-weight: ${themeGet('fontWeights.bold', '700')};
   color: ${themeGet('colors.text.bold', '#0D1136')};
   margin-right: 10px;
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   padding: 0 15px;
   border-radius: ${themeGet('radii.base', '6px')};
   cursor: pointer;
@@ -325,7 +325,7 @@ export const MetaItem = styled.span`
 `;
 
 export const DetailsWrapper = styled.div`
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   position: relative;
   display: flex;
   flex-direction: column;

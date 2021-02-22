@@ -3,7 +3,7 @@ import { themeGet } from '@styled-system/theme-get';
 import DotBG from 'assets/images/dot-bg.svg';
 
 export const ProductDetailsWrapper = styled.div`
-  background-color: ${themeGet('colors.gray.200', '#F7F7F7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   position: relative;
   width: 100%;
   display: flex;

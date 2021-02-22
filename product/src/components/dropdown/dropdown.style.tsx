@@ -16,7 +16,7 @@ const DropdownWrapper = styled.div`
     transition: all 0.35s ease-in-out;
 
     &.active {
-      background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+      background-color: ${themeGet('colors.gray.200', '#fff')};
     }
   }
 

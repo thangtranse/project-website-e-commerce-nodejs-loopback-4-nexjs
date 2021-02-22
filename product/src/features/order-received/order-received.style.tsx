@@ -6,7 +6,7 @@ type TextProps = {
 };
 
 const OrderReceivedWrapper = styled.div`
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   position: relative;
   padding: 100px 0 60px 0;
   min-height: 100vh;

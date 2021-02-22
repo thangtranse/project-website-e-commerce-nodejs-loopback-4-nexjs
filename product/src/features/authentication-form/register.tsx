@@ -62,7 +62,7 @@ export default function SignOutModal() {
             defaultMessage: 'Email Address or Contact No.',
           })}
           height='48px'
-          backgroundColor='#F7F7F7'
+          backgroundColor='#fff'
           mb='10px'
         />
         <Input
@@ -72,7 +72,7 @@ export default function SignOutModal() {
             defaultMessage: 'Password (min 6 characters)',
           })}
           height='48px'
-          backgroundColor='#F7F7F7'
+          backgroundColor='#fff'
           mb='10px'
         />
         <HelperText style={{ padding: '20px 0 30px' }}>

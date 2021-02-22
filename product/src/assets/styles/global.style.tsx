@@ -203,6 +203,12 @@ export const GlobalStyle = createGlobalStyle(({ theme }) =>
       width: '1px !important',
       whiteSpace: 'nowrap !important',
     },
+    '.product-card': {
+      border: '1px solid #cccccc6b'
+    },
+    '.food-card': {
+      border: '1px solid #cccccc6b'
+    },
     //@ts-ignore
     ...theme.globals,
   })

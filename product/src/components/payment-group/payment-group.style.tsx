@@ -138,8 +138,8 @@ export const OtherPayOption = styled.div`
     span {
       display: block;
       border-radius: ${themeGet('radii.base', '6px')};
-      background-color: ${themeGet('colors.gray.200', '#F7F7F7')};
-      border: 1px solid ${themeGet('colors.gray.200', '#F7F7F7')};
+      background-color: ${themeGet('colors.gray.200', '#fff')};
+      border: 1px solid ${themeGet('colors.gray.200', '#fff')};
       text-align: center;
       padding: 12px 20px;
       cursor: pointer;

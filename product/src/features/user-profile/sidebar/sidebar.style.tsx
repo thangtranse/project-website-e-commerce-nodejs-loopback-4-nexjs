@@ -24,7 +24,7 @@ const SidebarBottom = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 40px 0;
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
 `;
 
 const SidebarMenu = styled(NavLink)<any>`

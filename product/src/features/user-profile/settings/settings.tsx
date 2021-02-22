@@ -65,7 +65,7 @@ const SettingsContent: React.FC<SettingsContentProps> = ({ deviceType }) => {
               name='name'
               value={state.name}
               onChange={handleChange}
-              backgroundColor='#F7F7F7'
+              backgroundColor='#fff'
               height='48px'
             />
           </Col>
@@ -83,7 +83,7 @@ const SettingsContent: React.FC<SettingsContentProps> = ({ deviceType }) => {
               label='Email Address'
               value={state.email}
               onChange={handleChange}
-              backgroundColor='#F7F7F7'
+              backgroundColor='#fff'
             />
           </Col>
 

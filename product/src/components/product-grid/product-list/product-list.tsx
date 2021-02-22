@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import {
-  ProductsRow,
-  ProductsCol,
-  ButtonWrapper,
-  LoaderWrapper,
-  LoaderItem,
-  ProductCardWrapper,
-} from './product-list.style';
-import { CURRENCY } from 'utils/constant';
-import Placeholder from 'components/placeholder/placeholder';
-import Fade from 'react-reveal/Fade';
-import NoResultFound from 'components/no-result/no-result';
-import { FormattedMessage } from 'react-intl';
 import { Button } from 'components/button/button';
+import NoResultFound from 'components/no-result/no-result';
+import Placeholder from 'components/placeholder/placeholder';
 import useProducts from 'data/use-products';
-import { flex } from 'styled-system';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import Fade from 'react-reveal/Fade';
+import { CURRENCY } from 'utils/constant';
+import {
+  ButtonWrapper,
+
+  LoaderItem, LoaderWrapper,
+
+  ProductCardWrapper, ProductsCol, ProductsRow
+} from './product-list.style';
 const ErrorMessage = dynamic(() =>
   import('components/error-message/error-message')
 );

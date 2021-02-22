@@ -40,7 +40,7 @@ export const SubHeading = styled.span`
 `;
 export const OfferSection = styled.div`
   padding: 20px;
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   color: ${themeGet('colors.primary.regular', '#009e7f')};
   display: flex;
   justify-content: center;
@@ -58,8 +58,8 @@ export const Input = styled.input`
   width: 100%;
   height: 48px;
   border-radius: ${themeGet('radii.base', '6px')};
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
-  border: 1px solid ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
+  border: 1px solid ${themeGet('colors.gray.200', '#fff')};
   font-family: ${themeGet('fonts.body', 'Lato')};
   font-size: ${themeGet('fontSizes.base', '15')}px;
   font-weight: ${themeGet('fontWeights.regular', '400')};

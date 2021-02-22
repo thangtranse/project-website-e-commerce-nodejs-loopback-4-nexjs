@@ -45,7 +45,7 @@ export default function ForgotPasswordModal() {
             defaultMessage: 'Email Address or Contact No.',
           })}
           height='48px'
-          backgroundColor='#F7F7F7'
+          backgroundColor='#fff'
           mb='10px'
         />
 

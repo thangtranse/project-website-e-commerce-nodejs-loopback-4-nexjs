@@ -3,7 +3,7 @@ const baseColor = {
   black: '#000000',
   gray: {
     100: '#f9f9f9',
-    200: '#F7F7F7',
+    200: '#fff',
     300: '#f4f4f4',
     400: '#F3F3F3',
     500: '#f1f1f1', // border alt color

@@ -22,7 +22,7 @@ export const Box = styled.div<any>(
     alignItems: 'center',
     width: '100%',
     position: 'relative',
-    // backgroundColor: #f7f7f7;
+    // backgroundColor: #fff;
 
     '@media (max-width: 990px)': {
       padding: '80px 0 25px',

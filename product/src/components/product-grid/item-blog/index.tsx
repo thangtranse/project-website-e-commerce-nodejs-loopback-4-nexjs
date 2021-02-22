@@ -1,24 +1,21 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import FoodCard from 'components/product-card/product-card-four/product-card-four';
-import {
-  ProductsRow,
-  ProductsCol,
-  ButtonWrapper,
-  LoaderWrapper,
-  LoaderItem,
-  ProductCardWrapper,
-} from '../product-list/product-list.style';
 import { Button } from 'components/button/button';
-import Placeholder from 'components/placeholder/placeholder';
-import Fade from 'react-reveal/Fade';
-import NoResultFound from 'components/no-result/no-result';
-
-import { customerDistance } from 'utils/customerDistance';
-import { formatTime } from 'utils/formatTime';
-import { FormattedMessage } from 'react-intl';
-import useVendors from 'data/use-vendors';
 import ErrorMessage from 'components/error-message/error-message';
+import NoResultFound from 'components/no-result/no-result';
+import Placeholder from 'components/placeholder/placeholder';
+import FoodCard from 'components/product-card/product-card-four/product-card-four';
+import useVendors from 'data/use-vendors';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import Fade from 'react-reveal/Fade';
+import {
+  ButtonWrapper,
+
+  LoaderItem, LoaderWrapper,
+
+  ProductCardWrapper, ProductsCol, ProductsRow
+} from '../product-list/product-list.style';
+
 
 type ProductsProps = {
   deviceType?: {

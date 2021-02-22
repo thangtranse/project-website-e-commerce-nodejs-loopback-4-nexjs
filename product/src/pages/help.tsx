@@ -41,7 +41,7 @@ const Heading = styled.h3`
 `;
 
 const HelpPageWrapper = styled.div`
-  background-color: #f7f7f7;
+  background-color: #fff;
   position: relative;
   padding: 130px 0 60px 0;
   min-height: 100vh;

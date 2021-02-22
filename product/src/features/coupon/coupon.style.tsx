@@ -60,7 +60,7 @@ export const CouponBoxWrapper = styled.div`
       height: 48px;
       margin-right: 20px;
       border: 1px solid ${themeGet('colors.lightDarkColor', '#e6e6e6')} !important;
-      background-color: ${themeGet('colors.lightColor', '#f7f7f7')};
+      background-color: ${themeGet('colors.lightColor', '#fff')};
       flex-grow: unset;
       border-radius: ${themeGet('radii.base', '6px')};
 

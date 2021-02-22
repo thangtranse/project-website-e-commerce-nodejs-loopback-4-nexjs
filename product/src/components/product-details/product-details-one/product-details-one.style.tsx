@@ -282,7 +282,7 @@ export const MetaItem = styled.span`
   color: ${themeGet('colors.text.bold', '#0D1136')};
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   padding: 0 15px;
   border-radius: ${themeGet('radii.base', '6px')};
   cursor: pointer;

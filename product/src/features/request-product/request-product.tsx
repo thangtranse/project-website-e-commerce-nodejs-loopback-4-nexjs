@@ -74,7 +74,7 @@ const Checkout: React.FC<any> = () => {
                 placeholder="Enter medicine name"
                 value={medicineNameOne}
                 onChange={(e) => setMedicineNameOne(e.target.value)}
-                backgroundColor="#F7F7F7"
+                backgroundColor="#fff"
                 height="48px"
               />
             </Col>
@@ -91,7 +91,7 @@ const Checkout: React.FC<any> = () => {
                 placeholder="Enter quantity"
                 value={quantityOne}
                 onChange={(e) => setQuantityOne(e.target.value)}
-                backgroundColor="#F7F7F7"
+                backgroundColor="#fff"
                 height="48px"
               />
             </Col>
@@ -110,7 +110,7 @@ const Checkout: React.FC<any> = () => {
                 placeholder="Enter medicine name"
                 value={medicineNameTwo}
                 onChange={(e) => setMedicineNameTwo(e.target.value)}
-                backgroundColor="#F7F7F7"
+                backgroundColor="#fff"
                 height="48px"
               />
             </Col>
@@ -127,7 +127,7 @@ const Checkout: React.FC<any> = () => {
                 placeholder="Enter quantity"
                 value={quantityTwo}
                 onChange={(e) => setQuantityTwo(e.target.value)}
-                backgroundColor="#F7F7F7"
+                backgroundColor="#fff"
                 height="48px"
               />
             </Col>

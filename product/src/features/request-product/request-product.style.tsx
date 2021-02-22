@@ -3,7 +3,7 @@ import { themeGet } from '@styled-system/theme-get';
 import { Row as Rows, Col as Cols } from 'react-styled-flexboxgrid';
 
 const FormWrapper = styled.div`
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
   position: relative;
   padding: 130px 0 60px 0;
 
@@ -296,8 +296,8 @@ export const OtherPayOption = styled.div`
     span {
       display: block;
       border-radius: ${themeGet('radii.base', '6px')};
-      background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
-      border: 1px solid ${themeGet('colors.gray.200', '#f7f7f7')};
+      background-color: ${themeGet('colors.gray.200', '#fff')};
+      border: 1px solid ${themeGet('colors.gray.200', '#fff')};
       text-align: center;
       padding: 12px 20px;
       cursor: pointer;
@@ -402,7 +402,7 @@ export const OrderSummary = styled.div`
   flex-direction: column;
   padding: 60px;
   border-radius: ${themeGet('radii.base', '6px')};
-  background-color: ${themeGet('colors.gray.200', '#f7f7f7')};
+  background-color: ${themeGet('colors.gray.200', '#fff')};
 
   @media (max-width: 767px) {
     padding: 30px;

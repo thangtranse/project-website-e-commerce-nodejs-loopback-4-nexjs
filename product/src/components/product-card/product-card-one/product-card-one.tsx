@@ -15,9 +15,15 @@ import {
   ProductImageWrapper,
   ProductInfo
 } from '../product-card.style';
+
+/**
+ * DANH SÁCH ITEMS
+ */
+
 const QuickViewMobile = dynamic(() =>
   import('features/quick-view/quick-view-mobile')
 );
+
 type ProductCardProps = {
   title: string;
   image: any;
@@ -58,6 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   ...props
 }) => {
   const router = useRouter();
+  
   const [showModal, hideModal] = useModal(
     () => (
       <QuickViewMobile
@@ -83,7 +90,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
       },
     }
   );
+
   const { addItem, removeItem, getItem, isInCart, items } = useCart();
+
   const handleAddClick = (e) => {
     e.stopPropagation();
     addItem(data);
@@ -91,6 +100,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       cartAnimation(e);
     }
   };
+  
   const handleRemoveClick = (e) => {
     e.stopPropagation();
     removeItem(data);

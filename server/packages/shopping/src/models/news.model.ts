@@ -49,8 +49,8 @@ export class News extends Entity {
   })
   best?: string; // product is best selling ?
 
-  @property.array(Object, {})
-  type?: Object[]; // product type
+  @property.array(String, {})
+  type?: string[]; // product type
 
   @property({
     type: 'date',

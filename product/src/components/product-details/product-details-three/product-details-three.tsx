@@ -146,7 +146,6 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
                     {Object.keys(productGroups)[idx]}
                   </ItemCategoryName>
                 </ItemCategoryWrapper>
-
                 {items.map((item) => (
                   <ItemWrapper key={item.id}>
                     <ItemNameDetails>

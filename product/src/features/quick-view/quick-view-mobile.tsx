@@ -95,7 +95,10 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     description,
     gallery,
     categories,
+    slug
   } = modalProps;
+
+  console.log("thangtran.modalProps", modalProps)
 
   const { isRtl } = useLocale();
 
@@ -108,6 +111,7 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     e.stopPropagation();
     removeItem(modalProps);
   };
+
   function onCategoryClick(slug) {
     Router.push({
       pathname: `/${type && type[0] ? type[0].key : ""}`,
@@ -136,7 +140,11 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
           <ProductInfoWrapper dir={isRtl ? 'rtl' : 'ltr'}>
             <ProductInfo>
               <ProductTitlePriceWrapper>
-                <ProductTitle>{title}</ProductTitle>
+                <ProductTitle
+                  onClick={() => {
+                    hideModal();
+                    Router.push("/product/" + slug)
+                  }}>{title}</ProductTitle>
               </ProductTitlePriceWrapper>
 
               <ProductWeight>{unit}</ProductWeight>
@@ -198,12 +206,12 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
                       </ButtonText>
                     </Button>
                   ) : (
-                      <Counter
-                        value={getItem(id).quantity}
-                        onDecrement={handleRemoveClick}
-                        onIncrement={handleAddClick}
-                      />
-                    )}
+                    <Counter
+                      value={getItem(id).quantity}
+                      onDecrement={handleRemoveClick}
+                      onIncrement={handleAddClick}
+                    />
+                  )}
                 </ProductCartBtn>
               </ProductCartWrapper>
             </ProductInfo>

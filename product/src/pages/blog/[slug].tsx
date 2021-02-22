@@ -4,6 +4,7 @@ import ProductSingleWrapper, {
 } from 'assets/styles/product-single.style';
 import { SEO } from 'components/seo';
 import { SHOP_NAME } from "environment";
+import { ModalProvider } from 'contexts/modal/modal.provider';
 import { NextPage } from 'next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
@@ -115,37 +116,39 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
         title={`${data?.name} - ${SHOP_NAME}`}
         description={`${data?.name} Details`}
       />
-      <Modal>
-        <ProductSingleWrapper>
-          <ProductSingleContainer>
-            <ProductDetailsWrapper>
-              <h2>{data.title}</h2>
-              <br />
-              <div
-                className="html-content"
-                dangerouslySetInnerHTML={{
-                  __html: data.details,
-                }}
+      <ModalProvider>
+        <Modal>
+          <ProductSingleWrapper>
+            <ProductSingleContainer>
+              <ProductDetailsWrapper>
+                <h2>{data.title}</h2>
+                <br />
+                <div
+                  className="html-content"
+                  dangerouslySetInnerHTML={{
+                    __html: data.details,
+                  }}
+                />
+              </ProductDetailsWrapper>
+              <CartPopUp deviceType={deviceType} />
+            </ProductSingleContainer>
+          </ProductSingleWrapper>
+          <RelatedItems>
+            <h2>
+              <FormattedMessage
+                id="intlReletedItems"
+                defaultMessage="Related Items"
               />
-            </ProductDetailsWrapper>
-            <CartPopUp deviceType={deviceType} />
-          </ProductSingleContainer>
-        </ProductSingleWrapper>
-        <RelatedItems>
-          <h2>
-            <FormattedMessage
-              id="intlReletedItems"
-              defaultMessage="Related Items"
+            </h2>
+            <Products
+              type={"bag"}
+              deviceType={deviceType}
+              loadMore={false}
+              fetchLimit={10}
             />
-          </h2>
-          <Products
-            type={"bag"}
-            deviceType={deviceType}
-            loadMore={false}
-            fetchLimit={10}
-          />
-        </RelatedItems>
-      </Modal>
+          </RelatedItems>
+        </Modal>
+      </ModalProvider>
     </>
   );
 };

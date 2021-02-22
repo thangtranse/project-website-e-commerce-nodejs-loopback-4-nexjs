@@ -117,7 +117,7 @@ export const ProductTitle = styled.h1`
   color: ${themeGet('colors.text.bold', '#0D1136')};
   line-height: 1.5;
   display: flex;
-
+  cursor: pointer;
   @media (max-width: 767px) {
     word-break: break-word;
   }
@@ -240,6 +240,7 @@ export const MetaItem = styled.span`
   color: ${themeGet('colors.text.bold', '#0D1136')};
   margin-right: 10px;
   margin-bottom: 10px;
+  border-color: #ccc;
   background-color: ${themeGet('colors.gray.200', '#fff')};
   padding: 0 15px;
   border-radius: ${themeGet('radii.base', '6px')};

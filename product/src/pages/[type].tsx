@@ -48,6 +48,7 @@ const CategoryPage: React.FC<any> = ({ deviceType }) => {
         <Modal>
           <div style={{height: '70px'}}>
           </div>
+          
           <MainContentArea>
             <SidebarSection>
               <Sidebar type={PAGE_TYPE} deviceType={deviceType} />

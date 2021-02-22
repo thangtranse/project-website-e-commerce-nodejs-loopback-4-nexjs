@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import React from 'react';
 // Static Data Import Here
 import { siteOffers } from 'site-settings/site-offers';
-
 const Products = dynamic(() =>
   import('components/product-grid/item-blog')
 );

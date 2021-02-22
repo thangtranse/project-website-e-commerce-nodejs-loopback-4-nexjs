@@ -93,8 +93,8 @@ export const Products: React.FC<ProductsProps> = ({
                   data={item}
                   onClick={() =>
                     router.push(
-                      '/restaurant/[slug]',
-                      `/restaurant/${item.slug}`
+                      '/blog/[slug]',
+                      `/blog/${item.slug}`
                     )
                   }
                 />

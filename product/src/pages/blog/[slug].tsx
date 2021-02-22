@@ -19,6 +19,7 @@ export const ProductDetailsWrapper = styled.div`
   position: relative;
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   align-items: stretch;
   box-sizing: border-box;
   padding: 30px 15px;
@@ -108,12 +109,15 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
   if (router.isFallback) return <p>Loading...</p>;
   if (!data) return <p>Loading...</p>;
   if (!data[0]) return <p>Loading...</p>;
+
+  console.log("thangtran.check", data)
+
   data = data[0]
 
   return (
     <>
       <SEO
-        title={`${data?.name} - ${SHOP_NAME}`}
+        title={`${data.title} - ${SHOP_NAME}`}
         description={`${data?.name} Details`}
       />
       <ModalProvider>
@@ -155,6 +159,7 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
 
 export async function getStaticProps({ params }) {
   const data = await getVendorBySlug(params.slug);
+  console.log("thangtran.datadata", data)
   return {
     props: {
       data,

@@ -1,5 +1,6 @@
 import Fuse from 'fuse.js';
 import useSWR from 'swr';
+import { useState } from 'react';
 
 const URL_ROOT = process.env.NEXT_PUBLIC_REST_API_ENDPOINT;
 
@@ -17,8 +18,9 @@ const options = {
   // ignoreLocation: false,
   // ignoreFieldNorm: false,
   minMatchCharLength: 2,
-  keys: ['name'],
+  keys: ['title'],
 };
+
 function search(list, pattern) {
   const fuse = new Fuse(list, options);
 
@@ -34,35 +36,31 @@ interface Props {
   offset?: number;
   limit?: number;
 }
+
 export default function useVendors(variables: Props) {
 
-  const { type, text, category, offset = 0, limit = 20 } = variables ?? {};
-  const { data, mutate, error } = useSWR('/news', fetcher);
+  const { type, text, category, offset = 0, limit = 10 } = variables ?? {};
 
+  console.log(limit)
 
-  console.log("thangtran.data", JSON.stringify(data))
-  console.log("thangtran.mutate", mutate)
-  console.log("thangtran.error", error)
+  const [nextLimit, setNextLimit] = useState(limit);
+  const [nextOffset, setNextOffset] = useState(offset);
+
+  let fields: any = {
+    offset: nextOffset,
+    limit: nextLimit,
+    where: {}
+  }
+
+  const { data, mutate, error } = useSWR('/news?filter=' + JSON.stringify(fields), fetcher);
 
   const loading = !data && !error;
-  // need to remove when you using real API integration
-  // const [formattedData, setFormattedData] = useState(false);
-  
-  // let vendors = data?.filter((current) => current.type === type);
-  // if (category) {
-  //   vendors = vendors.filter((item) => item.categories.includes(category));
-  // }
-  // if (text) {
-  //   vendors = search(vendors, text);
-  // }
 
-  // let localOffset = offset;
-  // let localLimit = limit;
-  // const fetchMore = async (os, lmt) => {
-  //   localOffset = os;
-  //   localLimit = lmt;
-  //   setFormattedData(true);
-  // };
+  const fetchMore = async (os, lmt) => {
+    setNextLimit(os)
+    setNextOffset(lmt)
+  };
+  
   // console.log('object');
   // data: [
   //   ...state.data,
@@ -80,8 +78,10 @@ export default function useVendors(variables: Props) {
     loading,
     error,
     data,
+    offset: nextOffset, 
+    limit: nextLimit,
     // hasMore,
     mutate,
-    // fetchMore,
+    fetchMore,
   };
 }

@@ -16,6 +16,7 @@ import {
   ProductCardWrapper, ProductsCol, ProductsRow
 } from '../product-list/product-list.style';
 
+const URL_FILE = process.env.NEXT_PUBLIC_REST_API_ENDPOINT_FILE
 
 type ProductsProps = {
   deviceType?: {
@@ -30,18 +31,20 @@ type ProductsProps = {
 export const Products: React.FC<ProductsProps> = ({
   deviceType,
   type,
-  fetchLimit = 8,
+  fetchLimit = 10,
   loadMore = true,
 }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const { data, error } = useVendors({
+
+  const { data, error, fetchMore, offset, limit } = useVendors({
     type: type,
     text: router.query.text,
     category: router.query.category,
     offset: 0,
     limit: fetchLimit,
   });
+
   if (error) return <ErrorMessage message={error.message} />;
 
   if (!data) {
@@ -65,7 +68,7 @@ export const Products: React.FC<ProductsProps> = ({
   }
   const handleLoadMore = () => {
     setLoading(true);
-    //fetch call here
+    fetchMore(fetchLimit + limit, 0)
     setLoading(false);
   };
 
@@ -82,7 +85,7 @@ export const Products: React.FC<ProductsProps> = ({
               >
                 <FoodCard
                   name={item.name}
-                  image={item.thumbnailUrl}
+                  image={URL_FILE + "/" + item.thumbnailUrl}
                   restaurantType={item?.categories.join(', ')}
                   delivery={item.description}
                   isFree={true}

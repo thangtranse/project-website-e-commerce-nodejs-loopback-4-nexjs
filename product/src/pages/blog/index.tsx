@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 // Static Data Import Here
 import { siteOffers } from 'site-settings/site-offers';
+
 const Products = dynamic(() =>
   import('components/product-grid/item-blog')
 );
@@ -48,7 +49,7 @@ function RestaurantPage({ deviceType }) {
                 <Products
                   type={PAGE_TYPE}
                   deviceType={deviceType}
-                  fetchLimit={16}
+                  fetchLimit={2}
                 />
               </div>
             </ContentSection>

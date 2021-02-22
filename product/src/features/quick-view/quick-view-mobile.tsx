@@ -98,8 +98,6 @@ const QuickViewMobile: React.FunctionComponent<QuickViewProps> = ({
     slug
   } = modalProps;
 
-  console.log("thangtran.modalProps", modalProps)
-
   const { isRtl } = useLocale();
 
   const handleAddClick = (e: any) => {

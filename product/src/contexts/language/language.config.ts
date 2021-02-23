@@ -9,3 +9,11 @@ export const languageNames = {
   fr: 'français',
   pl: 'polski',
 };
+
+
+// // need to customize later
+// export const languageNames = {
+//   en: 'English',
+//   ja: 'Japan',
+//   vn: 'Vietnamese',
+// };

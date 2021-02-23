@@ -43,6 +43,8 @@ type ProductDetailsProps = {
   };
 };
 
+const WEBSITE_PATH = process.env.NEXT_PUBLIC_ENDPOINT ? process.env.NEXT_PUBLIC_ENDPOINT : ""
+
 const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
   product,
   deviceType,
@@ -143,12 +145,12 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
                   </ButtonText>
                 </Button>
               ) : (
-                  <Counter
-                    value={getItem(data.id).quantity}
-                    onDecrement={handleRemoveClick}
-                    onIncrement={handleAddClick}
-                  />
-                )}
+                <Counter
+                  value={getItem(data.id).quantity}
+                  onDecrement={handleRemoveClick}
+                  onIncrement={handleAddClick}
+                />
+              )}
             </ProductCartBtn>
           </ProductCartWrapper>
 
@@ -194,6 +196,12 @@ const ProductDetails: React.FunctionComponent<ProductDetailsProps> = ({
             />
           </ProductPreview>
         )}
+      </ProductDetailsWrapper>
+
+      <ProductDetailsWrapper>
+        <div style={{ width: '50%' }}>
+          <div className="fb-comments" data-href={WEBSITE_PATH + "/bags/" + product.slug} data-width="100%" data-numposts="5"></div>
+        </div>
       </ProductDetailsWrapper>
 
       <RelatedItems>

@@ -11,6 +11,8 @@
     "start:product": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@mui-treasury/components": "^1.10.1",
     "@redq/reuse-modal": "1.2.4-beta.0.63",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.11.0",

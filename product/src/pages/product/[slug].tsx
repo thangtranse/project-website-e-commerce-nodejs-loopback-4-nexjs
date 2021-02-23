@@ -37,10 +37,8 @@ const ProductPage: NextPage<Props> = ({ data, deviceType }) => {
 
   let content = <ProductDetails product={data} deviceType={deviceType} />;
 
-  if (data.type === 'book') {
-    content = <ProductDetailsBook product={data} deviceType={deviceType} />;
-  }
-  
+  data = data[0] ? data[0] : {}
+
   return (
     <>
       <SEO
